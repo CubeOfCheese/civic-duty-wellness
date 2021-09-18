@@ -1,4 +1,4 @@
-# java-getting-started
+# Civic Duty Wellness
 
 A barebones Java app, which can easily be deployed to Heroku.
 
