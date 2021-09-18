@@ -2,12 +2,33 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+
+    <title>Civic Duty Wellness</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
   </head>
   <body>
-    <h1>Hello World, I'm Civic Duty Wellness</h1>
-    <p>Take a second to think to yourself:</p>
-    <p><i>How am I doing today?</i></p>
-    <p>Now think about why you feel that way. What do you want to do about that? See you tomorrow.</p>
+    <header>
+    <h1>Civic Duty Wellness</h1>
+    </header>
+    <nav id="mySidenav" class="sidenav">
+      <a href="#">Profile</a>
+      <a href="#">Wellness Survey</a>
+      <a href="#">Wellness Report</a>
+      <a href="#">Marketplace</a>
+      <a href="#">Resources</a>
+      <a href="#">Settings</a>
+      <a href="#">About Us</a>
+    </nav>
+    <section>
+      <h2> How are you feeling today?</h2>
+      <p>Take a second to think to yourself:</p>
+      <p><i>How am I doing today?</i></p>
+      <p>Now think about why you feel that way. What do you want to do about that? See you tomorrow.</p>
+
+      <button class="button1" onclick="goodFeeling()">I'm feeling good</button>
+      <button class="button1" onclick="badFeeling()">I'm feeling bad</button>
+      <p id="how-are-you-feeling-response"></p>
+    </section>
   </body>
 </html>
