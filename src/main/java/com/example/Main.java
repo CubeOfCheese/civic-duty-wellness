@@ -53,6 +53,13 @@ public class Main {
     return "index";
   }
 
+
+  @RequestMapping("/survey")
+  String survey() {
+    return "wellness-survey";
+  }
+
+
   @RequestMapping("/db")
   String db(Map<String, Object> model) {
     try (Connection connection = dataSource.getConnection()) {
