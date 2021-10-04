@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="stylesheets/registration.css">
+      <nav id="topnavigation"> <!-- Header -->
+       <h1 class="header-name">CIVIC DUTY WELLNESS APP</h1>
+     </nav>
+  </head>
+
+   <body>
+
+      <div class="background">
+       <div class="container">
+         <div class="border">
+        <!-- Registration section -->
+            <h1>Register</h1>
+            <h3>Please fill in this form to create an account.</h3>
+            <label for="email"> <b>Email</b> </label>
+            <input type="text" placeholder="Enter Email" required>
+            <label for="password"> <b>Password</b> </label>
+            <input type="password" placeholder="Enter Password" required>
+            <label for="confirm-password"> <b>Confirm Password</b> </label>
+            <input type="password" placeholder="Confirm Password" required>
+            <label for="zip"> <b>Zip Code</b> </label>
+            <input type="zip" placeholder=" Zip Code" required>
+            <label for="phone-number"> <b>Phone</b> </label>
+            <input type="tel" placeholder="Phone Number" required>
+         </div>
+
+         <!-- My communities section -->
+         <div class="border">
+            <h2>My Communities</h2>
+            <ul id="partner-list">
+               <li>Partner 1</li>
+               <li>Partner 2</li>
+            </ul>
+            <br>
+            <button class="button">Add Community</button>
+            <br>
+            <br>
+         </div>
+
+         <!-- For My Data section -->
+         <div class="border">
+            <h2>My Data</h2>
+            <ul class ="my-data-list">
+               <li>
+                  <input type="radio" name="check" id="share-all">
+                  <label for="share-all"> Share all data with Civic Duty and my Partner(s)</label>
+               </li>
+               <br>
+               <li>
+                  <input type="radio" name="check" id="share">
+                  <label for="share"> Only share data with Civic Duty</label>
+               </li>
+               <br>
+               <li>
+                  <input type="radio" name="check" id="begin">
+                  <label for="begin"> Begin account without rewards and no data sharing</label>
+               </li>
+            </ul>
+            <br>
+            <br>
+
+            <!-- Terms agreement hyperlink -->
+            <p>
+               By creating an account you agree to our
+               <a href="#">
+                  Terms & Privacy
+            </p>
+
+            <button type="button" class="register">Register</button>
+            <br>
+            <div class="sign">
+              <a href="login.html">Already have an account? Sign in</a>
+            </div>
+         </div>
+
+   </body>
+</html>
