@@ -53,12 +53,15 @@ public class Main {
     return "index";
   }
 
-
   @RequestMapping("/survey")
   String survey() {
     return "wellness-survey";
   }
 
+  @RequestMapping("/dashboard")
+  String dashboard() {
+    return "dashboard";
+  }
 
   @RequestMapping("/db")
   String db(Map<String, Object> model) {
