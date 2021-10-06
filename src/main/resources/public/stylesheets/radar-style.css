@@ -1,0 +1,12 @@
+.container {
+    height: 600px;
+    width: 600px;
+    padding-left: 115px;
+  }
+  #heading h2 {
+    color: white;
+    background-color: var(--green-color);
+    margin-left: 40px;
+    margin-right: 40px;
+    padding-bottom: 54px;
+  }
