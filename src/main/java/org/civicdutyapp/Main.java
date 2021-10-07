@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example;
+package org.civicdutyapp;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -25,7 +25,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -41,8 +41,7 @@ public class Main {
   @Value("${spring.datasource.url}")
   private String dbUrl;
 
-  @Autowired
-  private DataSource dataSource;
+  @Autowired private DataSource dataSource;
 
   public static void main(String[] args) throws Exception {
     SpringApplication.run(Main.class, args);
@@ -61,6 +60,13 @@ public class Main {
   @RequestMapping("/dashboard")
   String dashboard() {
     return "dashboard";
+  }
+
+  // TODO: replace 123 with {id} variable
+  @ResponseBody
+  @RequestMapping(path = "/user/123/wellness-report", produces = "application/json; charset=UTF-8")
+  WellnessReport userWellnessReport() {
+    return new WellnessReport();
   }
 
   @RequestMapping("/db")
@@ -94,5 +100,4 @@ public class Main {
       return new HikariDataSource(config);
     }
   }
-
 }
