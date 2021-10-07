@@ -1,0 +1,145 @@
+body,
+html {
+  margin: 0;
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: large;
+  background-color: beige;
+}
+
+/* For header */
+.header-name {
+  padding-bottom: 55px;
+  color: beige;
+}
+
+#topnavigation {
+  text-align: center;
+  overflow: hidden;
+  background-color: #12aa72;
+  color: beige;
+  font-size: 20px;
+  height: 12%;
+}
+
+#topnavigation a {
+  text-decoration: none;
+}
+
+/*For styling My Communities and My Data sections */
+.data {
+  border-style: outset;
+  border-width: thick;
+  padding-bottom: 30px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/*For page background */
+.background {
+  background-image: url(nature.jpeg);
+  min-height: 1000px;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
+
+/*For unordered lists */
+#partner-list {
+  padding-left: 1px;
+}
+
+ul {
+  display: table;
+  margin: 0 auto;
+  text-align: left;
+}
+
+ul.my-data-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+/*For body design */
+.container {
+  position: center;
+  max-width: 500px;
+  background-color: beige;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*For input */
+input[type="text"],
+input[type="password"] {
+  width: 300px;
+  height: 50px;
+  padding: 15px;
+  display: block;
+  border: none;
+  background: #f1f1f1;
+  background-color: #ddd;
+  outline: none;
+  text-align: center;
+  position: center;
+  margin: auto;
+}
+
+input[type="phone"],
+input[type="tel"],
+input[type="zip"] {
+  width: 300px;
+  height: 50px;
+  padding: 15px;
+  margin: auto;
+  display: block;
+  border: none;
+  background: #f1f1f1;
+  background-color: #ddd;
+  outline: none;
+  text-align: center;
+}
+
+/*For add community button */
+.button {
+  background-color: #04aa6d;
+  border: none;
+  color: black;
+  padding: 10px 40px;
+  width: fit-content;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  font-size: large;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+/* For register button */
+.register {
+  background-color: #04aa6d;
+  display: inline-block;
+  width: 200px;
+  font-size: x-large;
+  font-weight: 600;
+  cursor: pointer;
+  height: 60px;
+  padding: 15px;
+  text-align: center;
+}
+
+/* For Sign in hyperlink */
+.sign {
+  padding-top: 20px;
+  font-size: x-large;
+  text-align: center;
+}
+
+a {
+  color: rgb(12, 12, 12);
+  font-weight: bold;
+}
