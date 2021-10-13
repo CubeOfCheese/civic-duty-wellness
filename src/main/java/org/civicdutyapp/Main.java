@@ -51,7 +51,7 @@ public class Main {
   String index() {
     return "index";
   }
-  
+
   @RequestMapping("/login")
   String login() {
      return "login";
@@ -61,7 +61,6 @@ public class Main {
   String register() {
      return "register";
   }
-
 
   @RequestMapping("/survey")
   String survey() {
