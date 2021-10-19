@@ -10,6 +10,7 @@ This application supports the [Getting Started with Java on Heroku](https://devc
 Make sure you have Java and Maven installed.  Also, install the [Heroku CLI](https://cli.heroku.com/).
 
 ```sh
+$ npm run-script watch
 $ mvn install
 $ heroku local:start
 ```
