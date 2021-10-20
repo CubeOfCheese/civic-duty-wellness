@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import NavBar from "./components/NavBar";
 
 
 export class App extends Component {
@@ -26,20 +27,7 @@ export class App extends Component {
 
     return (
         <div>
-          <nav id="top-nav" className="top-nav">
-            <a href="#">About Us</a>
-            <a href="#">Resources</a>
-            <a href="#">Marketplace</a>
-            <a href="/" id="logo">
-            <img src="civicduty-edited.png"/>
-            <h1>Civic Duty Wellness</h1>
-            </a>
-            <a href="#">Wellness Report</a>
-            <a href="/survey">Wellness Survey</a>
-            <a href="/dashboard">Profile</a>
-            {/* Settings should be linked from profile
-            <a href="#">Settings</a> */}
-          </nav>
+          <NavBar/>
           <section className="green-square">
             <h2> How are you feeling today?</h2>
             <p>Take a second to think to yourself:</p>
