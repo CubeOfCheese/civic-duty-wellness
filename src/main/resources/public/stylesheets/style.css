@@ -14,10 +14,13 @@ header {
 
 /*text*/
 h2 {
+  color: white;
+  background-color: var(--green-color);
   margin-top: 0px;
   margin-bottom: 0px;
   padding-top: 20px;
-  color: inherit;
+  padding-bottom: 20px;
+  text-align: center;
 }
 h3 {
   margin-top: 0px;

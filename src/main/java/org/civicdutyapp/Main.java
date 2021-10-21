@@ -47,31 +47,6 @@ public class Main {
     SpringApplication.run(Main.class, args);
   }
 
-  @RequestMapping("/")
-  String index() {
-    return "index";
-  }
-
-  @RequestMapping("/login")
-  String login() {
-     return "login";
-  }
-
-  @RequestMapping("/register")
-  String register() {
-     return "register";
-  }
-
-  @RequestMapping("/survey")
-  String survey() {
-    return "wellness-survey";
-  }
-
-  @RequestMapping("/dashboard")
-  String dashboard() {
-    return "dashboard";
-  }
-
   // TODO: replace 123 with {id} variable
   @ResponseBody
   @RequestMapping(path = "/user/123/wellness-report", produces = "application/json; charset=UTF-8")
