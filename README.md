@@ -5,9 +5,25 @@ Sac State 2021
 
 This application supports the [Getting Started with Java on Heroku](https://devcenter.heroku.com/articles/getting-started-with-java) article - check it out.
 
-## Running Locally
+## Setup
+Make sure you have Java and Maven installed.
+Install the Heroku CLI.
+Install node (recommended to install via nvm).
 
-Make sure you have Java and Maven installed.  Also, install the [Heroku CLI](https://cli.heroku.com/).
+Maven: https://maven.apache.org/
+
+Heroku CLI: https://cli.heroku.com/
+
+nvm for windows users: https://github.com/coreybutler/nvm-windows
+nvm for mac users: https://github.com/nvm-sh/nvm
+
+```sh
+$ nvm install lts
+$ nvm use 14.18.1
+$ npm install
+```
+
+## Running Locally
 
 ```sh
 $ npm run-script watch
@@ -26,8 +42,21 @@ JDBC_DATABASE_URL=jdbc:postgresql://localhost:5432/java_database_name
 ## Deploying to Heroku
 
 ```sh
+$ git checkout master
+$ git pull
+$ npm run-script watch
+```
+delete the line `src/main/resources/static` from .gitignore
+```sh
+$ mvn clean install
+$ git commit -m "deploy"
 $ git push heroku master
 $ heroku open
+```
+
+Clean up from deploying
+```sh
+$ git reset --hard HEAD~1
 ```
 
 ## Documentation
