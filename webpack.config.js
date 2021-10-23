@@ -1,4 +1,4 @@
-var path = require('path');
+const path = require('path');
 
 module.exports = {
   entry: './src/main/js/App.js',
@@ -6,7 +6,7 @@ module.exports = {
   mode: 'development',
   output: {
     path: path.resolve(__dirname, './src/main/resources/static/built'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   module: {
     rules: [
@@ -16,26 +16,26 @@ module.exports = {
         use: [{
           loader: 'babel-loader',
           options: {
-            presets: ["@babel/preset-env", "@babel/preset-react"]
-          }
-        }]
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+          },
+        }],
       },
       {
         test: /\.css$/,
         use: [
           'style-loader',
-          'css-loader'
-        ]
+          'css-loader',
+        ],
       },
       {
         test: /\.(png|svg|jpg|gif|eot|otf|ttf|woff|woff2)$/,
         use: [
           {
             loader: 'url-loader',
-            options: {}
-          }
-        ]
-      }
-    ]
-  }
+            options: {},
+          },
+        ],
+      },
+    ],
+  },
 };
