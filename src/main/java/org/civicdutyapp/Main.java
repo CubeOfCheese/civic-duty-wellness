@@ -47,19 +47,9 @@ public class Main {
     SpringApplication.run(Main.class, args);
   }
 
-  @RequestMapping(value={"/", "/survey"})
+  @RequestMapping(value={"/", "/survey", "/login", "/registration"})
   String index() {
     return "index";
-  }
-
-  @RequestMapping("/login")
-  String login() {
-     return "login";
-  }
-
-  @RequestMapping("/register")
-  String register() {
-     return "register";
   }
 
   // TODO: replace 123 with {id} variable

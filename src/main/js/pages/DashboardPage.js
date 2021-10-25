@@ -12,7 +12,6 @@ export default class Dashboard extends Component {
         data: [6, 8, 5, 7, 4, 3, 4, 9],
       }],
     };
-
     const options = {
       responsive: true,
       scale: {

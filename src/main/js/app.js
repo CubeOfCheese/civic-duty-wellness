@@ -3,8 +3,10 @@ import ReactDOM from 'react-dom';
 import {
   BrowserRouter as Router, Switch, Route, Link,
 } from 'react-router-dom';
-import Dashboard from './pages/Dashboard';
-import UserWellnessSurvey from './pages/UserWellnessSurvey';
+import Dashboard from './pages/DashboardPage';
+import UserWellnessSurvey from './pages/UserWellnessSurveyPage';
+import Login from './pages/LoginPage';
+import Registration from './pages/RegistrationPage';
 
 export class App extends Component {
   render() {
@@ -12,7 +14,7 @@ export class App extends Component {
       <div>
         <Router>
           <nav id="top-nav" className="top-nav">
-            <Link to="/">Dashboard</Link>
+            <Link to="/login">Login</Link>
             <Link to="/" id="logo">
               <img src="civicduty-edited.png" alt="civic duty logo" />
               <h1>Civic Duty Wellness</h1>
@@ -22,6 +24,8 @@ export class App extends Component {
           <Switch>
             <Route path="/" exact component={Dashboard} />
             <Route path="/survey" component={UserWellnessSurvey} />
+            <Route path="/login" component={Login} />
+            <Route path="/registration" component={Registration} />
           </Switch>
         </Router>
       </div>
