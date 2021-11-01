@@ -26,9 +26,13 @@ $ npm install
 ## Running Locally
 
 ```sh
-$ npm run-script watch
-$ mvn install
-$ heroku local:start
+$ npm run local
+```
+which runs the following commands
+```sh
+$ webpack --mode development
+$ mvn clean install
+$ heroku local
 ```
 
 Your app should now be running on [localhost:5000](http://localhost:5000/).
@@ -49,8 +53,9 @@ $ npm run-script watch
 delete the line `src/main/resources/static` from .gitignore
 ```sh
 $ mvn clean install
+$ git add .
 $ git commit -m "deploy"
-$ git push heroku master
+$ git push -f heroku master
 $ heroku open
 ```
 
