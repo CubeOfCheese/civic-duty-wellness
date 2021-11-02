@@ -9,6 +9,7 @@ This application supports the [Getting Started with Java on Heroku](https://devc
 Make sure you have Java and Maven installed.
 Install the Heroku CLI.
 Install node (recommended to install via nvm).
+Install postgresql (for consistency, download version 13).
 
 Maven: https://maven.apache.org/
 
@@ -16,6 +17,8 @@ Heroku CLI: https://cli.heroku.com/
 
 nvm for windows users: https://github.com/coreybutler/nvm-windows
 nvm for mac users: https://github.com/nvm-sh/nvm
+
+Postgresql: https://www.postgresqltutorial.com/install-postgresql/
 
 ```sh
 $ nvm install lts
@@ -40,8 +43,10 @@ Your app should now be running on [localhost:5000](http://localhost:5000/).
 If you're going to use a database, ensure you have a local `.env` file that reads something like this:
 
 ```
-JDBC_DATABASE_URL=jdbc:postgresql://localhost:5432/java_database_name
+JDBC_DATABASE_URL=jdbc:postgresql://localhost:5432/database_name_here?user=username_here&password=password_here
 ```
+
+The password is the one used when installing postgresql and connecting to the default local postgres database.
 
 ## Deploying to Heroku
 
