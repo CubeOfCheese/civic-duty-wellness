@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Col, Row, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 
 export class RegistrationPage extends Component {
   render() {
@@ -36,42 +36,17 @@ export class RegistrationPage extends Component {
                 <Form.Label>Phone</Form.Label>
                 <Form.Control type="phone" placeholder="Phone" />
               </Form.Group>
-
-              {/* // <label for="email" class="form-label font-weight-bold">Email Address</label>
-
-                //   <input type="text" placeholder="Enter Email" name="email" style={{ gridColumn: '2/3' }} required />
-                // <label htmlFor="password" style={{ display: 'grid', gridTemplateColumns: '2fr 3fr' }}>
-                //   <b style={{ gridColumn: '1/2' }}>Password</b>
-                //   <input type="password" placeholder="Enter Password" name="password" style={{ gridColumn: '2/3' }} required />
-                // </label>
-                // <label htmlFor="confirm-password" style={{ display: 'grid', gridTemplateColumns: '2fr 3fr' }}>
-                //   <b style={{ gridColumn: '1/2' }}>Confirm Password</b>
-                //   <input type="password" placeholder="Confirm Password" name="confirm-password" style={{ gridColumn: '2/3' }} required />
-                // </label>
-                // <label htmlFor="zip" style={{ display: 'grid', gridTemplateColumns: '2fr 3fr' }}>
-                //   <b style={{ gridColumn: '1/2' }}>Zip Code</b>
-                //   <input type="zip" placeholder=" Zip Code" name="zip" style={{ gridColumn: '2/3' }} required />
-                // </label>
-                // <label htmlFor="phone-number" style={{ display: 'grid', gridTemplateColumns: '2fr 3fr' }}>
-                //   <b style={{ gridColumn: '1/2' }}>Phone</b>
-                //   <input type="tel" placeholder="Phone Number" name="phone-number" style={{ gridColumn: '2/3' }} required />
-                // </label> */}
             </form>
           </div>
           <div className="mx-5 col bg-secondary text-white">
             <form>
               <h3>My Communities</h3>
               <Form.Group className="mb-3" controlId="partnerList" />
-              {/* // <table style={{ width: '300px', marginLeft: 'auto', marginRight: 'auto' }}>
-              //   <tr><td align="center">Partner 1</td></tr>
-              //   <tr><td align="center">Partner 2</td></tr>
-              // </table> */}
               <button type="button" className="btn btn-outline-light">Add Community</button>
             </form>
           </div>
           <div className="mx-5 col bg-secondary text-white">
             <h3>My Data</h3>
-
             <form>
               <div className="form-check">
                 <input className="form-check-input" type="checkbox" value="" id="shareCheck1" />
@@ -91,20 +66,6 @@ export class RegistrationPage extends Component {
                   Begin account without rewards and no data sharing
                 </label>
               </div>
-
-              {/* <form style={{ padding: '0px 80px' }}>
-                    <label htmlFor="share-all" style={{ display: 'grid', gridTemplateColumns: '1fr 5fr' }}>
-                      <b style={{ gridColumn: '2/3', gridRow: '1' }}>Share all data with Civic Duty and my Partner(s)</b>
-                      <input type="radio" name="check" id="share-all" style={{ gridColumn: '1/2', gridRow: '1' }} />
-                    </label>
-                    <label htmlFor="share" style={{ display: 'grid', gridTemplateColumns: '1fr 5fr' }}>
-                      <b style={{ gridColumn: '2/3', gridRow: '2' }}>Only share data with Civic Duty</b>
-                      <input type="radio" name="check" id="share" style={{ gridColumn: '1/2', gridRow: '2' }} />
-                    </label>
-                    <label htmlFor="begin" style={{ display: 'grid', gridTemplateColumns: '1fr 5fr' }}>
-                      <b style={{ gridColumn: '2/3', gridRow: '3' }}>Begin account without rewards and no data sharing</b>
-                      <input type="radio" name="check" id="begin" style={{ gridColumn: '1/2', gridRow: '3' }} />
-                    </label> */}
               <button type="button" className="btn btn-outline-light">Register</button>
               <p>
                 Already have an account?

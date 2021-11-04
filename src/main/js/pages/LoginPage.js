@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Col, Row, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 
 export default class LoginPage extends Component {
   render() {
