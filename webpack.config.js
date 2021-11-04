@@ -4,6 +4,7 @@ module.exports = {
   entry: './src/main/js/App.js',
   cache: true,
   mode: 'development',
+  devtool: 'eval-source-map',
   output: {
     path: path.resolve(__dirname, './src/main/resources/static/built'),
     filename: 'bundle.js',
