@@ -7,6 +7,8 @@ import Dashboard from './pages/DashboardPage';
 import UserWellnessSurvey from './pages/UserWellnessSurveyPage';
 import Login from './pages/LoginPage';
 import Registration from './pages/RegistrationPage';
+import '../resources/public/stylesheets/style.scss';
+import 'bootstrap';
 
 export class App extends Component {
   render() {
