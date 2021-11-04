@@ -33,6 +33,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Map;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @SpringBootApplication
@@ -41,22 +47,28 @@ public class Main {
   @Value("${spring.datasource.url}")
   private String dbUrl;
 
-  @Autowired private DataSource dataSource;
+  @Autowired
+  private DataSource dataSource;
 
   public static void main(String[] args) throws Exception {
     SpringApplication.run(Main.class, args);
   }
 
-  @RequestMapping(value={"/", "/survey", "/login", "/registration"})
+  @RequestMapping(value = { "/", "/survey", "/login", "/registration" })
   String index() {
     return "index";
   }
 
-  // TODO: replace 123 with {id} variable
   @ResponseBody
-  @RequestMapping(path = "/user/123/wellness-report", produces = "application/json; charset=UTF-8")
-  WellnessReport userWellnessReport() {
+  @RequestMapping(path = "/user/{id}/wellness-report", produces = "application/json; charset=UTF-8")
+  WellnessReport userWellnessReport(@PathVariable Integer id) {
     return new WellnessReport();
+  }
+
+  @PostMapping(path = "/survey/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> createSurvey(@RequestBody String data) {
+    System.out.println("Survery Data Received: " + data);
+    return new ResponseEntity<>("", HttpStatus.OK);
   }
 
   @RequestMapping("/db")
