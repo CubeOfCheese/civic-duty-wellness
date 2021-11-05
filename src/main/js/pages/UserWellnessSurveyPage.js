@@ -4,7 +4,7 @@ export default class UserWellnessSurvey extends Component {
   render() {
     return (
       <div>
-        <h2 className="bg-primary my-5 text-center text-light">Wellness Survey</h2>
+        <h2 className="bg-primary text-center text-light">Wellness Survey</h2>
         <form className="text-center">
           <div className="text-center w-75 mx-auto my-5 bg-secondary text-white">
             <h3>Select Date for Survey</h3>

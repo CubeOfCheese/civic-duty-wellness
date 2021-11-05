@@ -6,7 +6,7 @@ export class RegistrationPage extends Component {
   render() {
     return (
       <div>
-        <h2 className="bg-primary my-5 text-center text-light">Register</h2>
+        <h2 className="bg-primary text-center text-light">Register</h2>
 
         <div className="row">
           <div className="mx-5 col bg-secondary text-white">
