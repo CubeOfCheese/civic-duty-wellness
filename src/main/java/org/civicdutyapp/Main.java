@@ -26,19 +26,23 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Map;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.TimeZone;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 @SpringBootApplication
@@ -67,7 +71,31 @@ public class Main {
 
   @PostMapping(path = "/survey/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> createSurvey(@RequestBody String data) {
-    System.out.println("Survery Data Received: " + data);
+    ObjectMapper objectMapper = new ObjectMapper();
+    objectMapper.setTimeZone(TimeZone.getDefault());
+    try{
+      Survey survey = objectMapper.readValue(data, Survey.class);
+      try(Connection dbConnection = dataSource.getConnection()){
+        PreparedStatement pstmt = dbConnection.prepareStatement("INSERT INTO survey (user_id, survey_date, "
+        + "emotional_perf, spiritual_perf, intellectual_perf, physical_perf, environmental_perf, financial_perf, social_perf, occupational_perf)"
+        + "VALUES (?,?,?,?,?,?,?,?,?,?)");
+        pstmt.setInt(1, survey.getUserID());
+        pstmt.setDate(2, survey.getSurveyDate());
+        pstmt.setInt(3, survey.getEmotionalPerf());
+        pstmt.setInt(4, survey.getSpiritualPerf());
+        pstmt.setInt(5, survey.getIntellectualPerf());
+        pstmt.setInt(6, survey.getPhysicalPerf());
+        pstmt.setInt(7, survey.getEnvironmentalPerf());
+        pstmt.setInt(8, survey.getFinancialPerf());
+        pstmt.setInt(9, survey.getSocialPerf());
+        pstmt.setInt(10, survey.getOccupationalPerf());
+        pstmt.executeUpdate();
+      } catch(Exception e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    } catch(JsonProcessingException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
     return new ResponseEntity<>("", HttpStatus.OK);
   }
 
@@ -103,3 +131,4 @@ public class Main {
     }
   }
 }
+

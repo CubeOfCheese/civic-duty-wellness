@@ -4,6 +4,7 @@ target
 node_modules
 src/main/resources/static
 .env
-.settings
 .classpath
 .project
+.settings/
+.vscode/

@@ -1,0 +1,1 @@
+alter table survey add constraint uk_survey_user_surveydate unique (user_id, survey_date);
