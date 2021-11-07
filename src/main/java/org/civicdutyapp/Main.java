@@ -66,24 +66,17 @@ public class Main {
   @ResponseBody
   @RequestMapping(path = "/user/{id}/wellness-report", produces = "application/json; charset=UTF-8")
   ResponseEntity<?> userWellnessReport(@PathVariable Integer id) {
-    WellnessReport report = new WellnessReport();
-    report.setUserId(id);
+    WellnessReport report;
     try(Connection dbConnection = dataSource.getConnection()) {
-      //Currently retrieves most recent survey performance
       PreparedStatement pstmt = dbConnection.prepareStatement("SELECT * FROM survey WHERE user_id = ? AND survey_date = "
       + "(SELECT MAX(survey_date) FROM survey WHERE user_id = ?)");
       pstmt.setInt(1, id);
       pstmt.setInt(2, id);
       ResultSet rs = pstmt.executeQuery();
       rs.next();
-      report.setEmotionalPerf((double)rs.getInt("emotional_perf"));
-      report.setSpiritualPerf((double)rs.getInt("spiritual_perf"));
-      report.setIntellectualPerf((double)rs.getInt("intellectual_perf"));
-      report.setPhysicalPerf((double)rs.getInt("physical_perf"));
-      report.setEnvironmentalPerf((double)rs.getInt("environmental_perf"));
-      report.setFinancialPerf((double)rs.getInt("financial_perf"));
-      report.setSocialPerf((double)rs.getInt("social_perf"));
-      report.setOccupationalPerf((double)rs.getInt("occupational_perf"));
+      report = new WellnessReport(id, rs.getInt("emotional_perf"), rs.getInt("spiritual_perf"),
+      rs.getInt("intellectual_perf"), rs.getInt("physical_perf"), rs.getInt("environmental_perf"),
+      rs.getInt("financial_perf"), rs.getInt("social_perf"), rs.getInt("occupational_perf"));
     } catch(Exception e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
