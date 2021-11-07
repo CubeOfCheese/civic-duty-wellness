@@ -3,9 +3,9 @@ package org.civicdutyapp;
 import java.sql.Date;
 
 public class Survey {
-    private Long surveyId; 
-    private int userId;    
-    private Date surveyDate;    
+    private Long surveyId;
+    private int userId;
+    private Date surveyDate;
     private int emotionalPerf;
     private int spiritualPerf;
     private int intellectualPerf;
@@ -15,10 +15,8 @@ public class Survey {
     private int socialPerf;
     private int occupationalPerf;
 
-    protected Survey() {}
-
     public Survey(long surveyId, int userId, Date date,
-    int emPerf, int spiPerf, int intPerf, int phyPerf, int envPerf, 
+    int emPerf, int spiPerf, int intPerf, int phyPerf, int envPerf,
     int finPerf, int socPerf, int occuPerf) {
         this.surveyId  = surveyId;
         this.userId = userId;
@@ -32,9 +30,9 @@ public class Survey {
         this.socialPerf = socPerf;
         this.occupationalPerf = occuPerf;
     }
- 
+
     public Survey(int userId, Date date,
-    int emPerf, int spiPerf, int intPerf, int phyPerf, int envPerf, 
+    int emPerf, int spiPerf, int intPerf, int phyPerf, int envPerf,
     int finPerf, int socPerf, int occuPerf) {
         this.userId = userId;
         this.surveyDate = date;
@@ -47,10 +45,10 @@ public class Survey {
         this.socialPerf = socPerf;
         this.occupationalPerf = occuPerf;
     }
-  
+
     public Long getSurveyID() {
         return surveyId;
-    } 
+    }
     public void setSurveyID(Long surveyId) {
         this.surveyId = surveyId;
     }
