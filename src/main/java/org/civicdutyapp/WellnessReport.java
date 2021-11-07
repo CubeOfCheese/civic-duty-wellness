@@ -1,85 +1,97 @@
 package org.civicdutyapp;
 
-class WellnessReport {
-  private double physical;
-  private double emotional;
-  private double intellectual;
-  private double social;
-  private double spiritual;
-  private double environmental;
-  private double vocational;
-  private double financial;
+public class WellnessReport {
+    private int userId;
+    private double emotionalPerf;
+    private double spiritualPerf;
+    private double intellectualPerf;
+    private double physicalPerf;
+    private double environmentalPerf;
+    private double financialPerf;
+    private double socialPerf;
+    private double occupationalPerf;
 
-  WellnessReport() {
-    physical = 2;
-    emotional = 4;
-    intellectual = 3;
-    social = 3;
-    spiritual = 1;
-    environmental = 9;
-    vocational = 10;
-    financial = 8;
-  }
+    public WellnessReport(int userId,
+    double emPerf, double spiPerf, double intPerf, double phyPerf, double envPerf,
+    double finPerf, double socPerf, double occuPerf) {
+        this.userId = userId;
+        this.emotionalPerf = emPerf;
+        this.spiritualPerf = spiPerf;
+        this.intellectualPerf = intPerf;
+        this.physicalPerf = phyPerf;
+        this.environmentalPerf = envPerf;
+        this.financialPerf = finPerf;
+        this.socialPerf = socPerf;
+        this.occupationalPerf = occuPerf;
+    }
 
-  public double getPhysical() {
-    return this.physical;
-  }
-  public double getEmotional() {
-    return this.emotional;
-  }
-  public double getIntellectual() {
-    return this.intellectual;
-  }
-  public double getSocial() {
-    return this.social;
-  }
-  public double getSpiritual() {
-    return this.spiritual;
-  }
-  public double getEnvironmental() {
-    return this.environmental;
-  }
-  public double getVocational() {
-    return this.vocational;
-  }
-  public double getFinancial() {
-    return this.financial;
-  }
-  public void setPhysical(double physical) {
-    this.physical = physical;
-  }
-  public void setEmotional(double emotional) {
-    this.emotional = emotional;
-  }
-  public void setIntellectual(double intellectual) {
-    this.intellectual = intellectual;
-  }
-  public void setSocial(double social) {
-    this.social = social;
-  }
-  public void setSpiritual(double spiritual) {
-    this.spiritual = spiritual;
-  }
-  public void setEnvironmental(double environmental) {
-    this.environmental = environmental;
-  }
-  public void setVocational(double vocational) {
-    this.vocational = vocational;
-  }
-  public void setFinancial(double financial) {
-    this.financial = financial;
-  }
+    public int getUserId() {
+        return userId;
+    }
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+    public double getEmotionalPerf() {
+        return emotionalPerf;
+    }
+    public void setEmotionalPerf(double emotionalPerf) {
+        this.emotionalPerf = emotionalPerf;
+    }
+    public double getSpiritualPerf() {
+        return spiritualPerf;
+    }
+    public void setSpiritualPerf(double spiritualPerf) {
+        this.spiritualPerf = spiritualPerf;
+    }
+    public double getIntellectualPerf() {
+        return intellectualPerf;
+    }
+    public void setIntellectualPerf(double intellectualPerf) {
+        this.intellectualPerf = intellectualPerf;
+    }
+    public double getPhysicalPerf() {
+        return physicalPerf;
+    }
+    public void setPhysicalPerf(double physicalPerf) {
+        this.physicalPerf =  physicalPerf;
+    }
+    public double getEnvironmentalPerf() {
+        return environmentalPerf;
+    }
+    public void setEnvironmentalPerf(double environmentalPerf) {
+        this.environmentalPerf = environmentalPerf;
+    }
+    public double getFinancialPerf() {
+        return financialPerf;
+    }
+    public void setFinancialPerf(double financialPerf) {
+        this.financialPerf = financialPerf;
+    }
+    public double getSocialPerf() {
+        return socialPerf;
+    }
+    public void setSocialPerf(double socialPerf) {
+        this.socialPerf = socialPerf;
+    }
+    public double getOccupationalPerf() {
+        return occupationalPerf;
+    }
+    public void setOccupationalPerf(double occupationalPerf) {
+        this.occupationalPerf = occupationalPerf;
+    }
 
-  @Override
-  public String toString() {
-    return "WellnessReport{" + " physical:" + physical
-            + " emotional:" + emotional
-            + " intellectual:" + intellectual
-            + " social:" + social
-            + " spiritual:" + spiritual
-            + " environmental:" + environmental
-            + " vocational:" + vocational
-            + " financial:" + financial
-            + "}";
-  }
+    @Override
+    public String toString() {
+        return "Performance Report {" +
+              "userId='" + userId + '\'' +
+              ", emotionalPerf=" + emotionalPerf +
+              ", spiritualPerf='" + spiritualPerf + '\'' +
+              ", intellectualPerf='" + intellectualPerf + '\'' +
+              ", physicalPerf='" + physicalPerf + '\'' +
+              ", environmentalPerf='" + environmentalPerf + '\'' +
+              ", financialPerf='" + financialPerf + '\'' +
+              ", socialPerf='" + socialPerf + '\'' +
+              ", occupationalPerf='" + occupationalPerf + '\'' +
+              '}';
+    }
 }
