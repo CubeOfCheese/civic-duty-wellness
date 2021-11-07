@@ -70,7 +70,7 @@ export default class Dashboard extends Component {
     };
     return (
       <div>
-        <h2>Profile</h2>
+        <h2 className="bg-primary text-center text-light">Profile</h2>
         <div style={{ height: '600px', width: '600px', paddingLeft: '115px' }}>
           <Radar data={data} options={options} />
         </div>

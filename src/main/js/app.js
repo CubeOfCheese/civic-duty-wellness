@@ -13,13 +13,23 @@ export class App extends Component {
     return (
       <div>
         <Router>
-          <nav id="top-nav" className="top-nav">
-            <Link to="/login">Login</Link>
-            <Link to="/" id="logo">
-              <img src="civicduty-edited.png" alt="civic duty logo" />
-              <h1>Civic Duty Wellness</h1>
-            </Link>
-            <Link to="/survey">Wellness Survey</Link>
+          <nav className="navbar navbar-expand-sm bg-primary">
+            <div className="container-fluid">
+              <div className="navbar-header">
+                <Link className="navbar-brand text-light" to="/" style={{ width: '300px' }}>
+                  <img style={{ width: '100px' }} src="civicduty-edited.png" alt="civic duty logo" />
+                  Civic Duty Wellness
+                </Link>
+              </div>
+              <ul className="nav navbar-nav">
+                <li className="nav-item">
+                  <Link className="nav-link text-light" to="/login">Login</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link text-light" to="/survey">Wellness Survey</Link>
+                </li>
+              </ul>
+            </div>
           </nav>
           <Switch>
             <Route path="/" exact component={Dashboard} />
