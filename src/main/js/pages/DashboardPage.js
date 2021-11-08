@@ -72,7 +72,7 @@ export default class Dashboard extends Component {
       <div>
         <h2 className="bg-primary text-center text-light mb-5 p-3">Profile</h2>
         <div className="bg-secondary p-5 mx-auto my-5 w-75">
-          <div className="bg-light" style={{ height: '600px', width: '600px', paddingLeft: '115px' }}>
+          <div className="bg-light p-5" style={{ height: '600px', width: '600px', paddingLeft: '115px' }}>
             <Radar data={data} options={options} />
           </div>
         </div>
