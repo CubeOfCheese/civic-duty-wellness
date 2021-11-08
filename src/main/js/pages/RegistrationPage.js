@@ -6,11 +6,10 @@ export class RegistrationPage extends Component {
   render() {
     return (
       <div>
-        <h2 className="bg-primary text-center text-light">Register</h2>
-
+        <h2 className="bg-primary text-center text-light mb-5 p-3">Register</h2>
         <div className="row">
-          <div className="mx-5 col bg-secondary text-white">
-            <h3>Please fill in this form to create an account.</h3>
+          <div className="mx-5 col p-4 bg-secondary text-white">
+            <h3 className="text-center">Please fill in this form to create an account.</h3>
             <form>
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
@@ -38,15 +37,15 @@ export class RegistrationPage extends Component {
               </Form.Group>
             </form>
           </div>
-          <div className="mx-5 col bg-secondary text-white">
+          <div className="mx-5 col p-4 bg-secondary text-white text-center">
+            <h3>My Communities</h3>
             <form>
-              <h3>My Communities</h3>
               <Form.Group className="mb-3" controlId="partnerList" />
               <button type="button" className="btn btn-outline-light">Add Community</button>
             </form>
           </div>
-          <div className="mx-5 col bg-secondary text-white">
-            <h3>My Data</h3>
+          <div className="mx-5 col p-4 bg-secondary text-white">
+            <h3 className="text-center">My Data</h3>
             <form>
               <div className="form-check">
                 <input className="form-check-input" type="checkbox" value="" id="shareCheck1" />
@@ -66,12 +65,17 @@ export class RegistrationPage extends Component {
                   Begin account without rewards and no data sharing
                 </label>
               </div>
-              <button type="button" className="btn btn-outline-light">Register</button>
-              <p>
-                Already have an account?
-                <NavLink to="/login"> Sign in</NavLink>
-              </p>
             </form>
+          </div>
+        </div>
+        <div className="row mt-5 px-5">
+          <div className="bg-secondary text-center p-4">
+            <button type="button" className="text-center btn btn-outline-light w-25 mx-auto my-3">Register</button>
+            <p className="text-center">
+              Already have an account?
+              {' '}
+              <NavLink to="/login">Sign in</NavLink>
+            </p>
           </div>
         </div>
       </div>

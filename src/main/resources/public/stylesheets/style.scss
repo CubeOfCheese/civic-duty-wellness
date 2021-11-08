@@ -1,12 +1,3 @@
-/*
-    Ignore for now, was trying to change the color themes and couldn't get it to work, will tinker with
-    this code at a later time.
-*/
-
-@import "../node_modules/bootstrap/scss/functions";
-@import "../node_modules/bootstrap/scss/variables";
-@import "../node_modules/bootstrap/scss/mixins";
-
 $primary: #004b3a;
 $secondary: #af915b;
 $light: #f2f1f0;
@@ -20,4 +11,4 @@ $theme-colors: (
   "dark": $dark
 );
 
-@import "../node_modules/bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/bootstrap";

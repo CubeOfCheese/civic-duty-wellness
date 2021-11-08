@@ -59,15 +59,15 @@ export default class UserWellnessSurvey extends Component {
   render() {
     return (
       <div>
-        <h2 className="bg-primary text-center text-light">Wellness Survey</h2>
+        <h2 className="bg-primary text-center text-light mb-5 p-3">Wellness Survey</h2>
         <form className="text-center">
-          <div className="text-center w-75 mx-auto my-5 bg-secondary text-white">
+          <div className="text-center w-75 pb-3 mx-auto my-5 bg-secondary text-white">
             <h3>Select Date for Survey</h3>
             <input type="date" name="chosen-date" onChange={(e) => this.handleDate(e)} />
           </div>
           <div className="my-5 w-75 px-5 mx-auto bg-secondary text-white text-right">
             <h3 className="text-center">Performance</h3>
-            <table className="table w-50 mx-auto">
+            <table className="table w-50 mx-auto text-white">
               <thead>
                 <tr>
                   <th style={{ width: '10px' }} scope="col">1</th>
@@ -190,7 +190,9 @@ export default class UserWellnessSurvey extends Component {
                 </tr>
               </tbody>
             </table>
-            <button type="button" className="m-3 btn btn-outline-light pull-right">Reevaluate Importance</button>
+            <div className="d-flex flex-row-reverse">
+              <button type="button" className="my-3 btn btn-outline-light">Reevaluate Importance</button>
+            </div>
           </div>
           <input id="survey-submit-button" className="m-3 btn btn-outline-primary" type="submit" value="Submit" />
         </form>
