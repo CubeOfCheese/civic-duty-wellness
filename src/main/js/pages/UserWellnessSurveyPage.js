@@ -5,15 +5,16 @@ export default class UserWellnessSurvey extends Component {
     super();
     this.state = {
       surveyInfo: {
+        userId: 1,
         surveyDate: '',
-        physicalPerf: null,
         emotionalPerf: null,
+        spiritualPerf: null,
+        intellectualPerf: null,
+        physicalPerf: null,
         environmentalPerf: null,
         financialPerf: null,
-        intellectualPerf: null,
-        occupationalPerf: null,
         socialPerf: null,
-        spiritualPerf: null,
+        occupationalPerf: null,
       },
     };
     this.handlePerformanceChange = this.handlePerformanceChange.bind(this);
@@ -22,37 +23,36 @@ export default class UserWellnessSurvey extends Component {
   }
 
   handlePerformanceChange(event) {
+    const { surveyInfo } = this.state;
     const dimension = event.target.name;
-    const newPerformance = { ...this.state.surveyInfo };
-    newPerformance[dimension] = event.target.value;
+    const newPerformance = surveyInfo;
+    newPerformance[dimension] = Number(event.target.value);
     this.setState({
       surveyInfo: newPerformance,
     });
   }
 
   handleDate(event) {
-    const date = 'surveyDate';
-    const newDate = { ...this.state.surveyInfo };
-    newDate[date] = event.target.value;
+    const { surveyInfo } = this.state;
+    const newSurveyInfo = surveyInfo;
+    newSurveyInfo.surveyDate = event.target.value;
     this.setState({
-      surveyInfo: newDate,
+      surveyInfo: newSurveyInfo,
     });
   }
 
   handleSubmit() {
     const url = '/survey/add';
-    const surveyData = this.state.surveyInfo;
+    const { surveyInfo } = this.state;
     const request = {
       method: 'POST',
       headers: ({ 'Content-Type': 'application/json' }),
-      body: JSON.stringify(surveyData),
+      body: JSON.stringify(surveyInfo),
     };
-
     fetch(url, request)
-      .then((response) => { /// / TODO: We should be communicating this to the user
-        console.log(response); // Success!
-      }, (reason) => {
-        console.error(reason); // Error!
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error('Error:', error);
       });
   }
 
@@ -85,107 +85,107 @@ export default class UserWellnessSurvey extends Component {
               </thead>
               <tbody>
                 <tr onChange={(e) => this.handlePerformanceChange(e)}>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-emotional" value="1" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-emotional" value="2" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-emotional" value="3" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-emotional" value="4" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-emotional" value="5" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-emotional" value="6" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-emotional" value="7" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-emotional" value="8" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-emotional" value="9" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-emotional" value="10" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="emotionalPerf" value="1" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="emotionalPerf" value="2" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="emotionalPerf" value="3" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="emotionalPerf" value="4" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="emotionalPerf" value="5" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="emotionalPerf" value="6" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="emotionalPerf" value="7" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="emotionalPerf" value="8" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="emotionalPerf" value="9" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="emotionalPerf" value="10" /></td>
                   <td style={{ width: '10px' }}><p>Emotional</p></td>
                 </tr>
                 <tr onChange={(e) => this.handlePerformanceChange(e)}>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-spiritual" value="1" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-spiritual" value="2" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-spiritual" value="3" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-spiritual" value="4" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-spiritual" value="5" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-spiritual" value="6" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-spiritual" value="7" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-spiritual" value="8" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-spiritual" value="9" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-spiritual" value="10" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="spiritualPerf" value="1" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="spiritualPerf" value="2" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="spiritualPerf" value="3" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="spiritualPerf" value="4" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="spiritualPerf" value="5" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="spiritualPerf" value="6" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="spiritualPerf" value="7" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="spiritualPerf" value="8" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="spiritualPerf" value="9" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="spiritualPerf" value="10" /></td>
                   <td style={{ width: '10px' }}><p>Spiritual</p></td>
                 </tr>
                 <tr onChange={(e) => this.handlePerformanceChange(e)}>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-intellectual" value="1" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-intellectual" value="2" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-intellectual" value="3" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-intellectual" value="4" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-intellectual" value="5" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-intellectual" value="6" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-intellectual" value="7" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-intellectual" value="8" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-intellectual" value="9" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-intellectual" value="10" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="intellectualPerf" value="1" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="intellectualPerf" value="2" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="intellectualPerf" value="3" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="intellectualPerf" value="4" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="intellectualPerf" value="5" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="intellectualPerf" value="6" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="intellectualPerf" value="7" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="intellectualPerf" value="8" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="intellectualPerf" value="9" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="intellectualPerf" value="10" /></td>
                   <td style={{ width: '10px' }}><p>Intellectual</p></td>
                 </tr>
                 <tr onChange={(e) => this.handlePerformanceChange(e)}>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-physical" value="1" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-physical" value="2" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-physical" value="3" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-physical" value="4" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-physical" value="5" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-physical" value="6" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-physical" value="7" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-physical" value="8" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-physical" value="9" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-physical" value="10" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="physicalPerf" value="1" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="physicalPerf" value="2" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="physicalPerf" value="3" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="physicalPerf" value="4" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="physicalPerf" value="5" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="physicalPerf" value="6" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="physicalPerf" value="7" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="physicalPerf" value="8" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="physicalPerf" value="9" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="physicalPerf" value="10" /></td>
                   <td style={{ width: '10px' }}><p>Physical</p></td>
                 </tr>
                 <tr onChange={(e) => this.handlePerformanceChange(e)}>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-environmental" value="1" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-environmental" value="2" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-environmental" value="3" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-environmental" value="4" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-environmental" value="5" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-environmental" value="6" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-environmental" value="7" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-environmental" value="8" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-environmental" value="9" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-environmental" value="10" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="environmentalPerf" value="1" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="environmentalPerf" value="2" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="environmentalPerf" value="3" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="environmentalPerf" value="4" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="environmentalPerf" value="5" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="environmentalPerf" value="6" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="environmentalPerf" value="7" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="environmentalPerf" value="8" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="environmentalPerf" value="9" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="environmentalPerf" value="10" /></td>
                   <td style={{ width: '10px' }}><p>Environmental</p></td>
                 </tr>
                 <tr onChange={(e) => this.handlePerformanceChange(e)}>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-financial" value="1" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-financial" value="2" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-financial" value="3" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-financial" value="4" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-financial" value="5" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-financial" value="6" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-financial" value="7" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-financial" value="8" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-financial" value="9" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-financial" value="10" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="financialPerf" value="1" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="financialPerf" value="2" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="financialPerf" value="3" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="financialPerf" value="4" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="financialPerf" value="5" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="financialPerf" value="6" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="financialPerf" value="7" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="financialPerf" value="8" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="financialPerf" value="9" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="financialPerf" value="10" /></td>
                   <td style={{ width: '10px' }}><p>Financial</p></td>
                 </tr>
                 <tr onChange={(e) => this.handlePerformanceChange(e)}>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-social" value="1" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-social" value="2" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-social" value="3" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-social" value="4" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-social" value="5" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-social" value="6" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-social" value="7" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-social" value="8" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-social" value="9" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-social" value="10" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="socialPerf" value="1" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="socialPerf" value="2" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="socialPerf" value="3" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="socialPerf" value="4" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="socialPerf" value="5" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="socialPerf" value="6" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="socialPerf" value="7" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="socialPerf" value="8" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="socialPerf" value="9" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="socialPerf" value="10" /></td>
                   <td style={{ width: '10px' }}><p>Social</p></td>
                 </tr>
                 <tr onChange={(e) => this.handlePerformanceChange(e)}>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-occupational" value="1" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-occupational" value="2" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-occupational" value="3" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-occupational" value="4" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-occupational" value="5" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-occupational" value="6" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-occupational" value="7" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-occupational" value="8" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-occupational" value="9" /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="performance-occupational" value="10" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="occupationalPerf" value="1" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="occupationalPerf" value="2" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="occupationalPerf" value="3" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="occupationalPerf" value="4" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="occupationalPerf" value="5" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="occupationalPerf" value="6" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="occupationalPerf" value="7" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="occupationalPerf" value="8" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="occupationalPerf" value="9" /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="occupationalPerf" value="10" /></td>
                   <td style={{ width: '10px' }}><p>Occupational</p></td>
                 </tr>
               </tbody>
@@ -194,9 +194,10 @@ export default class UserWellnessSurvey extends Component {
               <button type="button" className="my-3 btn btn-outline-light">Reevaluate Importance</button>
             </div>
           </div>
-          <input id="survey-submit-button" className="m-3 btn btn-outline-primary" type="submit" value="Submit" />
+          <input id="survey-submit-button" className="m-3 btn btn-outline-primary" type="button" value="Submit" onClick={this.handleSubmit} />
         </form>
-        {/* <form id="survey-activities-popup" action="/action_page.php" className="form-container">
+        {/*
+          <form id="survey-activities-popup" action="/action_page.php" className="form-container">
             <h1>Add Activity</h1>
             <label htmlFor="activity">
               <b>Activity</b>
@@ -207,7 +208,10 @@ export default class UserWellnessSurvey extends Component {
               <input type="time" name="duration" />
             </label>
             <button type="button" class="btn btn-outline-light">Add</button>
-            <button type="button" class="btn btn-outline-light" onClick="closeForm()">Close</button> */}
+            <button type="button" class="btn btn-outline-light" onClick="*closeForm()">
+              Close
+            </button>
+        */}
       </div>
     );
   }
