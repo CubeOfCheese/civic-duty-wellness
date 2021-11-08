@@ -3,9 +3,6 @@
     this code at a later time.
 */
 
-@import "../node_modules/bootstrap/scss/functions";
-@import "../node_modules/bootstrap/scss/variables";
-@import "../node_modules/bootstrap/scss/mixins";
 
 $primary: #004b3a;
 $secondary: #af915b;
@@ -20,4 +17,4 @@ $theme-colors: (
   "dark": $dark
 );
 
-@import "../node_modules/bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/bootstrap";

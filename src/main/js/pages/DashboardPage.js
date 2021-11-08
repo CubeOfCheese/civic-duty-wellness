@@ -64,15 +64,17 @@ export default class Dashboard extends Component {
           },
         },
         ticks: {
-          backdropColor: 'rgba(242,241,240,0.2)',
+          backdropColor: 'rgba(0,0,0,0)',
         },
       },
     };
     return (
       <div>
-        <h2 className="bg-primary text-center text-light">Profile</h2>
-        <div style={{ height: '600px', width: '600px', paddingLeft: '115px' }}>
-          <Radar data={data} options={options} />
+        <h2 className="bg-primary text-center text-light mb-5 p-3">Profile</h2>
+        <div className="bg-secondary p-5 mx-auto my-5 w-75">
+          <div className="bg-light" style={{ height: '600px', width: '600px', paddingLeft: '115px' }}>
+            <Radar data={data} options={options} />
+          </div>
         </div>
       </div>
     );
