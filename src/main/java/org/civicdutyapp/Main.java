@@ -87,9 +87,9 @@ public class Main {
   public ResponseEntity<?> createSurvey(@RequestBody String data) {
     ObjectMapper objectMapper = new ObjectMapper();
     objectMapper.setTimeZone(TimeZone.getDefault());
-    try{
+    try {
       Survey survey = objectMapper.readValue(data, Survey.class);
-      try(Connection dbConnection = dataSource.getConnection()){
+      try(Connection dbConnection = dataSource.getConnection()) {
         PreparedStatement pstmt = dbConnection.prepareStatement("INSERT INTO survey (user_id, survey_date, "
         + "emotional_perf, spiritual_perf, intellectual_perf, physical_perf, environmental_perf, financial_perf, social_perf, occupational_perf)"
         + "VALUES (?,?,?,?,?,?,?,?,?,?)");
