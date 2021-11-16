@@ -63,6 +63,33 @@ public class Main {
     return "index";
   }
 
+  @PostMapping(path = "/login/attempt", consumes = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> requestLogin(@RequestBody String data) {
+    ObjectMapper objectMapper = new ObjectMapper();
+    try {
+      User login = objectMapper.readValue(data, User.class);
+      try(Connection dbConnection = dataSource.getConnection()) {
+        PreparedStatement pstmt = dbConnection.prepareStatement("SELECT password FROM civic_duty_user WHERE email = ?");
+        pstmt.setString(1, login.getEmail());
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.isBeforeFirst()) {
+          rs.next();
+          if (!rs.getString("password").equals(login.getPassword())) {
+            return new ResponseEntity<>("FAILURE", HttpStatus.BAD_REQUEST);
+          }
+        }
+        else {
+          return new ResponseEntity<>("FAILURE", HttpStatus.BAD_REQUEST);
+        }
+      } catch(Exception e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    } catch(JsonProcessingException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<>("", HttpStatus.OK);
+  }
+
   @ResponseBody
   @RequestMapping(path = "/user/{id}/wellness-report", produces = "application/json; charset=UTF-8")
   ResponseEntity<?> userWellnessReport(@PathVariable Integer id) {
