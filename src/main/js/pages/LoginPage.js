@@ -60,7 +60,7 @@ export default class LoginPage extends Component {
     }
     return (
       <div>
-        <h2 className="bg-primary text-center text-light mb-5 p-3">Login</h2>
+        <h2 className="bg-primary text-center text-light mb-5 p-3">Sign In</h2>
         <div className="w-50 p-3 bg-secondary text-white text-center mx-auto">
           <form>
             <Form.Group className="mb-3" controlId="formBasicEmail">
