@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 import { Redirect } from 'react-router';
+import { PropTypes } from 'prop-types';
 
 export default class LoginPage extends Component {
   constructor() {
     super();
     this.state = {
-      loggedIn: false,
       invalid: false,
       loginInfo: {
         email: '',
@@ -29,6 +29,7 @@ export default class LoginPage extends Component {
   }
 
   handleSubmit() {
+    const { changeAuth } = this.props;
     const url = '/login/attempt';
     const { loginInfo } = this.state;
     const request = {
@@ -39,11 +40,8 @@ export default class LoginPage extends Component {
     fetch(url, request)
       .then((response) => {
         if (response.ok) {
-          this.setState({
-            loggedIn: true,
-          });
-        }
-        else if (!response.ok) {
+          changeAuth();
+        } else if (!response.ok) {
           this.setState({
             invalid: true,
           });
@@ -55,9 +53,10 @@ export default class LoginPage extends Component {
   }
 
   render() {
-    const redirect = this.state.loggedIn;
-    if (redirect) {
-      return (<Redirect to = "/"/>);
+    const { invalid } = this.state;
+    const { authenticated } = this.props;
+    if (authenticated) {
+      return (<Redirect to="/" />);
     }
     return (
       <div>
@@ -66,18 +65,18 @@ export default class LoginPage extends Component {
           <form>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Email Address" name="email" onChange={(e) => this.handleEntryChange(e)}/>
+              <Form.Control type="email" placeholder="Email Address" name="email" onChange={(e) => this.handleEntryChange(e)} />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" name="password" onChange={(e) => this.handleEntryChange(e)}/>
+              <Form.Control type="password" placeholder="Password" name="password" onChange={(e) => this.handleEntryChange(e)} />
             </Form.Group>
-            {this.state.invalid ?
+            {invalid ? (
               <div className="alert alert-danger" role="alert">
                 Invalid Username and/or Password
               </div>
-              : null
-            }
+            )
+              : null}
             <button type="button" className="btn btn-outline-light mx-3" onClick={this.handleSubmit}>Login</button>
             <br />
             <p>
@@ -91,3 +90,7 @@ export default class LoginPage extends Component {
     );
   }
 }
+LoginPage.propTypes = {
+  changeAuth: PropTypes.func.isRequired,
+  authenticated: PropTypes.bool.isRequired,
+};

@@ -11,7 +11,21 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../resources/public/stylesheets/style.scss';
 
 export class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      authenticated: false,
+    };
+    this.changeAuth = this.changeAuth.bind(this);
+  }
+
+  changeAuth() {
+    const { authenticated } = this.state;
+    this.setState({ authenticated: !authenticated });
+  }
+
   render() {
+    const { authenticated } = this.state;
     return (
       <div>
         <Router>
@@ -34,10 +48,20 @@ export class App extends Component {
             </div>
           </nav>
           <Switch>
-            <Route path="/" exact component={Dashboard} />
-            <Route path="/survey" component={UserWellnessSurvey} />
-            <Route path="/login" component={Login} />
-            <Route path="/registration" component={Registration} />
+            <Route exact path="/">
+              {authenticated ? <Dashboard />
+                : <Login changeAuth={this.changeAuth} authenticated={authenticated} />}
+            </Route>
+            <Route path="/survey">
+              {authenticated ? <UserWellnessSurvey />
+                : <Login changeAuth={this.changeAuth} authenticated={authenticated} />}
+            </Route>
+            <Route path="/login">
+              <Login changeAuth={this.changeAuth} authenticated={authenticated} />
+            </Route>
+            <Route path="/registration">
+              <Registration />
+            </Route>
           </Switch>
         </Router>
       </div>
