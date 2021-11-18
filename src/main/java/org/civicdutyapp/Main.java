@@ -63,6 +63,79 @@ public class Main {
     return "index";
   }
 
+  @PostMapping(path = "/registration/attempt", consumes = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> requestRegistration(@RequestBody String data) {
+    ObjectMapper objectMapper = new ObjectMapper();
+    objectMapper.setTimeZone(TimeZone.getDefault());
+    try {
+      User registrationAttempt = objectMapper.readValue(data, User.class);
+      try(Connection dbConnection = dataSource.getConnection()) {
+        PreparedStatement check = dbConnection.prepareStatement("SELECT * FROM civic_duty_user WHERE email = ?");
+        check.setString(1, registrationAttempt.getEmail());
+        ResultSet rs = check.executeQuery();
+        if (!rs.isBeforeFirst()) {
+          PreparedStatement pstmt = dbConnection.prepareStatement("INSERT INTO civic_duty_user "
+          + "(user_id, fname, lname, user_type, email, password, phone_number, zip_code, dob, gender, ethnicity, "
+          + "emotional_imp, spiritual_imp, intellectual_imp, physical_imp, environmental_imp, financial_imp, "
+          + "social_imp, occupational_imp) VALUES (DEFAULT,?,?,'u',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+          pstmt.setString(1, registrationAttempt.getFname());
+          pstmt.setString(2, registrationAttempt.getLname());
+          pstmt.setString(3, registrationAttempt.getEmail());
+          pstmt.setString(4, registrationAttempt.getPassword());
+          pstmt.setInt(5, registrationAttempt.getPhone());
+          pstmt.setInt(6, registrationAttempt.getZip());
+          pstmt.setDate(7, registrationAttempt.getDOB());
+          pstmt.setString(8, registrationAttempt.getGender());
+          pstmt.setString(9, registrationAttempt.getEthnicity());
+          pstmt.setInt(10, registrationAttempt.getEmotionalImp());
+          pstmt.setInt(11, registrationAttempt.getSpiritualImp());
+          pstmt.setInt(12, registrationAttempt.getIntellectualImp());
+          pstmt.setInt(13, registrationAttempt.getPhysicalImp());
+          pstmt.setInt(14, registrationAttempt.getEnvironmentalImp());
+          pstmt.setInt(15, registrationAttempt.getFinancialImp());
+          pstmt.setInt(16, registrationAttempt.getSocialImp());
+          pstmt.setInt(17, registrationAttempt.getOccupationalImp());
+          pstmt.executeUpdate();
+        }
+        else {
+          return new ResponseEntity<>("FAILURE", HttpStatus.BAD_REQUEST);
+        }
+      } catch(Exception e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    } catch(JsonProcessingException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<>("", HttpStatus.OK);
+  }
+
+  @PostMapping(path = "/login/attempt", consumes = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> requestLogin(@RequestBody String data) {
+    ObjectMapper objectMapper = new ObjectMapper();
+    try {
+      User loginAttempt = objectMapper.readValue(data, User.class);
+      try(Connection dbConnection = dataSource.getConnection()) {
+        PreparedStatement pstmt = dbConnection.prepareStatement("SELECT password FROM civic_duty_user WHERE email = ?");
+        pstmt.setString(1, loginAttempt.getEmail());
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.isBeforeFirst()) {
+          rs.next();
+          if (!rs.getString("password").equals(loginAttempt.getPassword())) {
+            return new ResponseEntity<>("FAILURE", HttpStatus.BAD_REQUEST);
+          }
+        }
+        else {
+          return new ResponseEntity<>("FAILURE", HttpStatus.BAD_REQUEST);
+        }
+      } catch(Exception e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    } catch(JsonProcessingException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<>("", HttpStatus.OK);
+  }
+
   @ResponseBody
   @RequestMapping(path = "/user/{id}/wellness-report", produces = "application/json; charset=UTF-8")
   ResponseEntity<?> userWellnessReport(@PathVariable Integer id) {
@@ -87,9 +160,9 @@ public class Main {
   public ResponseEntity<?> createSurvey(@RequestBody String data) {
     ObjectMapper objectMapper = new ObjectMapper();
     objectMapper.setTimeZone(TimeZone.getDefault());
-    try{
+    try {
       Survey survey = objectMapper.readValue(data, Survey.class);
-      try(Connection dbConnection = dataSource.getConnection()){
+      try(Connection dbConnection = dataSource.getConnection()) {
         PreparedStatement pstmt = dbConnection.prepareStatement("INSERT INTO survey (user_id, survey_date, "
         + "emotional_perf, spiritual_perf, intellectual_perf, physical_perf, environmental_perf, financial_perf, social_perf, occupational_perf)"
         + "VALUES (?,?,?,?,?,?,?,?,?,?)");
