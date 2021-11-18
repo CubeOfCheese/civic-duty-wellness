@@ -15,8 +15,10 @@ export class App extends Component {
     super();
     this.state = {
       authenticated: false,
+      lastSurveyTaken: '',
     };
     this.changeAuth = this.changeAuth.bind(this);
+    this.changeSurv = this.changeSurv.bind(this);
   }
 
   changeAuth() {
@@ -24,8 +26,15 @@ export class App extends Component {
     this.setState({ authenticated: !authenticated });
   }
 
+  changeSurv() {
+    const date = new Date();
+    const stringDate = date.toDateString();
+    this.setState({ lastSurveyTaken: stringDate });
+  }
+
   render() {
     const { authenticated } = this.state;
+    const { lastSurveyTaken } = this.state;
     return (
       <div>
         <Router>
@@ -50,7 +59,12 @@ export class App extends Component {
                 : <Login changeAuth={this.changeAuth} authenticated={authenticated} />}
             </Route>
             <Route path="/survey">
-              {authenticated ? <UserWellnessSurvey />
+              {authenticated ? (
+                <UserWellnessSurvey
+                  changeSurv={this.changeSurv}
+                  lastSurveyTaken={lastSurveyTaken}
+                />
+              )
                 : <Login changeAuth={this.changeAuth} authenticated={authenticated} />}
             </Route>
             <Route path="/login">

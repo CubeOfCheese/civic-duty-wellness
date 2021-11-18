@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
+import { Redirect } from 'react-router';
 
-export default class UserWellnessSurvey extends Component {
+export default class UserWellnessSurveyPage extends Component {
   constructor() {
     super();
     this.state = {
@@ -42,6 +44,7 @@ export default class UserWellnessSurvey extends Component {
   }
 
   handleSubmit() {
+    const { changeSurv } = this.props;
     const url = '/survey/add';
     const { surveyInfo } = this.state;
     const request = {
@@ -50,6 +53,11 @@ export default class UserWellnessSurvey extends Component {
       body: JSON.stringify(surveyInfo),
     };
     fetch(url, request)
+      .then((response) => {
+        if (response.ok) {
+          changeSurv();
+        }
+      })
       .catch((error) => {
         // eslint-disable-next-line no-console
         console.error('Error:', error);
@@ -57,6 +65,12 @@ export default class UserWellnessSurvey extends Component {
   }
 
   render() {
+    const { lastSurveyTaken } = this.props;
+    const date = new Date();
+    const todaysDate = date.toDateString();
+    if (lastSurveyTaken === todaysDate) {
+      return (<Redirect to="/" />);
+    }
     return (
       <div>
         <h2 className="bg-primary text-center text-light mb-5 p-3">Wellness Survey</h2>
@@ -216,3 +230,8 @@ export default class UserWellnessSurvey extends Component {
     );
   }
 }
+
+UserWellnessSurveyPage.propTypes = {
+  changeSurv: PropTypes.func.isRequired,
+  lastSurveyTaken: PropTypes.string.isRequired,
+};

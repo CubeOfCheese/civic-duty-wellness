@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Radar } from 'react-chartjs-2';
 
-export default class Dashboard extends Component {
+export default class DashboardPage extends Component {
   constructor() {
     super();
     this.state = {
