@@ -57,7 +57,7 @@ export class App extends Component {
               <Login changeAuth={this.changeAuth} authenticated={authenticated} />
             </Route>
             <Route path="/registration">
-              <Registration />
+              <Registration changeAuth={this.changeAuth} authenticated={authenticated} />
             </Route>
           </Switch>
         </Router>

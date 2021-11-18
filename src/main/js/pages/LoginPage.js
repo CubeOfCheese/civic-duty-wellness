@@ -48,6 +48,7 @@ export default class LoginPage extends Component {
         }
       })
       .catch((error) => {
+        // eslint-disable-next-line no-console
         console.error('Error:', error);
       });
   }
@@ -65,11 +66,21 @@ export default class LoginPage extends Component {
           <form>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Email Address" name="email" onChange={(e) => this.handleEntryChange(e)} />
+              <Form.Control
+                type="email"
+                placeholder="Email Address"
+                name="email"
+                onChange={(e) => this.handleEntryChange(e)}
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" name="password" onChange={(e) => this.handleEntryChange(e)} />
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                name="password"
+                onChange={(e) => this.handleEntryChange(e)}
+              />
             </Form.Group>
             {invalid ? (
               <div className="alert alert-danger" role="alert">
@@ -77,7 +88,13 @@ export default class LoginPage extends Component {
               </div>
             )
               : null}
-            <button type="button" className="btn btn-outline-light mx-3" onClick={this.handleSubmit}>Login</button>
+            <button
+              type="button"
+              className="btn btn-outline-light mx-3"
+              onClick={this.handleSubmit}
+            >
+              Login
+            </button>
             <br />
             <p>
               Don&apos;t have an account?
