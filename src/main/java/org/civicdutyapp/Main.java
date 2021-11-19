@@ -136,6 +136,34 @@ public class Main {
     return new ResponseEntity<>("", HttpStatus.OK);
   }
 
+  @PostMapping(path = "/user/{id}/importance/update", consumes = MediaType.APPLICATION_JSON_VALUE)
+  ResponseEntity<?> updateImportance(@PathVariable Integer id, @RequestBody String data) {
+    ObjectMapper objectMapper = new ObjectMapper();
+    try {
+      User importance = objectMapper.readValue(data, User.class);
+      try(Connection dbConnection = dataSource.getConnection()) {
+        PreparedStatement pstmt = dbConnection.prepareStatement("UPDATE civic_duty_user SET"
+        + "(emotional_imp, spiritual_imp, intellectual_imp, physical_imp, environmental_imp, financial_imp,"
+        + "social_imp, occupational_imp) = (?,?,?,?,?,?,?,?) WHERE user_id = ?");
+        pstmt.setInt(1, importance.getEmotionalImp());
+        pstmt.setInt(2, importance.getSpiritualImp());
+        pstmt.setInt(3, importance.getIntellectualImp());
+        pstmt.setInt(4, importance.getPhysicalImp());
+        pstmt.setInt(5, importance.getEnvironmentalImp());
+        pstmt.setInt(6, importance.getFinancialImp());
+        pstmt.setInt(7, importance.getSocialImp());
+        pstmt.setInt(8, importance.getOccupationalImp());
+        pstmt.setInt(9, id);
+        pstmt.executeUpdate();
+      } catch(Exception e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    } catch(JsonProcessingException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<>("", HttpStatus.OK);
+  }
+
   @ResponseBody
   @RequestMapping(path = "/user/{id}/wellness-report", produces = "application/json; charset=UTF-8")
   ResponseEntity<?> userWellnessReport(@PathVariable Integer id) {
@@ -156,7 +184,7 @@ public class Main {
     return new ResponseEntity<>(report, HttpStatus.OK);
   }
 
-  @PostMapping(path = "/survey/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(path = "/survey/add", consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> createSurvey(@RequestBody String data) {
     ObjectMapper objectMapper = new ObjectMapper();
     objectMapper.setTimeZone(TimeZone.getDefault());
