@@ -5,6 +5,11 @@ module.exports = {
   cache: true,
   mode: 'development',
   devtool: 'eval-source-map',
+  resolve: {
+    fallback: {
+      crypto: false,
+    },
+  },
   output: {
     path: path.resolve(__dirname, './src/main/resources/static/built'),
     filename: 'bundle.js',

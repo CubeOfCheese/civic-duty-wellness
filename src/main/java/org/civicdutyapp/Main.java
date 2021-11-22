@@ -77,12 +77,12 @@ public class Main {
           PreparedStatement pstmt = dbConnection.prepareStatement("INSERT INTO civic_duty_user "
           + "(user_id, fname, lname, user_type, email, password, phone_number, zip_code, dob, gender, ethnicity, "
           + "emotional_imp, spiritual_imp, intellectual_imp, physical_imp, environmental_imp, financial_imp, "
-          + "social_imp, occupational_imp) VALUES (DEFAULT,?,?,'u',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+          + "social_imp, occupational_imp, salt) VALUES (DEFAULT,?,?,'u',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
           pstmt.setString(1, registrationAttempt.getFname());
           pstmt.setString(2, registrationAttempt.getLname());
           pstmt.setString(3, registrationAttempt.getEmail());
           pstmt.setString(4, registrationAttempt.getPassword());
-          pstmt.setInt(5, registrationAttempt.getPhone());
+          pstmt.setString(5, registrationAttempt.getPhone());
           pstmt.setInt(6, registrationAttempt.getZip());
           pstmt.setDate(7, registrationAttempt.getDOB());
           pstmt.setString(8, registrationAttempt.getGender());
@@ -95,6 +95,7 @@ public class Main {
           pstmt.setInt(15, registrationAttempt.getFinancialImp());
           pstmt.setInt(16, registrationAttempt.getSocialImp());
           pstmt.setInt(17, registrationAttempt.getOccupationalImp());
+          pstmt.setString(18, registrationAttempt.getSalt());
           pstmt.executeUpdate();
         }
         else {
@@ -165,6 +166,33 @@ public class Main {
   }
 
   @ResponseBody
+  @PostMapping(path = "/user/salt", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json; charset=UTF-8")
+  ResponseEntity<?> userEmail(@RequestBody String data) {
+    ObjectMapper objectMapper = new ObjectMapper();
+    User email;
+    try{
+      email = objectMapper.readValue(data, User.class);
+      try(Connection dbConnection = dataSource.getConnection()) {
+        PreparedStatement pstmt = dbConnection.prepareStatement("SELECT salt FROM civic_duty_user WHERE email = ?");
+        pstmt.setString(1, email.getEmail());
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.isBeforeFirst()) {
+          rs.next();
+          email.setSalt(rs.getString("salt"));
+        }
+        else {
+          return new ResponseEntity<>("FAILURE", HttpStatus.BAD_REQUEST);
+        }
+      } catch(Exception e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    } catch(JsonProcessingException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<>(email, HttpStatus.OK);
+    }
+
+  @ResponseBody
   @RequestMapping(path = "/user/{id}/wellness-report", produces = "application/json; charset=UTF-8")
   ResponseEntity<?> userWellnessReport(@PathVariable Integer id) {
     WellnessReport report;
@@ -192,8 +220,8 @@ public class Main {
       Survey survey = objectMapper.readValue(data, Survey.class);
       try(Connection dbConnection = dataSource.getConnection()) {
         PreparedStatement pstmt = dbConnection.prepareStatement("INSERT INTO survey (user_id, survey_date, "
-        + "emotional_perf, spiritual_perf, intellectual_perf, physical_perf, environmental_perf, financial_perf, social_perf, occupational_perf)"
-        + "VALUES (?,?,?,?,?,?,?,?,?,?)");
+        + "emotional_perf, spiritual_perf, intellectual_perf, physical_perf, environmental_perf, financial_perf, social_perf, occupational_perf, salt)"
+        + "VALUES (?,?,?,?,?,?,?,?,?,?,?)");
         pstmt.setInt(1, survey.getUserID());
         pstmt.setDate(2, survey.getSurveyDate());
         pstmt.setInt(3, survey.getEmotionalPerf());

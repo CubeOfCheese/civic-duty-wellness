@@ -9,7 +9,8 @@ public class User {
     private char userType;
     private String email;
     private String password;
-    private int phone;
+    private String phone;
+    private String salt;
     private int zip;
     private Date dob;
     private String gender;
@@ -26,9 +27,9 @@ public class User {
     public User() {}
 
     public User(long userId, String fname, String lname, char userType,
-    String email, String password, int phone, int zip, Date dob,
+    String email, String password, String phone, int zip, Date dob,
     String gender, String ethnicity, int emImp, int spiImp,
-    int intImp, int phyImp, int envImp, int finImp, int socImp, int occuImp) {
+    int intImp, int phyImp, int envImp, int finImp, int socImp, int occuImp, String salt) {
         this.userId = userId;
         this.fname = fname;
         this.lname = lname;
@@ -48,6 +49,7 @@ public class User {
         this.financialImp = finImp;
         this.socialImp = socImp;
         this.occupationalImp = occuImp;
+        this.salt = salt;
     }
 
     public Long getUserID() {
@@ -86,10 +88,10 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
     public int getZip() {
@@ -164,6 +166,12 @@ public class User {
     public void setOccupationalImp(int occupationalImp) {
         this.occupationalImp = occupationalImp;
     }
+    public String getSalt() {
+      return salt;
+    }
+    public void setSalt(String salt) {
+      this.salt = salt;
+    }
 
     @Override
     public String toString() {
@@ -185,6 +193,7 @@ public class User {
                 ", financialImp='" + financialImp + '\'' +
                 ", socialImp='" + socialImp + '\'' +
                 ", occupationalImp='" + occupationalImp + '\'' +
+                ", salt= '" + salt + '\'' +
                 '}';
     }
 }
