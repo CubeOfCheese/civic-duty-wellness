@@ -3,6 +3,9 @@ import { NavLink } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 import { Redirect } from 'react-router';
 import { PropTypes } from 'prop-types';
+import bcrypt from 'bcryptjs';
+
+const salt = bcrypt.genSaltSync(10);
 
 export class RegistrationPage extends Component {
   constructor() {
@@ -21,6 +24,7 @@ export class RegistrationPage extends Component {
         dob: '',
         gender: '',
         ethnicity: '',
+        salt: '',
         emotionalImp: 5,
         intellectualImp: 5,
         socialImp: 5,
@@ -98,6 +102,10 @@ export class RegistrationPage extends Component {
       missing: false,
     });
     if (!passwordMismatch) {
+      registerInfo.salt = salt;
+      let hashedPword = '';
+      hashedPword = bcrypt.hashSync(password, salt);
+      registerInfo.password = String(hashedPword);
       const url = '/registration/attempt';
       const request = {
         method: 'POST',
@@ -237,7 +245,7 @@ export class RegistrationPage extends Component {
                     type="phone"
                     placeholder="Phone"
                     name="phone"
-                    onChange={(e) => this.handleNumEntryChange(e)}
+                    onChange={(e) => this.handleTextEntryChange(e)}
                   />
                 </Form.Group>
               </form>

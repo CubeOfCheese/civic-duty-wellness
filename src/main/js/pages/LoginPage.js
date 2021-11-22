@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 import { Redirect } from 'react-router';
 import { PropTypes } from 'prop-types';
+import bcrypt from 'bcryptjs';
 
 export default class LoginPage extends Component {
   constructor() {
@@ -16,6 +17,7 @@ export default class LoginPage extends Component {
     };
     this.handleEntryChange = this.handleEntryChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.getSalt = this.getSalt.bind(this);
   }
 
   handleEntryChange(event) {
@@ -30,25 +32,55 @@ export default class LoginPage extends Component {
 
   handleSubmit() {
     const { changeAuth } = this.props;
-    const url = '/login/attempt';
     const { loginInfo } = this.state;
-    const request = {
-      method: 'POST',
-      headers: ({ 'Content-Type': 'application/json' }),
-      body: JSON.stringify(loginInfo),
-    };
-    fetch(url, request)
-      .then((response) => {
-        if (response.ok) {
-          changeAuth();
-        } else if (!response.ok) {
-          this.setState({
-            invalid: true,
+    const { password } = loginInfo;
+    const url = '/login/attempt';
+
+    this.getSalt()
+      .then((salt) => {
+        const hashedPassword = bcrypt.hashSync(password, salt);
+        loginInfo.password = hashedPassword;
+        const request = {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(loginInfo),
+        };
+        fetch(url, request)
+          .then((response) => {
+            if (response.ok) {
+              changeAuth();
+              return;
+            }
+            this.setState({
+              invalid: true,
+            });
+          })
+          .catch((error) => {
+            // eslint-disable-next-line no-console
+            console.error('Error:', error);
           });
-        }
-      })
-      .catch((error) => {
-        // eslint-disable-next-line no-console
+      })// eslint-disable-next-line no-console
+      .catch((error) => console.error(error));
+  }
+
+  getSalt() {
+    const getUrl = '/user/salt';
+    const { loginInfo } = this.state;
+    const getRequest = {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: loginInfo.email }),
+    };
+    return fetch(getUrl, getRequest)
+      .then((response) => response.json())
+      .then((obj) => obj.salt)
+      .catch((error) => { // eslint-disable-next-line no-console
         console.error('Error:', error);
       });
   }
