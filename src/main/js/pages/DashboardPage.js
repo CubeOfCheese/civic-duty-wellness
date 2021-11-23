@@ -5,14 +5,14 @@ export default class Dashboard extends Component {
   constructor() {
     super();
     this.state = {
-      physical: null,
-      emotional: null,
-      intellectual: null,
-      social: null,
-      spiritual: null,
-      environmental: null,
-      occupational: null,
-      financial: null,
+      emotionalPerf: null,
+      spiritualPerf: null,
+      intellectualPerf: null,
+      physicalPerf: null,
+      environmentalPerf: null,
+      financialPerf: null,
+      socialPerf: null,
+      occupationalPerf: null,
     };
   }
 
@@ -21,36 +21,44 @@ export default class Dashboard extends Component {
     fetch('/user/1/wellness-report')
       .then((response) => response.json())
       .then((obj) => this.setState({
-        physical: obj.physical,
-        emotional: obj.emotional,
-        intellectual: obj.intellectual,
-        social: obj.social,
-        spiritual: obj.spiritual,
-        environmental: obj.environmental,
-        occupational: obj.occupational,
-        financial: obj.financial,
+        emotionalPerf: obj.emotionalPerf,
+        spiritualPerf: obj.spiritualPerf,
+        intellectualPerf: obj.intellectualPerf,
+        physicalPerf: obj.physicalPerf,
+        environmentalPerf: obj.environmentalPerf,
+        financialPerf: obj.financialPerf,
+        socialPerf: obj.socialPerf,
+        occupationalPerf: obj.occupationalPerf,
       }));
   }
 
   render() {
     const {
-      physical, emotional, intellectual, social, spiritual, environmental, occupational, financial,
+      emotionalPerf,
+      intellectualPerf,
+      socialPerf,
+      spiritualPerf,
+      environmentalPerf,
+      occupationalPerf,
+      financialPerf,
+      physicalPerf,
     } = this.state;
     const data = {
-      labels: ['Physical', 'Emotional', 'Intellectual', 'Social', 'Spiritual', 'Environmental', 'Occupational', 'Financial'],
+      labels: ['Emotional', 'Intellectual', 'Social', 'Spiritual', 'Environmental', 'Occupational', 'Financial', 'Physical'],
       datasets: [{
         label: 'My Wellness',
         backgroundColor: 'rgba(0,75,58,0.2)',
         borderColor: 'rgba(0,75,58,0.5)',
         data: [
-          physical,
-          emotional,
-          intellectual,
-          social,
-          spiritual,
-          environmental,
-          occupational,
-          financial],
+          emotionalPerf,
+          intellectualPerf,
+          socialPerf,
+          spiritualPerf,
+          environmentalPerf,
+          occupationalPerf,
+          financialPerf,
+          physicalPerf,
+        ],
       }],
     };
     const options = {
@@ -63,8 +71,30 @@ export default class Dashboard extends Component {
             size: 16,
           },
         },
-        ticks: {
-          backdropColor: 'rgba(0,0,0,0)',
+      },
+      scales: {
+        r: {
+          angleLines: {
+            color: 'rgba(255,255,255, 0.2',
+          },
+          grid: {
+            color: 'rgba(255,255,255, 0.2',
+          },
+          pointLabels: {
+            color: 'white',
+          },
+          ticks: {
+            color: 'white',
+            backdropColor: 'rgba(0,0,0,0)',
+          },
+        },
+      },
+      plugins: {
+        legend: {
+          display: true,
+          labels: {
+            color: 'white',
+          },
         },
       },
     };
@@ -72,7 +102,7 @@ export default class Dashboard extends Component {
       <div>
         <h2 className="bg-primary text-center text-light mb-5 p-3">Profile</h2>
         <div className="bg-secondary p-5 mx-auto my-5 w-75">
-          <div className="bg-light" style={{ height: '600px', width: '600px', paddingLeft: '115px' }}>
+          <div className="p-5" style={{ height: '600px', width: '600px', paddingLeft: '115px' }}>
             <Radar data={data} options={options} />
           </div>
         </div>

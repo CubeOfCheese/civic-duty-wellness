@@ -15,6 +15,8 @@ public class Survey {
     private int socialPerf;
     private int occupationalPerf;
 
+    public Survey() {}
+
     public Survey(long surveyId, int userId, Date date,
     int emPerf, int spiPerf, int intPerf, int phyPerf, int envPerf,
     int finPerf, int socPerf, int occuPerf) {
