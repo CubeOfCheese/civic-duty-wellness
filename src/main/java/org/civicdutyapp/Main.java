@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -166,6 +167,40 @@ public class Main {
   }
 
   @ResponseBody
+  @GetMapping(path = "/user/{id}", produces = "application/json; charset=UTF-8")
+  ResponseEntity<?> user(@PathVariable Integer id) {
+    User user = new User();
+    try(Connection dbConnection = dataSource.getConnection()) {
+      PreparedStatement pstmt = dbConnection.prepareStatement("SELECT * FROM civic_duty_user WHERE user_id = ?");
+      pstmt.setInt(1, id);
+      ResultSet rs = pstmt.executeQuery();
+      rs.next();
+      user.setUserID(rs.getLong("user_id"));
+      user.setFname(rs.getString("fname"));
+      user.setLname(rs.getString("lname"));
+      user.setUserType(rs.getString("user_type").charAt(0));
+      user.setEmail(rs.getString("email"));
+      user.setPhone(rs.getString("phone_number"));
+      user.setZip(rs.getInt("zip_code"));
+      user.setDOB(rs.getDate("dob"));
+      user.setGender(rs.getString("gender"));
+      user.setEthnicity(rs.getString("ethnicity"));
+      user.setEmotionalImp(rs.getInt("emotional_imp"));
+      user.setSpiritualImp(rs.getInt("spiritual_imp"));
+      user.setIntellectualImp(rs.getInt("intellectual_imp"));
+      user.setPhysicalImp(rs.getInt("physical_imp"));
+      user.setEnvironmentalImp(rs.getInt("environmental_imp"));
+      user.setFinancialImp(rs.getInt("financial_imp"));
+      user.setSocialImp(rs.getInt("social_imp"));
+      user.setOccupationalImp(rs.getInt("occupational_imp"));
+      user.setEmotionalImp(rs.getInt("emotional_imp"));
+    } catch(Exception e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return new ResponseEntity<>(user, HttpStatus.OK);
+  }
+
+  @ResponseBody
   @PostMapping(path = "/user/salt", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json; charset=UTF-8")
   ResponseEntity<?> userEmail(@RequestBody String data) {
     ObjectMapper objectMapper = new ObjectMapper();
@@ -190,7 +225,7 @@ public class Main {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
     return new ResponseEntity<>(email, HttpStatus.OK);
-    }
+  }
 
   @ResponseBody
   @RequestMapping(path = "/user/{id}/wellness-report", produces = "application/json; charset=UTF-8")
@@ -220,8 +255,8 @@ public class Main {
       Survey survey = objectMapper.readValue(data, Survey.class);
       try(Connection dbConnection = dataSource.getConnection()) {
         PreparedStatement pstmt = dbConnection.prepareStatement("INSERT INTO survey (user_id, survey_date, "
-        + "emotional_perf, spiritual_perf, intellectual_perf, physical_perf, environmental_perf, financial_perf, social_perf, occupational_perf, salt)"
-        + "VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+        + "emotional_perf, spiritual_perf, intellectual_perf, physical_perf, environmental_perf, financial_perf, social_perf, occupational_perf)"
+        + "VALUES (?,?,?,?,?,?,?,?,?,?)");
         pstmt.setInt(1, survey.getUserID());
         pstmt.setDate(2, survey.getSurveyDate());
         pstmt.setInt(3, survey.getEmotionalPerf());
