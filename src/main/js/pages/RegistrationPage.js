@@ -274,15 +274,6 @@ export class RegistrationPage extends Component {
             </div>
           </div>
         </div>
-        <div className="row mt-5 px-5">
-          <div className="bg-secondary text-center p-4">
-            <button type="button" className="text-center btn btn-outline-light w-25 mx-auto my-5">Register</button>
-            <p className="text-center">
-              Already have an account?
-              <NavLink to="/login"> Sign in</NavLink>
-            </p>
-          </div>
-        </div>
       </div>
     );
   }
