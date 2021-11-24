@@ -50,6 +50,9 @@ export default class UserWellnessSurvey extends Component {
       body: JSON.stringify(surveyInfo),
     };
     fetch(url, request)
+      .then(() => {
+        window.location.href = '/';
+      })
       .catch((error) => {
         // eslint-disable-next-line no-console
         console.error('Error:', error);
