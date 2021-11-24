@@ -25,6 +25,10 @@ $ nvm install lts
 $ nvm use 14.18.1
 $ npm install
 ```
+## Run After Each Pull
+```sh
+$ npm install
+```
 
 ## Running Locally
 
