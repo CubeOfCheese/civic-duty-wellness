@@ -1,12 +1,8 @@
 package org.civicdutyapp.service;
 
-import java.util.List;
-
-import org.civicdutyapp.User;
+import org.civicdutyapp.model.User;
 
 public interface UserService {
 
-    public List<User> auth(String name, String password);
-
-    public List<User> getUsers();
+    public User auth(String email, String password);
 }

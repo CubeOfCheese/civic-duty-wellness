@@ -1,7 +1,11 @@
-package org.civicdutyapp;
+package org.civicdutyapp.model;
 
-public class WellnessReport {
+import java.sql.Date;
+
+public class Survey {
+    private Long surveyId;
     private int userId;
+    private Date surveyDate;
     private int emotionalPerf;
     private int spiritualPerf;
     private int intellectualPerf;
@@ -11,10 +15,14 @@ public class WellnessReport {
     private int socialPerf;
     private int occupationalPerf;
 
-    public WellnessReport(int userId,
+    public Survey() {}
+
+    public Survey(long surveyId, int userId, Date date,
     int emPerf, int spiPerf, int intPerf, int phyPerf, int envPerf,
     int finPerf, int socPerf, int occuPerf) {
+        this.surveyId  = surveyId;
         this.userId = userId;
+        this.surveyDate = date;
         this.emotionalPerf = emPerf;
         this.spiritualPerf = spiPerf;
         this.intellectualPerf = intPerf;
@@ -25,11 +33,38 @@ public class WellnessReport {
         this.occupationalPerf = occuPerf;
     }
 
-    public int getUserId() {
+    public Survey(int userId, Date date,
+    int emPerf, int spiPerf, int intPerf, int phyPerf, int envPerf,
+    int finPerf, int socPerf, int occuPerf) {
+        this.userId = userId;
+        this.surveyDate = date;
+        this.emotionalPerf = emPerf;
+        this.spiritualPerf = spiPerf;
+        this.intellectualPerf = intPerf;
+        this.physicalPerf = phyPerf;
+        this.environmentalPerf = envPerf;
+        this.financialPerf = finPerf;
+        this.socialPerf = socPerf;
+        this.occupationalPerf = occuPerf;
+    }
+
+    public Long getSurveyID() {
+        return surveyId;
+    }
+    public void setSurveyID(Long surveyId) {
+        this.surveyId = surveyId;
+    }
+    public int getUserID() {
         return userId;
     }
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+    public Date getSurveyDate() {
+        return surveyDate;
+    }
+    public void setSurveyDate(Date surveyDate) {
+        this.surveyDate = surveyDate;
     }
     public int getEmotionalPerf() {
         return emotionalPerf;
@@ -82,16 +117,17 @@ public class WellnessReport {
 
     @Override
     public String toString() {
-        return "Performance Report {" +
-              "userId='" + userId + '\'' +
-              ", emotionalPerf=" + emotionalPerf +
-              ", spiritualPerf='" + spiritualPerf + '\'' +
-              ", intellectualPerf='" + intellectualPerf + '\'' +
-              ", physicalPerf='" + physicalPerf + '\'' +
-              ", environmentalPerf='" + environmentalPerf + '\'' +
-              ", financialPerf='" + financialPerf + '\'' +
-              ", socialPerf='" + socialPerf + '\'' +
-              ", occupationalPerf='" + occupationalPerf + '\'' +
-              '}';
+        return "Survey{" +
+                "userId='" + userId + '\'' +
+                ", surveyDate='" + surveyDate + '\'' +
+                ", emotionalPerf=" + emotionalPerf +
+                ", spiritualPerf='" + spiritualPerf + '\'' +
+                ", intellectualPerf='" + intellectualPerf + '\'' +
+                ", physicalPerf='" + physicalPerf + '\'' +
+                ", environmentalPerf='" + environmentalPerf + '\'' +
+                ", financialPerf='" + financialPerf + '\'' +
+                ", socialPerf='" + socialPerf + '\'' +
+                ", occupationalPerf='" + occupationalPerf + '\'' +
+                '}';
     }
 }

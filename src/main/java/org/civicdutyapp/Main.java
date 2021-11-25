@@ -18,6 +18,10 @@ package org.civicdutyapp;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+
+import org.civicdutyapp.model.Survey;
+import org.civicdutyapp.model.User;
+import org.civicdutyapp.model.WellnessReport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -69,15 +73,15 @@ public class Main {
     objectMapper.setTimeZone(TimeZone.getDefault());
     try {
       User registrationAttempt = objectMapper.readValue(data, User.class);
-      try(Connection dbConnection = dataSource.getConnection()) {
+      try (Connection dbConnection = dataSource.getConnection()) {
         PreparedStatement check = dbConnection.prepareStatement("SELECT * FROM civic_duty_user WHERE email = ?");
         check.setString(1, registrationAttempt.getEmail());
         ResultSet rs = check.executeQuery();
         if (!rs.isBeforeFirst()) {
           PreparedStatement pstmt = dbConnection.prepareStatement("INSERT INTO civic_duty_user "
-          + "(user_id, fname, lname, user_type, email, password, phone_number, zip_code, dob, gender, ethnicity, "
-          + "emotional_imp, spiritual_imp, intellectual_imp, physical_imp, environmental_imp, financial_imp, "
-          + "social_imp, occupational_imp) VALUES (DEFAULT,?,?,'u',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+              + "(user_id, fname, lname, user_type, email, password, phone_number, zip_code, dob, gender, ethnicity, "
+              + "emotional_imp, spiritual_imp, intellectual_imp, physical_imp, environmental_imp, financial_imp, "
+              + "social_imp, occupational_imp) VALUES (DEFAULT,?,?,'u',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
           pstmt.setString(1, registrationAttempt.getFname());
           pstmt.setString(2, registrationAttempt.getLname());
           pstmt.setString(3, registrationAttempt.getEmail());
@@ -96,14 +100,13 @@ public class Main {
           pstmt.setInt(16, registrationAttempt.getSocialImp());
           pstmt.setInt(17, registrationAttempt.getOccupationalImp());
           pstmt.executeUpdate();
-        }
-        else {
+        } else {
           return new ResponseEntity<>("FAILURE", HttpStatus.BAD_REQUEST);
         }
-      } catch(Exception e) {
+      } catch (Exception e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
       }
-    } catch(JsonProcessingException e) {
+    } catch (JsonProcessingException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
     return new ResponseEntity<>("", HttpStatus.OK);
@@ -114,23 +117,24 @@ public class Main {
     ObjectMapper objectMapper = new ObjectMapper();
     try {
       User loginAttempt = objectMapper.readValue(data, User.class);
-      try(Connection dbConnection = dataSource.getConnection()) {
+      try (Connection dbConnection = dataSource.getConnection()) {
         PreparedStatement pstmt = dbConnection.prepareStatement("SELECT password FROM civic_duty_user WHERE email = ?");
         pstmt.setString(1, loginAttempt.getEmail());
         ResultSet rs = pstmt.executeQuery();
         if (rs.isBeforeFirst()) {
           rs.next();
           if (!rs.getString("password").equals(loginAttempt.getPassword())) {
+            System.out.println("FAILURE");
             return new ResponseEntity<>("FAILURE", HttpStatus.BAD_REQUEST);
           }
-        }
-        else {
+        } else {
+          System.out.println("FAILURE Bad Request");
           return new ResponseEntity<>("FAILURE", HttpStatus.BAD_REQUEST);
         }
-      } catch(Exception e) {
+      } catch (Exception e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
       }
-    } catch(JsonProcessingException e) {
+    } catch (JsonProcessingException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
     return new ResponseEntity<>("", HttpStatus.OK);
@@ -140,17 +144,18 @@ public class Main {
   @RequestMapping(path = "/user/{id}/wellness-report", produces = "application/json; charset=UTF-8")
   ResponseEntity<?> userWellnessReport(@PathVariable Integer id) {
     WellnessReport report;
-    try(Connection dbConnection = dataSource.getConnection()) {
-      PreparedStatement pstmt = dbConnection.prepareStatement("SELECT * FROM survey WHERE user_id = ? AND survey_date = "
-      + "(SELECT MAX(survey_date) FROM survey WHERE user_id = ?)");
+    try (Connection dbConnection = dataSource.getConnection()) {
+      PreparedStatement pstmt = dbConnection
+          .prepareStatement("SELECT * FROM survey WHERE user_id = ? AND survey_date = "
+              + "(SELECT MAX(survey_date) FROM survey WHERE user_id = ?)");
       pstmt.setInt(1, id);
       pstmt.setInt(2, id);
       ResultSet rs = pstmt.executeQuery();
       rs.next();
       report = new WellnessReport(id, rs.getInt("emotional_perf"), rs.getInt("spiritual_perf"),
-      rs.getInt("intellectual_perf"), rs.getInt("physical_perf"), rs.getInt("environmental_perf"),
-      rs.getInt("financial_perf"), rs.getInt("social_perf"), rs.getInt("occupational_perf"));
-    } catch(Exception e) {
+          rs.getInt("intellectual_perf"), rs.getInt("physical_perf"), rs.getInt("environmental_perf"),
+          rs.getInt("financial_perf"), rs.getInt("social_perf"), rs.getInt("occupational_perf"));
+    } catch (Exception e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return new ResponseEntity<>(report, HttpStatus.OK);
@@ -162,10 +167,10 @@ public class Main {
     objectMapper.setTimeZone(TimeZone.getDefault());
     try {
       Survey survey = objectMapper.readValue(data, Survey.class);
-      try(Connection dbConnection = dataSource.getConnection()) {
+      try (Connection dbConnection = dataSource.getConnection()) {
         PreparedStatement pstmt = dbConnection.prepareStatement("INSERT INTO survey (user_id, survey_date, "
-        + "emotional_perf, spiritual_perf, intellectual_perf, physical_perf, environmental_perf, financial_perf, social_perf, occupational_perf)"
-        + "VALUES (?,?,?,?,?,?,?,?,?,?)");
+            + "emotional_perf, spiritual_perf, intellectual_perf, physical_perf, environmental_perf, financial_perf, social_perf, occupational_perf)"
+            + "VALUES (?,?,?,?,?,?,?,?,?,?)");
         pstmt.setInt(1, survey.getUserID());
         pstmt.setDate(2, survey.getSurveyDate());
         pstmt.setInt(3, survey.getEmotionalPerf());
@@ -177,10 +182,10 @@ public class Main {
         pstmt.setInt(9, survey.getSocialPerf());
         pstmt.setInt(10, survey.getOccupationalPerf());
         pstmt.executeUpdate();
-      } catch(Exception e) {
+      } catch (Exception e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
       }
-    } catch(JsonProcessingException e) {
+    } catch (JsonProcessingException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
     return new ResponseEntity<>("", HttpStatus.OK);

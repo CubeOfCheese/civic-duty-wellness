@@ -30,8 +30,10 @@ public class SecurityConfigurer {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http.csrf().disable().authorizeRequests().antMatchers("/api/v1/users/auth").permitAll().anyRequest()
-                    .authenticated().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            http.csrf().disable().authorizeRequests().antMatchers("/").permitAll().antMatchers("/login").permitAll()
+                    .antMatchers("/login/attempt").permitAll().antMatchers("/registration").permitAll()
+                    .antMatchers("/registration/attempt").permitAll().anyRequest().authenticated().and().sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
             http.addFilterBefore(jwtSecurityFilter, UsernamePasswordAuthenticationFilter.class);
         }

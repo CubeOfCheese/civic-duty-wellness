@@ -1,10 +1,10 @@
-package org.civicdutyapp;
+package org.civicdutyapp.model;
 
 import java.sql.Date;
 
 public class User {
     private Long userId;
-    private String fname;
+    private String fname;  
     private String lname;
     private char userType;
     private String email;
@@ -23,7 +23,13 @@ public class User {
     private int socialImp;
     private int occupationalImp;
 
-    public User() {}
+    public User() {
+    }
+    
+    public User (String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 
     public User(long userId, String fname, String lname, char userType,
     String email, String password, int phone, int zip, Date dob,

@@ -1,30 +1,41 @@
 package org.civicdutyapp.service.implementation;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 
-import org.civicdutyapp.User;
+import javax.sql.DataSource;
+
+import org.civicdutyapp.model.User;
 import org.civicdutyapp.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Override
-    public List<User> auth(String name, String password) {
-        // Compare this information (name and password) with information from the
-        // database.
-        /*
-         * if(user.getName.equal(name) && user.getPassword.equals(password)){
-         * 
-         * }
-         */
-        return null;
-    }
+    @Autowired
+    private DataSource dataSource;
 
     @Override
-    public List<User> getUsers() {
-        // Fetch all the users from the database.
-        return null;
+    public User auth(String email, String password) {
+        User u = null;
+
+        try (Connection dbConnection = dataSource.getConnection()) {
+
+            PreparedStatement check = dbConnection.prepareStatement("SELECT * FROM civic_duty_user WHERE email = ?");
+            check.setString(1, email);
+            ResultSet result = check.executeQuery();
+
+            while (result.next()) {
+                u = new User(result.getString("email"), result.getString("password"));
+            }
+            return u;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
 }
