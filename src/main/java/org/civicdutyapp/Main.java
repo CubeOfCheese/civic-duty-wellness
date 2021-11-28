@@ -230,7 +230,7 @@ public class Main {
   @ResponseBody
   @RequestMapping(path = "/user/{id}/wellness-report", produces = "application/json; charset=UTF-8")
   ResponseEntity<?> userWellnessReport(@PathVariable Integer id) {
-    WellnessReport report;
+    Survey report;
     try(Connection dbConnection = dataSource.getConnection()) {
       PreparedStatement pstmt = dbConnection.prepareStatement("SELECT * FROM survey WHERE user_id = ? AND survey_date = "
       + "(SELECT MAX(survey_date) FROM survey WHERE user_id = ?)");
@@ -238,7 +238,7 @@ public class Main {
       pstmt.setInt(2, id);
       ResultSet rs = pstmt.executeQuery();
       rs.next();
-      report = new WellnessReport(id, rs.getInt("emotional_perf"), rs.getInt("spiritual_perf"),
+      report = new Survey(id, rs.getDate("survey_date"), rs.getInt("emotional_perf"), rs.getInt("spiritual_perf"),
       rs.getInt("intellectual_perf"), rs.getInt("physical_perf"), rs.getInt("environmental_perf"),
       rs.getInt("financial_perf"), rs.getInt("social_perf"), rs.getInt("occupational_perf"));
     } catch(Exception e) {
