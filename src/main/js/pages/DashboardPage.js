@@ -5,6 +5,8 @@ export default class Dashboard extends Component {
   constructor() {
     super();
     this.state = {
+      surveyDate: null,
+
       emotionalPerf: null,
       spiritualPerf: null,
       intellectualPerf: null,
@@ -30,6 +32,7 @@ export default class Dashboard extends Component {
     fetch('/user/1/wellness-report')
       .then((response) => response.json())
       .then((obj) => this.setState({
+        surveyDate: obj.surveyDate,
         emotionalPerf: obj.emotionalPerf,
         spiritualPerf: obj.spiritualPerf,
         intellectualPerf: obj.intellectualPerf,
@@ -56,6 +59,7 @@ export default class Dashboard extends Component {
 
   render() {
     const {
+      surveyDate,
       emotionalPerf,
       intellectualPerf,
       socialPerf,
@@ -149,6 +153,10 @@ export default class Dashboard extends Component {
         <div className="bg-secondary p-5 mx-auto w-75 d-flex justify-content-center">
           <div style={{ height: '60vh', width: '60vh' }}>
             <Radar data={data} options={options} />
+          </div>
+          <div className="text-center w-75 pb-3 mx-auto my-5 bg-secondary text-white">
+            <h4>Show Performance for</h4>
+            <input type="date" name="chosen-date" value={surveyDate} onChange={(e) => this.handleDate(e)} />
           </div>
         </div>
       </div>
