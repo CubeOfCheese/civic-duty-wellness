@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 export default class UserWellnessSurvey extends Component {
   constructor() {
@@ -66,7 +67,7 @@ export default class UserWellnessSurvey extends Component {
         <form className="text-center">
           <div className="text-center w-75 pb-3 mx-auto my-5 bg-secondary text-white">
             <h3>Select Date for Survey</h3>
-            <input type="date" name="chosen-date" onChange={(e) => this.handleDate(e)} />
+            <input type="date" name="chosen-date" onChange={(e) => this.handleDate(e)} max={moment().format('YYYY-MM-DD')} />
           </div>
           <div className="my-5 w-75 px-5 mx-auto bg-secondary text-white text-right">
             <h3 className="text-center">Performance</h3>
