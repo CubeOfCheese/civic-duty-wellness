@@ -181,19 +181,18 @@ public class User {
                 ", userType='" + userType + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
-                ", zip='" + zip + '\'' +
+                ", zip=" + zip + 
                 ", dob='" + dob + '\'' +
                 ", gender='" + gender + '\'' +
                 ", ethnicity='" + ethnicity + '\'' +
-                ", emotionalImp=" + emotionalImp +
-                ", spiritualImp='" + spiritualImp + '\'' +
-                ", intellectualImp='" + intellectualImp + '\'' +
-                ", physicalImp='" + physicalImp + '\'' +
-                ", environmentalImp='" + environmentalImp + '\'' +
-                ", financialImp='" + financialImp + '\'' +
-                ", socialImp='" + socialImp + '\'' +
-                ", occupationalImp='" + occupationalImp + '\'' +
-                ", salt= '" + salt + '\'' +
+                ", emotionalImp=" + emotionalImp + 
+                ", spiritualImp=" + spiritualImp + 
+                ", intellectualImp=" + intellectualImp + 
+                ", physicalImp=" + physicalImp + 
+                ", environmentalImp=" + environmentalImp + 
+                ", financialImp=" + financialImp + 
+                ", socialImp=" + socialImp + 
+                ", occupationalImp=" + occupationalImp + 
                 '}';
     }
 }

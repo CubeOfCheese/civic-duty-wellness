@@ -194,9 +194,6 @@ export default class UserWellnessSurvey extends Component {
                 </tr>
               </tbody>
             </table>
-            <div className="d-flex flex-row-reverse">
-              <button type="button" className="my-3 btn btn-outline-light">Reevaluate Importance</button>
-            </div>
           </div>
           <input id="survey-submit-button" className="m-3 btn btn-outline-primary" type="button" value="Submit" onClick={this.handleSubmit} />
         </form>

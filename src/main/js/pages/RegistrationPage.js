@@ -7,7 +7,7 @@ import bcrypt from 'bcryptjs';
 
 const salt = bcrypt.genSaltSync(10);
 
-export class RegistrationPage extends Component {
+export default class RegistrationPage extends Component {
   constructor() {
     super();
     this.state = {
@@ -157,7 +157,7 @@ export class RegistrationPage extends Component {
     } = this.state;
     const { authenticated } = this.props;
     if (complete && authenticated) {
-      return (<Redirect to="/" />);
+      return (<Redirect to="/importance" />);
     }
     return (
       <div>
@@ -278,7 +278,7 @@ export class RegistrationPage extends Component {
     );
   }
 }
-export default RegistrationPage;
+
 RegistrationPage.propTypes = {
   changeAuth: PropTypes.func.isRequired,
   authenticated: PropTypes.bool.isRequired,
