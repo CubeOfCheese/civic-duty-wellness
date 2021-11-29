@@ -100,13 +100,13 @@ export default class Dashboard extends Component {
         borderColor: 'rgba(217,83,79,0.5)',
         data: [
           emotionalImp,
-          spiritualImp,
           intellectualImp,
-          physicalImp,
-          environmentalImp,
-          financialImp,
           socialImp,
+          spiritualImp,
+          environmentalImp,
           occupationalImp,
+          financialImp,
+          physicalImp,
         ],
       }],
     };
@@ -150,14 +150,15 @@ export default class Dashboard extends Component {
     return (
       <div>
         <h2 className="bg-primary text-center text-light mb-5 p-3">Profile</h2>
-        <div className="bg-secondary p-5 mx-auto w-75 d-flex justify-content-center">
+        <div className="text-center w-75 pb-3 mx-auto my-5 bg-secondary text-white">
+          <h4>Show Performance for</h4>
+          <input type="date" name="chosen-date" value={surveyDate} onChange={(e) => this.handleDate(e)} />
+        </div>
+        <div className="bg-secondary p-5 mx-auto w-75 d-flex align-items-center flex-column">
           <div style={{ height: '60vh', width: '60vh' }}>
             <Radar data={data} options={options} />
           </div>
-          <div className="text-center w-75 pb-3 mx-auto my-5 bg-secondary text-white">
-            <h4>Show Performance for</h4>
-            <input type="date" name="chosen-date" value={surveyDate} onChange={(e) => this.handleDate(e)} />
-          </div>
+          <a href="/importance" className="my-3 btn btn-outline-light">Reevaluate Importance</a>
         </div>
       </div>
     );

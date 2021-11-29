@@ -7,6 +7,7 @@ import Dashboard from './pages/DashboardPage';
 import UserWellnessSurvey from './pages/UserWellnessSurveyPage';
 import Login from './pages/LoginPage';
 import Registration from './pages/RegistrationPage';
+import ImportancePage from './pages/ImportancePage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../resources/public/stylesheets/style.scss';
 
@@ -58,6 +59,10 @@ export class App extends Component {
             </Route>
             <Route path="/registration">
               <Registration changeAuth={this.changeAuth} authenticated={authenticated} />
+            </Route>
+            <Route path="/importance">
+              {authenticated ? <ImportancePage authenticated={authenticated} />
+                : <Login changeAuth={this.changeAuth} authenticated={authenticated} />}
             </Route>
           </Switch>
         </Router>

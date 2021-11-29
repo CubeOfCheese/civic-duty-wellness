@@ -121,13 +121,13 @@ public class Survey {
                 "userId='" + userId + '\'' +
                 ", surveyDate='" + surveyDate + '\'' +
                 ", emotionalPerf=" + emotionalPerf +
-                ", spiritualPerf='" + spiritualPerf + '\'' +
-                ", intellectualPerf='" + intellectualPerf + '\'' +
-                ", physicalPerf='" + physicalPerf + '\'' +
-                ", environmentalPerf='" + environmentalPerf + '\'' +
-                ", financialPerf='" + financialPerf + '\'' +
-                ", socialPerf='" + socialPerf + '\'' +
-                ", occupationalPerf='" + occupationalPerf + '\'' +
+                ", spiritualPerf=" + spiritualPerf + 
+                ", intellectualPerf=" + intellectualPerf +
+                ", physicalPerf=" + physicalPerf + 
+                ", environmentalPerf=" + environmentalPerf + 
+                ", financialPerf=" + financialPerf + 
+                ", socialPerf=" + socialPerf + 
+                ", occupationalPerf=" + occupationalPerf + 
                 '}';
     }
 }

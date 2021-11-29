@@ -59,7 +59,7 @@ public class Main {
     SpringApplication.run(Main.class, args);
   }
 
-  @RequestMapping(value = { "/", "/survey", "/login", "/registration" })
+  @RequestMapping(value = { "/", "/survey", "/login", "/registration", "/importance" })
   String index() {
     return "index";
   }
