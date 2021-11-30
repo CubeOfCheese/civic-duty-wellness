@@ -77,8 +77,8 @@ public class Main {
         if (!rs.isBeforeFirst()) {
           PreparedStatement pstmt = dbConnection.prepareStatement("INSERT INTO civic_duty_user "
           + "(user_id, fname, lname, user_type, email, password, phone_number, zip_code, dob, gender, ethnicity, "
-          + "emotional_imp, spiritual_imp, intellectual_imp, physical_imp, environmental_imp, financial_imp, "
-          + "social_imp, occupational_imp, salt) VALUES (DEFAULT,?,?,'u',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+          + "physical_imp, emotional_imp, intellectual_imp, social_imp, spiritual_imp, environmental_imp, occupational_imp, "
+          + "financial_imp, salt) VALUES (DEFAULT,?,?,'u',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
           pstmt.setString(1, registrationAttempt.getFname());
           pstmt.setString(2, registrationAttempt.getLname());
           pstmt.setString(3, registrationAttempt.getEmail());
@@ -88,14 +88,14 @@ public class Main {
           pstmt.setDate(7, registrationAttempt.getDOB());
           pstmt.setString(8, registrationAttempt.getGender());
           pstmt.setString(9, registrationAttempt.getEthnicity());
-          pstmt.setInt(10, registrationAttempt.getEmotionalImp());
-          pstmt.setInt(11, registrationAttempt.getSpiritualImp());
+          pstmt.setInt(10, registrationAttempt.getPhysicalImp());
+          pstmt.setInt(11, registrationAttempt.getEmotionalImp());
           pstmt.setInt(12, registrationAttempt.getIntellectualImp());
-          pstmt.setInt(13, registrationAttempt.getPhysicalImp());
-          pstmt.setInt(14, registrationAttempt.getEnvironmentalImp());
-          pstmt.setInt(15, registrationAttempt.getFinancialImp());
-          pstmt.setInt(16, registrationAttempt.getSocialImp());
-          pstmt.setInt(17, registrationAttempt.getOccupationalImp());
+          pstmt.setInt(13, registrationAttempt.getSocialImp());
+          pstmt.setInt(14, registrationAttempt.getSpiritualImp());
+          pstmt.setInt(15, registrationAttempt.getEnvironmentalImp());
+          pstmt.setInt(16, registrationAttempt.getOccupationalImp());
+          pstmt.setInt(17, registrationAttempt.getFinancialImp());
           pstmt.setString(18, registrationAttempt.getSalt());
           pstmt.executeUpdate();
         }
@@ -145,16 +145,16 @@ public class Main {
       User importance = objectMapper.readValue(data, User.class);
       try(Connection dbConnection = dataSource.getConnection()) {
         PreparedStatement pstmt = dbConnection.prepareStatement("UPDATE civic_duty_user SET"
-        + "(emotional_imp, spiritual_imp, intellectual_imp, physical_imp, environmental_imp, financial_imp,"
-        + "social_imp, occupational_imp) = (?,?,?,?,?,?,?,?) WHERE user_id = ?");
-        pstmt.setInt(1, importance.getEmotionalImp());
-        pstmt.setInt(2, importance.getSpiritualImp());
+        + "(physical_imp, emotional_imp, intellectual_imp, social_imp, spiritual_imp, environmental_imp, occupational_imp,"
+        + "financial_imp,) = (?,?,?,?,?,?,?,?) WHERE user_id = ?");
+        pstmt.setInt(1, importance.getPhysicalImp());
+        pstmt.setInt(2, importance.getEmotionalImp());
         pstmt.setInt(3, importance.getIntellectualImp());
-        pstmt.setInt(4, importance.getPhysicalImp());
-        pstmt.setInt(5, importance.getEnvironmentalImp());
-        pstmt.setInt(6, importance.getFinancialImp());
-        pstmt.setInt(7, importance.getSocialImp());
-        pstmt.setInt(8, importance.getOccupationalImp());
+        pstmt.setInt(4, importance.getSocialImp());
+        pstmt.setInt(5, importance.getSpiritualImp());
+        pstmt.setInt(6, importance.getEnvironmentalImp());
+        pstmt.setInt(7, importance.getOccupationalImp());
+        pstmt.setInt(8, importance.getFinancialImp());
         pstmt.setInt(9, id);
         pstmt.executeUpdate();
       } catch(Exception e) {
@@ -185,15 +185,14 @@ public class Main {
       user.setDOB(rs.getDate("dob"));
       user.setGender(rs.getString("gender"));
       user.setEthnicity(rs.getString("ethnicity"));
-      user.setEmotionalImp(rs.getInt("emotional_imp"));
-      user.setSpiritualImp(rs.getInt("spiritual_imp"));
-      user.setIntellectualImp(rs.getInt("intellectual_imp"));
       user.setPhysicalImp(rs.getInt("physical_imp"));
-      user.setEnvironmentalImp(rs.getInt("environmental_imp"));
-      user.setFinancialImp(rs.getInt("financial_imp"));
-      user.setSocialImp(rs.getInt("social_imp"));
-      user.setOccupationalImp(rs.getInt("occupational_imp"));
       user.setEmotionalImp(rs.getInt("emotional_imp"));
+      user.setIntellectualImp(rs.getInt("intellectual_imp"));
+      user.setSocialImp(rs.getInt("social_imp"));
+      user.setSpiritualImp(rs.getInt("spiritual_imp"));
+      user.setEnvironmentalImp(rs.getInt("environmental_imp"));
+      user.setOccupationalImp(rs.getInt("occupational_imp"));
+      user.setFinancialImp(rs.getInt("financial_imp"));
     } catch(Exception e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -238,9 +237,9 @@ public class Main {
       pstmt.setInt(2, id);
       ResultSet rs = pstmt.executeQuery();
       rs.next();
-      report = new Survey(id, rs.getDate("survey_date"), rs.getInt("emotional_perf"), rs.getInt("spiritual_perf"),
-      rs.getInt("intellectual_perf"), rs.getInt("physical_perf"), rs.getInt("environmental_perf"),
-      rs.getInt("financial_perf"), rs.getInt("social_perf"), rs.getInt("occupational_perf"));
+      report = new Survey(id, rs.getDate("survey_date"), rs.getInt("physical_perf"), rs.getInt("emotional_perf"),
+      rs.getInt("intellectual_perf"), rs.getInt("social_perf"), rs.getInt("spiritual_perf"),
+      rs.getInt("environmental_perf"), rs.getInt("occupational_perf"), rs.getInt("financial_perf"));
     } catch(Exception e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -255,18 +254,18 @@ public class Main {
       Survey survey = objectMapper.readValue(data, Survey.class);
       try(Connection dbConnection = dataSource.getConnection()) {
         PreparedStatement pstmt = dbConnection.prepareStatement("INSERT INTO survey (user_id, survey_date, "
-        + "emotional_perf, spiritual_perf, intellectual_perf, physical_perf, environmental_perf, financial_perf, social_perf, occupational_perf)"
+        + "physical_perf, emotional_perf, intellectual_perf, social_perf, spiritual_perf, environmental_perf, occupational_perf, financial_perf)"
         + "VALUES (?,?,?,?,?,?,?,?,?,?)");
         pstmt.setInt(1, survey.getUserID());
         pstmt.setDate(2, survey.getSurveyDate());
-        pstmt.setInt(3, survey.getEmotionalPerf());
-        pstmt.setInt(4, survey.getSpiritualPerf());
+        pstmt.setInt(3, survey.getPhysicalPerf());
+        pstmt.setInt(4, survey.getEmotionalPerf());
         pstmt.setInt(5, survey.getIntellectualPerf());
-        pstmt.setInt(6, survey.getPhysicalPerf());
-        pstmt.setInt(7, survey.getEnvironmentalPerf());
-        pstmt.setInt(8, survey.getFinancialPerf());
-        pstmt.setInt(9, survey.getSocialPerf());
-        pstmt.setInt(10, survey.getOccupationalPerf());
+        pstmt.setInt(6, survey.getSocialPerf());
+        pstmt.setInt(7, survey.getSpiritualPerf());
+        pstmt.setInt(8, survey.getEnvironmentalPerf());
+        pstmt.setInt(9, survey.getOccupationalPerf());
+        pstmt.setInt(10, survey.getFinancialPerf());
         pstmt.executeUpdate();
       } catch(Exception e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

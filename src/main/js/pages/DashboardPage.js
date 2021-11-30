@@ -6,24 +6,23 @@ export default class Dashboard extends Component {
     super();
     this.state = {
       surveyDate: null,
-
-      emotionalPerf: null,
-      spiritualPerf: null,
-      intellectualPerf: null,
       physicalPerf: null,
-      environmentalPerf: null,
-      financialPerf: null,
+      emotionalPerf: null,
+      intellectualPerf: null,
       socialPerf: null,
+      spiritualPerf: null,
+      environmentalPerf: null,
       occupationalPerf: null,
+      financialPerf: null,
 
-      emotionalImp: null,
-      spiritualImp: null,
-      intellectualImp: null,
       physicalImp: null,
-      environmentalImp: null,
-      financialImp: null,
+      emotionalImp: null,
+      intellectualImp: null,
       socialImp: null,
+      spiritualImp: null,
+      environmentalImp: null,
       occupationalImp: null,
+      financialImp: null,
     };
   }
 
@@ -33,33 +32,34 @@ export default class Dashboard extends Component {
       .then((response) => response.json())
       .then((obj) => this.setState({
         surveyDate: obj.surveyDate,
-        emotionalPerf: obj.emotionalPerf,
-        spiritualPerf: obj.spiritualPerf,
-        intellectualPerf: obj.intellectualPerf,
         physicalPerf: obj.physicalPerf,
-        environmentalPerf: obj.environmentalPerf,
-        financialPerf: obj.financialPerf,
+        emotionalPerf: obj.emotionalPerf,
+        intellectualPerf: obj.intellectualPerf,
         socialPerf: obj.socialPerf,
+        spiritualPerf: obj.spiritualPerf,
+        environmentalPerf: obj.environmentalPerf,
         occupationalPerf: obj.occupationalPerf,
+        financialPerf: obj.financialPerf,
       }));
 
     fetch('/user/1')
       .then((response) => response.json())
       .then((user) => this.setState({
-        emotionalImp: user.emotionalImp,
-        spiritualImp: user.spiritualImp,
-        intellectualImp: user.intellectualImp,
         physicalImp: user.physicalImp,
-        environmentalImp: user.environmentalImp,
-        financialImp: user.financialImp,
+        emotionalImp: user.emotionalImp,
+        intellectualImp: user.intellectualImp,
         socialImp: user.socialImp,
+        spiritualImp: user.spiritualImp,
+        environmentalImp: user.environmentalImp,
         occupationalImp: user.occupationalImp,
+        financialImp: user.financialImp,
       }));
   }
 
   render() {
     const {
       surveyDate,
+      physicalPerf,
       emotionalPerf,
       intellectualPerf,
       socialPerf,
@@ -67,23 +67,23 @@ export default class Dashboard extends Component {
       environmentalPerf,
       occupationalPerf,
       financialPerf,
-      physicalPerf,
-      emotionalImp,
-      spiritualImp,
-      intellectualImp,
       physicalImp,
-      environmentalImp,
-      financialImp,
+      emotionalImp,
+      intellectualImp,
       socialImp,
+      spiritualImp,
+      environmentalImp,
       occupationalImp,
+      financialImp,
     } = this.state;
     const data = {
-      labels: ['Emotional', 'Intellectual', 'Social', 'Spiritual', 'Environmental', 'Occupational', 'Financial', 'Physical'],
+      labels: ['Physical', 'Emotional', 'Intellectual', 'Social', 'Spiritual', 'Environmental', 'Occupational', 'Financial'],
       datasets: [{
         label: 'Survey Performance',
         backgroundColor: 'rgba(0,75,58,0.2)',
         borderColor: 'rgba(0,75,58,0.5)',
         data: [
+          physicalPerf,
           emotionalPerf,
           intellectualPerf,
           socialPerf,
@@ -91,7 +91,6 @@ export default class Dashboard extends Component {
           environmentalPerf,
           occupationalPerf,
           financialPerf,
-          physicalPerf,
         ],
       },
       {
@@ -99,6 +98,7 @@ export default class Dashboard extends Component {
         backgroundColor: 'rgba(217,83,79,0.2)',
         borderColor: 'rgba(217,83,79,0.5)',
         data: [
+          physicalImp,
           emotionalImp,
           intellectualImp,
           socialImp,
@@ -106,7 +106,6 @@ export default class Dashboard extends Component {
           environmentalImp,
           occupationalImp,
           financialImp,
-          physicalImp,
         ],
       }],
     };

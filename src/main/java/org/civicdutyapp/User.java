@@ -15,21 +15,21 @@ public class User {
     private Date dob;
     private String gender;
     private String ethnicity;
-    private int emotionalImp;
-    private int spiritualImp;
-    private int intellectualImp;
     private int physicalImp;
-    private int environmentalImp;
-    private int financialImp;
+    private int emotionalImp;
+    private int intellectualImp;
     private int socialImp;
+    private int spiritualImp;
+    private int environmentalImp;
     private int occupationalImp;
+    private int financialImp;
 
     public User() {}
 
     public User(long userId, String fname, String lname, char userType,
     String email, String password, String phone, int zip, Date dob,
-    String gender, String ethnicity, int emImp, int spiImp,
-    int intImp, int phyImp, int envImp, int finImp, int socImp, int occuImp, String salt) {
+    String gender, String ethnicity, int phyImp, int emImp, int intImp,
+    int socImp, int spiImp, int envImp, int occuImp, int finImp, String salt) {
         this.userId = userId;
         this.fname = fname;
         this.lname = lname;
@@ -41,14 +41,14 @@ public class User {
         this.dob = dob;
         this.gender = gender;
         this.ethnicity = ethnicity;
-        this.emotionalImp = emImp;
-        this.spiritualImp = spiImp;
-        this.intellectualImp = intImp;
         this.physicalImp = phyImp;
-        this.environmentalImp = envImp;
-        this.financialImp = finImp;
+        this.emotionalImp = emImp;
+        this.intellectualImp = intImp;
         this.socialImp = socImp;
+        this.spiritualImp = spiImp;
+        this.environmentalImp = envImp;
         this.occupationalImp = occuImp;
+        this.financialImp = finImp;
         this.salt = salt;
     }
 
@@ -118,17 +118,17 @@ public class User {
     public void setEthnicity(String ethnicity) {
         this.ethnicity = ethnicity;
     }
+    public int getPhysicalImp() {
+        return physicalImp;
+    }
+    public void setPhysicalImp(int physicalImp) {
+        this.physicalImp =  physicalImp;
+    }
     public int getEmotionalImp() {
         return emotionalImp;
     }
     public void setEmotionalImp(int emotionalImp) {
         this.emotionalImp = emotionalImp;
-    }
-    public int getSpiritualImp() {
-        return spiritualImp;
-    }
-    public void setSpiritualImp(int spiritualImp) {
-        this.spiritualImp = spiritualImp;
     }
     public int getIntellectualImp() {
         return intellectualImp;
@@ -136,11 +136,17 @@ public class User {
     public void setIntellectualImp(int intellectualImp) {
         this.intellectualImp = intellectualImp;
     }
-    public int getPhysicalImp() {
-        return physicalImp;
+    public int getSocialImp() {
+        return socialImp;
     }
-    public void setPhysicalImp(int physicalImp) {
-        this.physicalImp =  physicalImp;
+    public void setSocialImp(int socialImp) {
+        this.socialImp = socialImp;
+    }
+    public int getSpiritualImp() {
+        return spiritualImp;
+    }
+    public void setSpiritualImp(int spiritualImp) {
+        this.spiritualImp = spiritualImp;
     }
     public int getEnvironmentalImp() {
         return environmentalImp;
@@ -148,24 +154,19 @@ public class User {
     public void setEnvironmentalImp(int environmentalImp) {
         this.environmentalImp = environmentalImp;
     }
-    public int getFinancialImp() {
-        return financialImp;
-    }
-    public void setFinancialImp(int financialImp) {
-        this.financialImp = financialImp;
-    }
-    public int getSocialImp() {
-        return socialImp;
-    }
-    public void setSocialImp(int socialImp) {
-        this.socialImp = socialImp;
-    }
     public int getOccupationalImp() {
         return occupationalImp;
     }
     public void setOccupationalImp(int occupationalImp) {
         this.occupationalImp = occupationalImp;
     }
+    public int getFinancialImp() {
+        return financialImp;
+    }
+    public void setFinancialImp(int financialImp) {
+        this.financialImp = financialImp;
+    }
+
     public String getSalt() {
       return salt;
     }
@@ -181,18 +182,18 @@ public class User {
                 ", userType='" + userType + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
-                ", zip=" + zip + 
+                ", zip=" + zip +
                 ", dob='" + dob + '\'' +
                 ", gender='" + gender + '\'' +
                 ", ethnicity='" + ethnicity + '\'' +
-                ", emotionalImp=" + emotionalImp + 
-                ", spiritualImp=" + spiritualImp + 
-                ", intellectualImp=" + intellectualImp + 
-                ", physicalImp=" + physicalImp + 
-                ", environmentalImp=" + environmentalImp + 
-                ", financialImp=" + financialImp + 
-                ", socialImp=" + socialImp + 
-                ", occupationalImp=" + occupationalImp + 
+                ", physicalImp=" + physicalImp +
+                ", emotionalImp=" + emotionalImp +
+                ", intellectualImp=" + intellectualImp +
+                ", socialImp=" + socialImp +
+                ", spiritualImp=" + spiritualImp +
+                ", environmentalImp=" + environmentalImp +
+                ", occupationalImp=" + occupationalImp +
+                ", financialImp=" + financialImp +
                 '}';
     }
 }

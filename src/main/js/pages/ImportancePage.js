@@ -7,6 +7,7 @@ export default class ImportancePage extends Component {
     super();
     this.state = {
       importanceInfo: {
+        physicalImp: null,
         emotionalImp: null,
         intellectualImp: null,
         socialImp: null,
@@ -14,7 +15,6 @@ export default class ImportancePage extends Component {
         environmentalImp: null,
         occupationalImp: null,
         financialImp: null,
-        physicalImp: null,
       },
       complete: false,
     };
@@ -28,14 +28,14 @@ export default class ImportancePage extends Component {
       .then((response) => response.json())
       .then((user) => this.setState({
         importanceInfo: {
-          emotionalImp: user.emotionalImp,
-          spiritualImp: user.spiritualImp,
-          intellectualImp: user.intellectualImp,
           physicalImp: user.physicalImp,
-          environmentalImp: user.environmentalImp,
-          financialImp: user.financialImp,
+          emotionalImp: user.emotionalImp,
+          intellectualImp: user.intellectualImp,
           socialImp: user.socialImp,
+          spiritualImp: user.spiritualImp,
+          environmentalImp: user.environmentalImp,
           occupationalImp: user.occupationalImp,
+          financialImp: user.financialImp,
         },
       }));
   }
@@ -105,6 +105,19 @@ export default class ImportancePage extends Component {
                 </tr>
               </thead>
               <tbody>
+                <tr onChange={(e) => this.handleImportanceChange(e)}>
+                  <td style={{ width: '10px' }}><input type="radio" name="physicalImp" value="1" checked={physicalImp === 1} /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="physicalImp" value="2" checked={physicalImp === 2} /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="physicalImp" value="3" checked={physicalImp === 3} /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="physicalImp" value="4" checked={physicalImp === 4} /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="physicalImp" value="5" checked={physicalImp === 5} /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="physicalImp" value="6" checked={physicalImp === 6} /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="physicalImp" value="7" checked={physicalImp === 7} /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="physicalImp" value="8" checked={physicalImp === 8} /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="physicalImp" value="9" checked={physicalImp === 9} /></td>
+                  <td style={{ width: '10px' }}><input type="radio" name="physicalImp" value="10" checked={physicalImp === 10} /></td>
+                  <td style={{ width: '10px' }}><p>Physical</p></td>
+                </tr>
                 <tr onChange={(e) => this.handleImportanceChange(e)}>
                   <td style={{ width: '10px' }}><input type="radio" name="emotionalImp" value="1" checked={emotionalImp === 1} /></td>
                   <td style={{ width: '10px' }}><input type="radio" name="emotionalImp" value="2" checked={emotionalImp === 2} /></td>
@@ -195,19 +208,6 @@ export default class ImportancePage extends Component {
                   <td style={{ width: '10px' }}><input type="radio" name="financialImp" value="9" checked={financialImp === 9} /></td>
                   <td style={{ width: '10px' }}><input type="radio" name="financialImp" value="10" checked={financialImp === 10} /></td>
                   <td style={{ width: '10px' }}><p>Financial</p></td>
-                </tr>
-                <tr onChange={(e) => this.handleImportanceChange(e)}>
-                  <td style={{ width: '10px' }}><input type="radio" name="physicalImp" value="1" checked={physicalImp === 1} /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="physicalImp" value="2" checked={physicalImp === 2} /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="physicalImp" value="3" checked={physicalImp === 3} /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="physicalImp" value="4" checked={physicalImp === 4} /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="physicalImp" value="5" checked={physicalImp === 5} /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="physicalImp" value="6" checked={physicalImp === 6} /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="physicalImp" value="7" checked={physicalImp === 7} /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="physicalImp" value="8" checked={physicalImp === 8} /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="physicalImp" value="9" checked={physicalImp === 9} /></td>
-                  <td style={{ width: '10px' }}><input type="radio" name="physicalImp" value="10" checked={physicalImp === 10} /></td>
-                  <td style={{ width: '10px' }}><p>Physical</p></td>
                 </tr>
               </tbody>
             </table>
