@@ -123,12 +123,10 @@ public class Main {
         ResultSet rs = pstmt.executeQuery();
         if (rs.isBeforeFirst()) {
           rs.next();
-          if (!rs.getString("password").equals(loginAttempt.getPassword())) {
-            System.out.println("FAILURE");
+          if (!rs.getString("password").equals(loginAttempt.getPassword())) { 
             return new ResponseEntity<>("FAILURE", HttpStatus.BAD_REQUEST);
           }
         } else {
-          System.out.println("FAILURE Bad Request");
           return new ResponseEntity<>("FAILURE", HttpStatus.BAD_REQUEST);
         }
       } catch (Exception e) {

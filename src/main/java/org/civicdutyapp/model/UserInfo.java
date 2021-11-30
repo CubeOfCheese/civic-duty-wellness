@@ -22,11 +22,11 @@ public class UserInfo implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        User u = userDB(email);
+        User u = getUserDB(email);
         return new org.springframework.security.core.userdetails.User(u.getEmail(), u.getPassword(), new ArrayList<>());
     }
 
-    private User userDB(String email) {
+    private User getUserDB(String email) {
         User u = null;
 
         try (Connection dbConnection = dataSource.getConnection()) {

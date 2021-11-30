@@ -18,7 +18,7 @@ public class JWTUtility {
     Date date = new Date();
     Date iat;
     Date expDate;
-    Date refTokenExpDate;
+
 
     private String jwtToken;
 
@@ -28,10 +28,10 @@ public class JWTUtility {
         try {
             Algorithm algoHS = Algorithm.HMAC256(config.getSignatureKey());
 
-            jwtToken = JWT.create().withIssuedAt(iat).withIssuer(config.getIssue()).withAudience(config.getAudience())
+            jwtToken = JWT.create().withIssuedAt(iat).withExpiresAt(expDate).withIssuer(config.getIssue()).withAudience(config.getAudience())
                     .withSubject(userEmail).sign(algoHS);
         } catch (Exception e) {
-            throw new Exception("JWT Could be Created. \n" + e.getMessage());
+            throw new Exception("Could not be Created. \n" + e.getMessage());
         }
         return jwtToken;
     }

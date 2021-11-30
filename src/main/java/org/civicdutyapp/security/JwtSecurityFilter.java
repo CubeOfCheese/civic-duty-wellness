@@ -62,7 +62,7 @@ public class JwtSecurityFilter extends OncePerRequestFilter {
                 }
 
             } catch (JWTVerificationException e) {
-                System.err.println("JWT Verification Error " + e.getMessage());
+                System.err.println("JWT has Expired or has been modified. " + e.getMessage());
             }
         }
 

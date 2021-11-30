@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import org.civicdutyapp.model.User;
 import org.civicdutyapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.common.ExpressionUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,9 +32,12 @@ public class UserServiceImpl implements UserService {
             while (result.next()) {
                 u = new User(result.getString("email"), result.getString("password"));
             }
-            return u;
+            if(u.getPassword().equals(password)) {
+                return u;
+            } 
+            return null;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            System.out.println(ex.getMessage());
             return null;
         }
     }
