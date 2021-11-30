@@ -227,23 +227,61 @@ public class Main {
   }
 
   @ResponseBody
-  @RequestMapping(path = "/user/{id}/wellness-report", produces = "application/json; charset=UTF-8")
-  ResponseEntity<?> userWellnessReport(@PathVariable Integer id) {
-    Survey report;
+  @RequestMapping(path = "/user/{id}/survey/recent", produces = "application/json; charset=UTF-8")
+  ResponseEntity<?> getRecentSurvey(@PathVariable Integer id) {
+    Survey survey;
     try(Connection dbConnection = dataSource.getConnection()) {
       PreparedStatement pstmt = dbConnection.prepareStatement("SELECT * FROM survey WHERE user_id = ? AND survey_date = "
-      + "(SELECT MAX(survey_date) FROM survey WHERE user_id = ?)");
+          + "(SELECT MAX(survey_date) FROM survey WHERE user_id = ?)");
       pstmt.setInt(1, id);
       pstmt.setInt(2, id);
       ResultSet rs = pstmt.executeQuery();
-      rs.next();
-      report = new Survey(id, rs.getDate("survey_date"), rs.getInt("physical_perf"), rs.getInt("emotional_perf"),
-      rs.getInt("intellectual_perf"), rs.getInt("social_perf"), rs.getInt("spiritual_perf"),
-      rs.getInt("environmental_perf"), rs.getInt("occupational_perf"), rs.getInt("financial_perf"));
+      if (rs.isBeforeFirst()) {
+        rs.next();
+        survey = new Survey(rs.getDate("survey_date"), rs.getInt("physical_perf"), rs.getInt("emotional_perf"),
+        rs.getInt("intellectual_perf"), rs.getInt("social_perf"), rs.getInt("spiritual_perf"),
+        rs.getInt("environmental_perf"), rs.getInt("occupational_perf"), rs.getInt("financial_perf"));
+      } else {
+        Survey noData = new Survey();
+        noData.setSurveyID(new Long(-1));
+        return new ResponseEntity<>(noData, HttpStatus.BAD_REQUEST);
+      }
     } catch(Exception e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<>(report, HttpStatus.OK);
+    return new ResponseEntity<>(survey, HttpStatus.OK);
+  }
+
+  @ResponseBody
+  @RequestMapping(path = "/user/{id}/survey", produces = "application/json; charset=UTF-8")
+  ResponseEntity<?> getSurvey(@PathVariable Integer id, @RequestBody String data) {
+    ObjectMapper objectMapper = new ObjectMapper();
+    objectMapper.setTimeZone(TimeZone.getDefault());
+    Survey survey;
+    try {
+      survey = objectMapper.readValue(data, Survey.class);
+      try(Connection dbConnection = dataSource.getConnection()) {
+        PreparedStatement pstmt = dbConnection.prepareStatement("SELECT * FROM survey WHERE user_id = ? AND survey_date = ?");
+        pstmt.setInt(1, id);
+        pstmt.setDate(2, survey.getSurveyDate());
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.isBeforeFirst()) {
+          rs.next();
+          survey = new Survey(rs.getDate("survey_date"), rs.getInt("emotional_perf"), rs.getInt("spiritual_perf"),
+          rs.getInt("intellectual_perf"), rs.getInt("physical_perf"), rs.getInt("environmental_perf"),
+          rs.getInt("financial_perf"), rs.getInt("social_perf"), rs.getInt("occupational_perf"));
+        } else {
+          Survey noData = new Survey();
+          noData.setSurveyID(new Long(-1));
+          return new ResponseEntity<>(noData, HttpStatus.BAD_REQUEST);
+        }
+      } catch(Exception e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    } catch (JsonProcessingException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<>(survey, HttpStatus.OK);
   }
 
   @PostMapping(path = "/survey/add", consumes = MediaType.APPLICATION_JSON_VALUE)

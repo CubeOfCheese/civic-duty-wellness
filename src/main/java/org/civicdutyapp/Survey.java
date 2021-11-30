@@ -18,8 +18,8 @@ public class Survey {
     public Survey() {}
 
     public Survey(long surveyId, int userId, Date date,
-    int phyPerf, int emPerf, int intPerf, int socPerf, int spiPerf, int envPerf,
-    int occuPerf, int finPerf) {
+    int phyPerf, int emPerf, int intPerf, int socPerf,
+    int spiPerf, int envPerf, int occuPerf, int finPerf) {
         this.surveyId  = surveyId;
         this.userId = userId;
         this.surveyDate = date;
@@ -34,9 +34,22 @@ public class Survey {
     }
 
     public Survey(int userId, Date date,
-    int phyPerf, int emPerf, int intPerf, int socPerf, int spiPerf, int envPerf,
-    int occuPerf, int finPerf) {
+    int phyPerf, int emPerf, int intPerf, int socPerf,
+    int spiPerf, int envPerf, int occuPerf, int finPerf) {
         this.userId = userId;
+        this.surveyDate = date;
+        this.physicalPerf = phyPerf;
+        this.emotionalPerf = emPerf;
+        this.intellectualPerf = intPerf;
+        this.socialPerf = socPerf;
+        this.spiritualPerf = spiPerf;
+        this.environmentalPerf = envPerf;
+        this.occupationalPerf = occuPerf;
+        this.financialPerf = finPerf;
+    }
+
+    public Survey( Date date, int phyPerf, int emPerf, int intPerf,
+    int socPerf, int spiPerf, int envPerf, int occuPerf, int finPerf) {
         this.surveyDate = date;
         this.physicalPerf = phyPerf;
         this.emotionalPerf = emPerf;
