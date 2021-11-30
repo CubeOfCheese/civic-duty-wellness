@@ -6,46 +6,46 @@ public class Survey {
     private Long surveyId;
     private int userId;
     private Date surveyDate;
-    private int emotionalPerf;
-    private int spiritualPerf;
-    private int intellectualPerf;
     private int physicalPerf;
-    private int environmentalPerf;
-    private int financialPerf;
+    private int emotionalPerf;
+    private int intellectualPerf;
     private int socialPerf;
+    private int spiritualPerf;
+    private int environmentalPerf;
     private int occupationalPerf;
+    private int financialPerf;
 
     public Survey() {}
 
     public Survey(long surveyId, int userId, Date date,
-    int emPerf, int spiPerf, int intPerf, int phyPerf, int envPerf,
-    int finPerf, int socPerf, int occuPerf) {
+    int phyPerf, int emPerf, int intPerf, int socPerf, int spiPerf, int envPerf,
+    int occuPerf, int finPerf) {
         this.surveyId  = surveyId;
         this.userId = userId;
         this.surveyDate = date;
-        this.emotionalPerf = emPerf;
-        this.spiritualPerf = spiPerf;
-        this.intellectualPerf = intPerf;
         this.physicalPerf = phyPerf;
-        this.environmentalPerf = envPerf;
-        this.financialPerf = finPerf;
+        this.emotionalPerf = emPerf;
+        this.intellectualPerf = intPerf;
         this.socialPerf = socPerf;
+        this.spiritualPerf = spiPerf;
+        this.environmentalPerf = envPerf;
         this.occupationalPerf = occuPerf;
+        this.financialPerf = finPerf;
     }
 
     public Survey(int userId, Date date,
-    int emPerf, int spiPerf, int intPerf, int phyPerf, int envPerf,
-    int finPerf, int socPerf, int occuPerf) {
+    int phyPerf, int emPerf, int intPerf, int socPerf, int spiPerf, int envPerf,
+    int occuPerf, int finPerf) {
         this.userId = userId;
         this.surveyDate = date;
-        this.emotionalPerf = emPerf;
-        this.spiritualPerf = spiPerf;
-        this.intellectualPerf = intPerf;
         this.physicalPerf = phyPerf;
-        this.environmentalPerf = envPerf;
-        this.financialPerf = finPerf;
+        this.emotionalPerf = emPerf;
+        this.intellectualPerf = intPerf;
         this.socialPerf = socPerf;
+        this.spiritualPerf = spiPerf;
+        this.environmentalPerf = envPerf;
         this.occupationalPerf = occuPerf;
+        this.financialPerf = finPerf;
     }
 
     public Long getSurveyID() {
@@ -66,17 +66,17 @@ public class Survey {
     public void setSurveyDate(Date surveyDate) {
         this.surveyDate = surveyDate;
     }
+    public int getPhysicalPerf() {
+        return physicalPerf;
+    }
+    public void setPhysicalPerf(int physicalPerf) {
+        this.physicalPerf =  physicalPerf;
+    }
     public int getEmotionalPerf() {
         return emotionalPerf;
     }
     public void setEmotionalPerf(int emotionalPerf) {
         this.emotionalPerf = emotionalPerf;
-    }
-    public int getSpiritualPerf() {
-        return spiritualPerf;
-    }
-    public void setSpiritualPerf(int spiritualPerf) {
-        this.spiritualPerf = spiritualPerf;
     }
     public int getIntellectualPerf() {
         return intellectualPerf;
@@ -84,11 +84,17 @@ public class Survey {
     public void setIntellectualPerf(int intellectualPerf) {
         this.intellectualPerf = intellectualPerf;
     }
-    public int getPhysicalPerf() {
-        return physicalPerf;
+    public int getSocialPerf() {
+        return socialPerf;
     }
-    public void setPhysicalPerf(int physicalPerf) {
-        this.physicalPerf =  physicalPerf;
+    public void setSocialPerf(int socialPerf) {
+        this.socialPerf = socialPerf;
+    }
+    public int getSpiritualPerf() {
+        return spiritualPerf;
+    }
+    public void setSpiritualPerf(int spiritualPerf) {
+        this.spiritualPerf = spiritualPerf;
     }
     public int getEnvironmentalPerf() {
         return environmentalPerf;
@@ -96,23 +102,17 @@ public class Survey {
     public void setEnvironmentalPerf(int environmentalPerf) {
         this.environmentalPerf = environmentalPerf;
     }
-    public int getFinancialPerf() {
-        return financialPerf;
-    }
-    public void setFinancialPerf(int financialPerf) {
-        this.financialPerf = financialPerf;
-    }
-    public int getSocialPerf() {
-        return socialPerf;
-    }
-    public void setSocialPerf(int socialPerf) {
-        this.socialPerf = socialPerf;
-    }
     public int getOccupationalPerf() {
         return occupationalPerf;
     }
     public void setOccupationalPerf(int occupationalPerf) {
         this.occupationalPerf = occupationalPerf;
+    }
+    public int getFinancialPerf() {
+        return financialPerf;
+    }
+    public void setFinancialPerf(int financialPerf) {
+        this.financialPerf = financialPerf;
     }
 
     @Override
@@ -120,14 +120,14 @@ public class Survey {
         return "Survey{" +
                 "userId='" + userId + '\'' +
                 ", surveyDate='" + surveyDate + '\'' +
+                ", physicalPerf=" + physicalPerf +
                 ", emotionalPerf=" + emotionalPerf +
-                ", spiritualPerf=" + spiritualPerf + 
                 ", intellectualPerf=" + intellectualPerf +
-                ", physicalPerf=" + physicalPerf + 
-                ", environmentalPerf=" + environmentalPerf + 
-                ", financialPerf=" + financialPerf + 
-                ", socialPerf=" + socialPerf + 
-                ", occupationalPerf=" + occupationalPerf + 
+                ", socialPerf=" + socialPerf +
+                ", spiritualPerf=" + spiritualPerf +
+                ", environmentalPerf=" + environmentalPerf +
+                ", occupationalPerf=" + occupationalPerf +
+                ", financialPerf=" + financialPerf +
                 '}';
     }
 }
