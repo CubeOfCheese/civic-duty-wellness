@@ -35,16 +35,17 @@ export default class LoginPage extends Component {
     const { loginInfo } = this.state;
     const { password } = loginInfo;
     const url = '/login/attempt';
-
     this.getSalt()
       .then((salt) => {
         const hashedPassword = bcrypt.hashSync(password, salt);
         loginInfo.password = hashedPassword;
+        const jwt = window.localStorage.get('user');
         const request = {
           method: 'POST',
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
+            Authorization: jwt,
           },
           body: JSON.stringify(loginInfo),
         };
@@ -69,11 +70,13 @@ export default class LoginPage extends Component {
   getSalt() {
     const getUrl = '/user/salt';
     const { loginInfo } = this.state;
+    const jwt = window.localStorage.get('user');
     const getRequest = {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: jwt,
       },
       body: JSON.stringify({ email: loginInfo.email }),
     };

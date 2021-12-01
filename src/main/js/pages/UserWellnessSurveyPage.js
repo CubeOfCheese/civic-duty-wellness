@@ -42,9 +42,13 @@ export default class UserWellnessSurvey extends Component {
     }, () => {
       const { surveyDate } = surveyInfo;
       const url = '/user/1/survey';
+      const jwt = window.localStorage.get('user');
       const request = {
         method: 'POST',
-        headers: ({ 'Content-Type': 'application/json' }),
+        headers: ({
+          'Content-Type': 'application/json',
+          Authorization: jwt,
+        }),
         body: JSON.stringify({ surveyDate }),
       };
       // console.log(surveyDate);
@@ -74,9 +78,13 @@ export default class UserWellnessSurvey extends Component {
   handleSubmit() {
     const url = '/survey/add';
     const { surveyInfo } = this.state;
+    const jwt = window.localStorage.get('user');
     const request = {
       method: 'POST',
-      headers: ({ 'Content-Type': 'application/json' }),
+      headers: ({
+        'Content-Type': 'application/json',
+        Authorization: jwt,
+      }),
       body: JSON.stringify(surveyInfo),
     };
     fetch(url, request)

@@ -31,7 +31,14 @@ export default class Dashboard extends Component {
   }
 
   componentDidMount() {
-    fetch('/user/1/survey/recent')
+    const jwt = window.localStorage.get('user');
+    const request = {
+      method: 'GET',
+      headers: ({
+        Authorization: jwt,
+      }),
+    };
+    fetch('/user/1/survey/recent', request)
       .then((response) => response.json())
       .then((obj) => this.setState({
         surveyDate: obj.surveyDate,
@@ -45,7 +52,7 @@ export default class Dashboard extends Component {
         financialPerf: obj.financialPerf,
       }));
 
-    fetch('/user/1')
+    fetch('/user/1', request)
       .then((response) => response.json())
       .then((user) => this.setState({
         physicalImp: user.physicalImp,
@@ -67,9 +74,13 @@ export default class Dashboard extends Component {
       // retrieve performance data from dummy backend route
       const { surveyDate } = this.state;
       const url = '/user/1/survey';
+      const jwt = window.localStorage.get('user');
       const request = {
         method: 'POST',
-        headers: ({ 'Content-Type': 'application/json' }),
+        headers: ({
+          'Content-Type': 'application/json',
+          Authorization: jwt,
+        }),
         body: JSON.stringify({ surveyDate }),
       };
       fetch(url, request)

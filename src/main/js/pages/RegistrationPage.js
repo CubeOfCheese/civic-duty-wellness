@@ -107,9 +107,13 @@ export default class RegistrationPage extends Component {
       hashedPword = bcrypt.hashSync(password, salt);
       registerInfo.password = String(hashedPword);
       const url = '/registration/attempt';
+      const jwt = window.localStorage.get('user');
       const request = {
         method: 'POST',
-        headers: ({ 'Content-Type': 'application/json' }),
+        headers: ({
+          'Content-Type': 'application/json',
+          Authorization: jwt,
+        }),
         body: JSON.stringify(registerInfo),
       };
       fetch(url, request)
