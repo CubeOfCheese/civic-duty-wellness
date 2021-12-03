@@ -19,7 +19,7 @@ public class Survey {
 
     public Survey() {}
 
-    public Survey(long surveyId, int userId, Date date,
+    public Survey(Long surveyId, int userId, Date date,
     int phyPerf, int emPerf, int intPerf, int socPerf,
     int spiPerf, int envPerf, int occuPerf, int finPerf,
     List<Activity> activities) {
@@ -52,8 +52,9 @@ public class Survey {
         this.financialPerf = finPerf;
     }
 
-    public Survey( Date date, int phyPerf, int emPerf, int intPerf,
-    int socPerf, int spiPerf, int envPerf, int occuPerf, int finPerf) {
+    public Survey(Long surveyId, Date date, int phyPerf, int emPerf,
+    int intPerf, int socPerf, int spiPerf, int envPerf, int occuPerf, int finPerf) {
+        this.surveyId  = surveyId;
         this.surveyDate = date;
         this.physicalPerf = phyPerf;
         this.emotionalPerf = emPerf;
@@ -70,8 +71,10 @@ public class Survey {
     }
     public void setSurveyID(Long surveyId) {
         this.surveyId = surveyId;
-        for (int i = 0; i < activities.size(); i++) {
-          activities.get(i).setSurveyID(surveyId.intValue());
+        if (activities != null) {
+          for (int i = 0; i < activities.size(); i++) {
+            activities.get(i).setSurveyID(surveyId.intValue());
+          }
         }
     }
     public int getUserID() {
@@ -141,7 +144,7 @@ public class Survey {
         this.activities = activities;
     }
     public int countActivities() {
-      return activities.size();
+        return activities == null ? null : activities.size();
     }
 
     @Override
@@ -156,9 +159,12 @@ public class Survey {
                 ", spiritualPerf=" + spiritualPerf +
                 ", environmentalPerf=" + environmentalPerf +
                 ", occupationalPerf=" + occupationalPerf +
-                ", financialPerf=" + financialPerf + "\n";
-        for (int i = 0; i < activities.size(); i++) {
-                out = out + "\t" + activities.get(i).toString() + ",\n";
+                ", financialPerf=" + financialPerf;
+        if (activities != null) {
+          out = out + "\n";
+          for (int i = 0; i < activities.size(); i++) {
+                  out = out + "\t" + activities.get(i).toString() + ",\n";
+          }
         }
         out = out + '}';
         return out;

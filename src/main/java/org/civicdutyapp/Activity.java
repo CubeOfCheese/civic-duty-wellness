@@ -20,9 +20,9 @@ public class Activity {
       this.intensity = intensity;
     }
 
-    public Activity(Long activityId, String activityName,
+    public Activity(int surveyId, String activityName,
     int hours, int minutes, int intensity) {
-      this.activityId = activityId;
+      this.surveyId = surveyId;
       this.activityName = activityName;
       this.hours = hours;
       this.minutes = minutes;
