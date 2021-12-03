@@ -166,7 +166,6 @@ public class User {
     public void setFinancialImp(int financialImp) {
         this.financialImp = financialImp;
     }
-
     public String getSalt() {
       return salt;
     }
