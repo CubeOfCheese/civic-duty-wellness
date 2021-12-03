@@ -238,9 +238,22 @@ public class Main {
       ResultSet rs = pstmt.executeQuery();
       if (rs.isBeforeFirst()) {
         rs.next();
-        survey = new Survey(rs.getDate("survey_date"), rs.getInt("physical_perf"), rs.getInt("emotional_perf"),
-        rs.getInt("intellectual_perf"), rs.getInt("social_perf"), rs.getInt("spiritual_perf"),
+        survey = new Survey(new Long(rs.getInt("survey_id")), rs.getDate("survey_date"), rs.getInt("physical_perf"),
+        rs.getInt("emotional_perf"), rs.getInt("intellectual_perf"), rs.getInt("social_perf"), rs.getInt("spiritual_perf"),
         rs.getInt("environmental_perf"), rs.getInt("occupational_perf"), rs.getInt("financial_perf"));
+        PreparedStatement activityPstmt = dbConnection.prepareStatement("SELECT * FROM survey_activity WHERE survey_id = ?");
+        activityPstmt.setInt(1, survey.getSurveyID().intValue());
+        ResultSet actrs = activityPstmt.executeQuery();
+        ArrayList<Activity> activities = new ArrayList<Activity>();
+        if (actrs.isBeforeFirst()) {
+          actrs.next();
+          while (!actrs.isAfterLast()) {
+            activities.add(new Activity(actrs.getInt("survey_id"), actrs.getString("name"), Integer.parseInt(actrs.getString("duration").substring(0,2)),
+            Integer.parseInt(actrs.getString("duration").substring(3,5)), actrs.getInt("intensity")));
+            actrs.next();
+          }
+        }
+        survey.setActivities(activities);
       } else {
         Survey noData = new Survey();
         noData.setSurveyID(new Long(-1));
@@ -267,9 +280,22 @@ public class Main {
         ResultSet rs = pstmt.executeQuery();
         if (rs.isBeforeFirst()) {
           rs.next();
-          survey = new Survey(rs.getDate("survey_date"), rs.getInt("emotional_perf"), rs.getInt("spiritual_perf"),
-          rs.getInt("intellectual_perf"), rs.getInt("physical_perf"), rs.getInt("environmental_perf"),
+          survey = new Survey(new Long(rs.getInt("survey_id")), rs.getDate("survey_date"), rs.getInt("emotional_perf"),
+          rs.getInt("spiritual_perf"), rs.getInt("intellectual_perf"), rs.getInt("physical_perf"), rs.getInt("environmental_perf"),
           rs.getInt("financial_perf"), rs.getInt("social_perf"), rs.getInt("occupational_perf"));
+          PreparedStatement activityPstmt = dbConnection.prepareStatement("SELECT * FROM survey_activity WHERE survey_id = ?");
+          activityPstmt.setInt(1, survey.getSurveyID().intValue());
+          ResultSet actrs = activityPstmt.executeQuery();
+          ArrayList<Activity> activities = new ArrayList<Activity>();
+          if (actrs.isBeforeFirst()) {
+            actrs.next();
+            while (!actrs.isAfterLast()) {
+              activities.add(new Activity(actrs.getInt("survey_id"), actrs.getString("name"), Integer.parseInt(actrs.getString("duration").substring(0,2)),
+              Integer.parseInt(actrs.getString("duration").substring(3,5)), actrs.getInt("intensity")));
+              actrs.next();
+            }
+          }
+          survey.setActivities(activities);
         } else {
           Survey noData = new Survey();
           noData.setSurveyID(new Long(-1));
