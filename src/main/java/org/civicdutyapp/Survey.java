@@ -1,5 +1,6 @@
 package org.civicdutyapp;
 
+import java.util.List;
 import java.sql.Date;
 
 public class Survey {
@@ -14,12 +15,14 @@ public class Survey {
     private int environmentalPerf;
     private int occupationalPerf;
     private int financialPerf;
+    private List<Activity> activities;
 
     public Survey() {}
 
     public Survey(long surveyId, int userId, Date date,
     int phyPerf, int emPerf, int intPerf, int socPerf,
-    int spiPerf, int envPerf, int occuPerf, int finPerf) {
+    int spiPerf, int envPerf, int occuPerf, int finPerf,
+    List<Activity> activities) {
         this.surveyId  = surveyId;
         this.userId = userId;
         this.surveyDate = date;
@@ -31,6 +34,7 @@ public class Survey {
         this.environmentalPerf = envPerf;
         this.occupationalPerf = occuPerf;
         this.financialPerf = finPerf;
+        this.activities = activities;
     }
 
     public Survey(int userId, Date date,
@@ -66,6 +70,9 @@ public class Survey {
     }
     public void setSurveyID(Long surveyId) {
         this.surveyId = surveyId;
+        for (int i = 0; i < activities.size(); i++) {
+          activities.get(i).setSurveyID(surveyId.intValue());
+        }
     }
     public int getUserID() {
         return userId;
@@ -127,10 +134,19 @@ public class Survey {
     public void setFinancialPerf(int financialPerf) {
         this.financialPerf = financialPerf;
     }
+    public List<Activity> getActivities() {
+        return activities;
+    }
+    public void setActivities(List<Activity> activities) {
+        this.activities = activities;
+    }
+    public int countActivities() {
+      return activities.size();
+    }
 
     @Override
     public String toString() {
-        return "Survey{" +
+        String out = "Survey{" +
                 "userId='" + userId + '\'' +
                 ", surveyDate='" + surveyDate + '\'' +
                 ", physicalPerf=" + physicalPerf +
@@ -140,7 +156,11 @@ public class Survey {
                 ", spiritualPerf=" + spiritualPerf +
                 ", environmentalPerf=" + environmentalPerf +
                 ", occupationalPerf=" + occupationalPerf +
-                ", financialPerf=" + financialPerf +
-                '}';
+                ", financialPerf=" + financialPerf + "\n";
+        for (int i = 0; i < activities.size(); i++) {
+                out = out + "\t" + activities.get(i).toString() + ",\n";
+        }
+        out = out + '}';
+        return out;
     }
 }

@@ -305,6 +305,25 @@ public class Main {
         pstmt.setInt(9, survey.getOccupationalPerf());
         pstmt.setInt(10, survey.getFinancialPerf());
         pstmt.executeUpdate();
+        PreparedStatement survIdPstmt = dbConnection.prepareStatement("SELECT survey_id FROM survey WHERE user_id = ? AND survey_date = ?");
+        survIdPstmt.setInt(1, survey.getUserID());
+        survIdPstmt.setDate(2, survey.getSurveyDate());
+        ResultSet rs = survIdPstmt.executeQuery();
+        if (rs.isBeforeFirst()) {
+          rs.next();
+          survey.setSurveyID(new Long(rs.getInt("survey_id")));
+        } else {
+          return new ResponseEntity<>("", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        for (int i = 0; i < survey.countActivities(); i++) {
+          PreparedStatement actPstmt = dbConnection.prepareStatement("INSERT INTO survey_activity "
+          + "(survey_id, name, duration, intensity) VALUES (?,?,?::interval,?)");
+          actPstmt.setInt(1, survey.getSurveyID().intValue());
+          actPstmt.setString(2, survey.getActivities().get(i).getActivityName());
+          actPstmt.setString(3, survey.getActivities().get(i).getDuration());
+          actPstmt.setInt(4, survey.getActivities().get(i).getIntensity());
+          actPstmt.executeUpdate();
+        }
       } catch(Exception e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
       }
