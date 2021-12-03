@@ -48,6 +48,19 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+    
+<!-- OAuth Attempt Here -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-oauth2-client</artifactId>
+    </dependency>
+    <!-- <dependency>
+        <groupId>org.webjars</groupId>
+        <artifactId>js-cookie</artifactId>
+        <version>2.1.0</version>
+    </dependency> -->
+<!-- End OAuth attempt -->
+
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>

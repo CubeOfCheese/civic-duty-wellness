@@ -8,3 +8,4 @@ src/main/resources/static
 .project
 .settings/
 .vscode/
+application.yml

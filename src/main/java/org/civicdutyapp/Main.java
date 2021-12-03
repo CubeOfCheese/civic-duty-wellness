@@ -40,10 +40,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 import java.util.TimeZone;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+// Oauth imports
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Controller
 @SpringBootApplication
@@ -63,6 +72,34 @@ public class Main {
   String index() {
     return "index";
   }
+
+// oauth attempt
+
+  @GetMapping("/user")
+  public Map<String, Object> user(@AuthenticationPrincipal OAuth2User principal) {
+      return Collections.singletonMap("name", principal.getAttribute("name"));
+  }
+  protected void configure(HttpSecurity http) throws Exception {
+    // @formatter:off
+      http
+          .authorizeRequests(a -> a
+              .antMatchers("/", "/error", "/webjars/**").permitAll()
+              .anyRequest().authenticated()
+          )
+          .logout(l -> l
+            .logoutSuccessUrl("/").permitAll()
+        )
+        // .csrf(c -> c
+        //     .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+        // )
+          .exceptionHandling(e -> e
+              .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+          )
+          .oauth2Login();
+      // @formatter:on
+  }
+
+  // End oauth attempt
 
   @PostMapping(path = "/registration/attempt", consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> requestRegistration(@RequestBody String data) {
@@ -166,38 +203,38 @@ public class Main {
     return new ResponseEntity<>("", HttpStatus.OK);
   }
 
-  @ResponseBody
-  @GetMapping(path = "/user/{id}", produces = "application/json; charset=UTF-8")
-  ResponseEntity<?> user(@PathVariable Integer id) {
-    User user = new User();
-    try(Connection dbConnection = dataSource.getConnection()) {
-      PreparedStatement pstmt = dbConnection.prepareStatement("SELECT * FROM civic_duty_user WHERE user_id = ?");
-      pstmt.setInt(1, id);
-      ResultSet rs = pstmt.executeQuery();
-      rs.next();
-      user.setUserID(rs.getLong("user_id"));
-      user.setFname(rs.getString("fname"));
-      user.setLname(rs.getString("lname"));
-      user.setUserType(rs.getString("user_type").charAt(0));
-      user.setEmail(rs.getString("email"));
-      user.setPhone(rs.getString("phone_number"));
-      user.setZip(rs.getInt("zip_code"));
-      user.setDOB(rs.getDate("dob"));
-      user.setGender(rs.getString("gender"));
-      user.setEthnicity(rs.getString("ethnicity"));
-      user.setPhysicalImp(rs.getInt("physical_imp"));
-      user.setEmotionalImp(rs.getInt("emotional_imp"));
-      user.setIntellectualImp(rs.getInt("intellectual_imp"));
-      user.setSocialImp(rs.getInt("social_imp"));
-      user.setSpiritualImp(rs.getInt("spiritual_imp"));
-      user.setEnvironmentalImp(rs.getInt("environmental_imp"));
-      user.setOccupationalImp(rs.getInt("occupational_imp"));
-      user.setFinancialImp(rs.getInt("financial_imp"));
-    } catch(Exception e) {
-      return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    return new ResponseEntity<>(user, HttpStatus.OK);
-  }
+  // @ResponseBody
+  // @GetMapping(path = "/user/{id}", produces = "application/json; charset=UTF-8")
+  // ResponseEntity<?> user(@PathVariable Integer id) {
+  //   User user = new User();
+  //   try(Connection dbConnection = dataSource.getConnection()) {
+  //     PreparedStatement pstmt = dbConnection.prepareStatement("SELECT * FROM civic_duty_user WHERE user_id = ?");
+  //     pstmt.setInt(1, id);
+  //     ResultSet rs = pstmt.executeQuery();
+  //     rs.next();
+  //     user.setUserID(rs.getLong("user_id"));
+  //     user.setFname(rs.getString("fname"));
+  //     user.setLname(rs.getString("lname"));
+  //     user.setUserType(rs.getString("user_type").charAt(0));
+  //     user.setEmail(rs.getString("email"));
+  //     user.setPhone(rs.getString("phone_number"));
+  //     user.setZip(rs.getInt("zip_code"));
+  //     user.setDOB(rs.getDate("dob"));
+  //     user.setGender(rs.getString("gender"));
+  //     user.setEthnicity(rs.getString("ethnicity"));
+  //     user.setPhysicalImp(rs.getInt("physical_imp"));
+  //     user.setEmotionalImp(rs.getInt("emotional_imp"));
+  //     user.setIntellectualImp(rs.getInt("intellectual_imp"));
+  //     user.setSocialImp(rs.getInt("social_imp"));
+  //     user.setSpiritualImp(rs.getInt("spiritual_imp"));
+  //     user.setEnvironmentalImp(rs.getInt("environmental_imp"));
+  //     user.setOccupationalImp(rs.getInt("occupational_imp"));
+  //     user.setFinancialImp(rs.getInt("financial_imp"));
+  //   } catch(Exception e) {
+  //     return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+  //   }
+  //   return new ResponseEntity<>(user, HttpStatus.OK);
+  // }
 
   @ResponseBody
   @PostMapping(path = "/user/salt", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json; charset=UTF-8")
