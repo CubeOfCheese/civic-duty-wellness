@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Form } from 'react-bootstrap';
+import $ from 'jquery';
 
 export default class UserWellnessSurvey extends Component {
   constructor() {
@@ -16,11 +18,18 @@ export default class UserWellnessSurvey extends Component {
         environmentalPerf: null,
         occupationalPerf: null,
         financialPerf: null,
+        activities: [],
+      },
+      currentActivityIsComplete: null,
+      currentActivity: {
+        activityName: '', hours: null, minutes: null, intensity: null,
       },
     };
     this.handlePerformanceChange = this.handlePerformanceChange.bind(this);
     this.handleDate = this.handleDate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleActivityChange.bind(this);
+    this.handleAddActivity = this.handleAddActivity.bind(this);
   }
 
   handlePerformanceChange(event) {
@@ -71,6 +80,43 @@ export default class UserWellnessSurvey extends Component {
     });
   }
 
+  handleActivityChange(event, key) {
+    const { currentActivity } = this.state;
+    const newCurrentActivity = currentActivity;
+    newCurrentActivity[key] = event.target.value;
+    this.setState({
+      currentActivity: newCurrentActivity,
+    });
+  }
+
+  handleAddActivity() {
+    const { currentActivity, surveyInfo } = this.state;
+    const { activities } = surveyInfo;
+    const currentActivtyIsDefined = Object.values(currentActivity).every((val) => (val !== null && val !== '' && typeof val !== 'undefined'));
+    if (currentActivtyIsDefined) {
+      activities.push(
+        {
+          activityName: currentActivity.activityName,
+          hours: currentActivity.hours,
+          minutes: currentActivity.minutes,
+          intensity: currentActivity.intensity,
+        },
+      );
+      this.setState({
+        currentActivityIsComplete: true,
+      });
+      $(document).ready(() => {
+        window.$('#survey-activities-popup').modal();
+        window.$('#survey-activities-popup').modal('hide');
+        window.$('#activityForm').trigger('reset');
+      });
+    } else {
+      this.setState({
+        currentActivityIsComplete: false,
+      });
+    }
+  }
+
   handleSubmit() {
     const url = '/survey/add';
     const { surveyInfo } = this.state;
@@ -90,7 +136,9 @@ export default class UserWellnessSurvey extends Component {
   }
 
   render() {
-    const { invalidDate } = this.state;
+    const { invalidDate, currentActivityIsComplete, surveyInfo } = this.state;
+    const { activities } = surveyInfo;
+
     return (
       <div>
         <h2 className="bg-primary text-center text-light mb-5 p-3">Wellness Survey</h2>
@@ -233,28 +281,114 @@ export default class UserWellnessSurvey extends Component {
                   </tbody>
                 </table>
               </div>
+              <div className="my-5 w-75 px-5 mx-auto bg-secondary text-white text-right">
+                <h3 className="text-center">Activities</h3>
+                <div className="w-50 mx-auto">
+                  {activities.length > 0 ? (
+                    <div className="row">
+                      <p className="col">Activity</p>
+                      <p className="col">Duration</p>
+                      <p className="col">Intensity</p>
+                    </div>
+                  )
+                    : null}
+                  {
+                    activities.map((item) => (
+                      <div className="row">
+                        <p className="col">{item.activityName}</p>
+                        <p className="col">
+                          {item.hours}
+                          :
+                          {item.minutes}
+                        </p>
+                        <p className="col">{item.intensity}</p>
+                      </div>
+                    ))
+                  }
+                </div>
+                <button type="button" className="btn btn-outline-light my-3" data-toggle="modal" data-target="#survey-activities-popup">
+                  Add Activity
+                </button>
+              </div>
               <input id="survey-submit-button" className="m-3 btn btn-outline-primary" type="button" value="Submit" onClick={this.handleSubmit} />
             </div>
           )
             : null}
         </form>
+        <div className="modal fade" id="survey-activities-popup" tabIndex="-1" role="dialog" aria-labelledby="survey-activities-popup" aria-hidden="true">
+          <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLongTitle">Add Activity</h5>
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <form id="activityForm">
+                  <Form.Group className="mb-3" controlId="formBasicActivityName">
+                    <Form.Label>Activity Name</Form.Label>
+                    <div className="row mx-2">
+                      <Form.Control
+                        type="text"
+                        placeholder="Activity Name"
+                        onBlur={(e) => this.handleActivityChange(e, 'activityName')}
+                      />
+                    </div>
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="formBasicActivityDuration">
+                    <Form.Label>Duration</Form.Label>
+                    <div className="row mx-2">
+                      <Form.Control
+                        type="number"
+                        placeholder="00"
+                        name="durationHours"
+                        className="w-25"
+                        min="0"
+                        onBlur={(e) => this.handleActivityChange(e, 'hours')}
+                      />
+                      :
+                      <Form.Control
+                        type="number"
+                        placeholder="00"
+                        name="durationMinutes"
+                        className="w-25"
+                        min="0"
+                        onBlur={(e) => this.handleActivityChange(e, 'minutes')}
+                      />
+                    </div>
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="formBasicActivityIntensity">
+                    <Form.Label>Intensity</Form.Label>
+                    <div className="row mx-2">
+                      <Form.Label className="col text-center">Low</Form.Label>
+                      <Form.Label className="col text-center">Medium</Form.Label>
+                      <Form.Label className="col text-center">High</Form.Label>
+                    </div>
+                    <div className="row mx-2" onBlur={(e) => this.handleActivityChange(e, 'intensity')}>
+                      <input type="radio" name="Intensity" className="col" value="1" />
+                      <input type="radio" name="Intensity" className="col" value="2" />
+                      <input type="radio" name="Intensity" className="col" value="3" />
+                    </div>
+                  </Form.Group>
+                </form>
+                {currentActivityIsComplete === false ? (
+                  <div>
+                    <p className="alert alert-danger fade show" role="alert">
+                      Activity is not completed. Fill in all sections before submitting.
+                    </p>
+                  </div>
+                )
+                  : null}
+              </div>
 
-        {/*
-          <form id="survey-activities-popup" action="/action_page.php" className="form-container">
-            <h1>Add Activity</h1>
-            <label htmlFor="activity">
-              <b>Activity</b>
-              <input type="text" placeholder="Activity Name" name="activity" />
-            </label>
-            <label htmlFor="Duration">
-              <b>Duration</b>
-              <input type="time" name="duration" />
-            </label>
-            <button type="button" class="btn btn-outline-light">Add</button>
-            <button type="button" class="btn btn-outline-light" onClick="*closeForm()">
-              Close
-            </button>
-        */}
+              <div className="modal-footer">
+                <button type="button" className="btn btn-primary" data-dismiss="modal">Close</button>
+                <button type="submit" className="btn btn-primary" onClick={(e) => this.handleAddActivity(e)}>Add</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
