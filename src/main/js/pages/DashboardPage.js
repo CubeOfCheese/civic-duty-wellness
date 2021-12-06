@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Radar } from 'react-chartjs-2';
-import moment from 'moment';
 
 export default class Dashboard extends Component {
   constructor() {
@@ -26,6 +25,8 @@ export default class Dashboard extends Component {
       environmentalImp: null,
       occupationalImp: null,
       financialImp: null,
+
+      activities: [],
     };
     this.handleDate = this.handleDate.bind(this);
   }
@@ -43,6 +44,7 @@ export default class Dashboard extends Component {
         environmentalPerf: obj.environmentalPerf,
         occupationalPerf: obj.occupationalPerf,
         financialPerf: obj.financialPerf,
+        activities: obj.activities,
       }));
 
     fetch('/user/1')
@@ -94,6 +96,15 @@ export default class Dashboard extends Component {
             occupationalPerf: obj.occupationalPerf,
             financialPerf: obj.financialPerf,
           });
+          if (obj.activities !== null) {
+            this.setState({
+              activities: obj.activities,
+            });
+          } else {
+            this.setState({
+              activities: [],
+            });
+          }
         })
         .catch((error) => {
           // eslint-disable-next-line no-console
@@ -104,7 +115,7 @@ export default class Dashboard extends Component {
 
   render() {
     const {
-      surveyDate, invalidDate,
+      surveyDate, invalidDate, activities,
       physicalPerf, emotionalPerf, intellectualPerf, socialPerf,
       spiritualPerf, environmentalPerf, occupationalPerf, financialPerf,
       physicalImp, emotionalImp, intellectualImp, socialImp,
@@ -169,6 +180,7 @@ export default class Dashboard extends Component {
         },
       },
     };
+
     return (
       <div>
         <h2 className="bg-primary text-center text-light mb-5 p-3">Profile</h2>
@@ -181,8 +193,6 @@ export default class Dashboard extends Component {
             <Radar data={data} options={options} />
           </div>
           <div className="text-center w-75 pb-3 mx-auto my-5 bg-secondary text-white">
-            <h3>Showing Performance For:</h3>
-            <input type="date" name="chosen-date" value={surveyDate} onChange={(e) => this.handleDate(e)} max={moment().format('YYYY-MM-DD')} />
             {invalidDate ? (
               <div className="alert alert-danger" role="alert">
                 There is no survey that was completed on this date
@@ -190,8 +200,36 @@ export default class Dashboard extends Component {
             )
               : null}
           </div>
-          <a href="/importance" className="my-3 btn btn-outline-light">Reevaluate Importance</a>
+          <a href="/importance" className="mt-2 mb-1 btn btn-outline-light">Reevaluate Importance</a>
         </div>
+        { activities.length ? (
+          <div className="bg-secondary text-light w-75 h3 text-center mt-5 mx-auto my-5 pb-3 pt-3">
+            <div className="w-75 text-center mx-auto my-3">
+              {activities.length > 0 ? (
+                <div className="row">
+                  <p className="col">Activity</p>
+                  <p className="col">Duration</p>
+                  <p className="col">Intensity</p>
+                </div>
+              )
+                : null}
+              {
+              activities.map((item) => (
+                <div className="row">
+                  <p className="col">{item.activityName}</p>
+                  <p className="col">
+                    {item.hours}
+                    :
+                    {item.minutes}
+                  </p>
+                  <p className="col">{item.intensity}</p>
+                </div>
+              ))
+            }
+            </div>
+          </div>
+        )
+          : null}
       </div>
     );
   }
