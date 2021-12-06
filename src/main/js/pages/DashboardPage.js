@@ -115,8 +115,8 @@ export default class Dashboard extends Component {
         'Spiritual', 'Environmental', 'Occupational', 'Financial'],
       datasets: [{
         label: 'Survey Performance',
-        backgroundColor: 'rgba(0,75,58,0.2)',
-        borderColor: 'rgba(0,75,58,0.5)',
+        backgroundColor: 'rgba(255, 255, 255,0.2)',
+        borderColor: 'rgba(255, 255, 255,0.5)',
         data: [
           physicalPerf, emotionalPerf, intellectualPerf, socialPerf,
           spiritualPerf, environmentalPerf, occupationalPerf, financialPerf,
@@ -124,8 +124,8 @@ export default class Dashboard extends Component {
       },
       {
         label: 'My Importance',
-        backgroundColor: 'rgba(217,83,79,0.2)',
-        borderColor: 'rgba(217,83,79,0.5)',
+        backgroundColor: 'rgba(0, 0, 0,0.2)',
+        borderColor: 'rgba(0, 0, 0,0.5)',
         data: [
           physicalImp, emotionalImp, intellectualImp, socialImp,
           spiritualImp, environmentalImp, occupationalImp, financialImp,
@@ -146,7 +146,7 @@ export default class Dashboard extends Component {
       scales: {
         r: {
           angleLines: {
-            color: 'rgba(255,255,255, 0.2',
+            color: ['red', 'orange', 'yellow', 'green', 'rgba(34, 157, 181, 1)', 'rgba(32, 23, 99, 1)', 'rgba(81, 31, 130, 1)', 'rgba(252, 3, 148,1)'],
           },
           grid: {
             color: 'rgba(255,255,255, 0.2',
