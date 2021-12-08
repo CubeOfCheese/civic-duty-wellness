@@ -146,7 +146,7 @@ public class Main {
       try(Connection dbConnection = dataSource.getConnection()) {
         PreparedStatement pstmt = dbConnection.prepareStatement("UPDATE civic_duty_user SET"
         + "(physical_imp, emotional_imp, intellectual_imp, social_imp, spiritual_imp, environmental_imp, occupational_imp,"
-        + "financial_imp,) = (?,?,?,?,?,?,?,?) WHERE user_id = ?");
+        + "financial_imp) = (?,?,?,?,?,?,?,?) WHERE user_id = ?");
         pstmt.setInt(1, importance.getPhysicalImp());
         pstmt.setInt(2, importance.getEmotionalImp());
         pstmt.setInt(3, importance.getIntellectualImp());
