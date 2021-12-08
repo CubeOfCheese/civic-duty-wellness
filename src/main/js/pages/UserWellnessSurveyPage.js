@@ -10,7 +10,7 @@ export default class UserWellnessSurvey extends Component {
       complete: false,
       invalidDate: -1,
       surveyInfo: {
-        userId: 1,
+        userId: window.localStorage.getItem('userId'),
         surveyDate: '',
         physicalPerf: null,
         emotionalPerf: null,
@@ -63,7 +63,6 @@ export default class UserWellnessSurvey extends Component {
         }),
         body: JSON.stringify({ surveyDate }),
       };
-      // console.log(surveyDate);
       fetch(url, request)
         .then((response) => response.json())
         .then((obj) => {
