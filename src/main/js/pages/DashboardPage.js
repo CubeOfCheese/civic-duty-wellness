@@ -202,7 +202,7 @@ export default class Dashboard extends Component {
           </div>
           <a href="/importance" className="mt-2 mb-1 btn btn-outline-light">Reevaluate Importance</a>
         </div>
-        { activities.length ? (
+        { activities && activities.length ? (
           <div className="bg-secondary text-light w-75 h3 text-center mt-5 mx-auto my-5 pb-3 pt-3">
             <div className="w-75 text-center mx-auto my-3">
               {activities.length > 0 ? (
