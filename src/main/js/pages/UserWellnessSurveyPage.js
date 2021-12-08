@@ -150,6 +150,9 @@ export default class UserWellnessSurvey extends Component {
       invalidDate, currentActivityIsComplete, surveyInfo, complete,
     } = this.state;
     const { activities } = surveyInfo;
+    const now = new Date();
+    // Substring to include only the date and not the time
+    const maxDate = now.toISOString().substring(0, 10);
     if (complete) {
       return (<Redirect to="/" />);
     }
@@ -159,7 +162,7 @@ export default class UserWellnessSurvey extends Component {
         <form className="text-center">
           <div className="text-center w-75 pb-3 mx-auto my-5 bg-secondary text-white">
             <h3>Select Date for Survey</h3>
-            <input type="date" name="chosen-date" onChange={(e) => this.handleDate(e)} />
+            <input type="date" name="chosen-date" max={maxDate} onChange={(e) => this.handleDate(e)} />
             {invalidDate === 1 ? (
               <p className="alert alert-danger alert-dismissible fade show" role="alert">
                 Survey already exists for selected date.
@@ -359,6 +362,7 @@ export default class UserWellnessSurvey extends Component {
                         name="durationHours"
                         className="w-25"
                         min="0"
+                        max="24"
                         onBlur={(e) => this.handleActivityChange(e, 'hours')}
                       />
                       :
@@ -368,6 +372,7 @@ export default class UserWellnessSurvey extends Component {
                         name="durationMinutes"
                         className="w-25"
                         min="0"
+                        max="59"
                         onBlur={(e) => this.handleActivityChange(e, 'minutes')}
                       />
                     </div>

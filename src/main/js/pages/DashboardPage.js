@@ -201,18 +201,18 @@ export default class Dashboard extends Component {
         <div className="text-center w-75 pb-3 mx-auto my-5 bg-secondary text-white">
           <h4>Show Performance for</h4>
           <input type="date" name="chosen-date" value={surveyDate} onChange={(e) => this.handleDate(e)} />
+          {invalidDate ? (
+            <div className="text-center w-75 pb-3 mx-auto my-5 bg-secondary text-white">
+              <div className="alert alert-danger" role="alert">
+                There is no survey that was completed on this date
+              </div>
+            </div>
+          )
+            : null}
         </div>
         <div className="bg-secondary p-5 mx-auto w-75 d-flex align-items-center flex-column">
           <div style={{ height: '60vh', width: '60vh' }}>
             <Radar data={data} options={options} />
-          </div>
-          <div className="text-center w-75 pb-3 mx-auto my-5 bg-secondary text-white">
-            {invalidDate ? (
-              <div className="alert alert-danger" role="alert">
-                There is no survey that was completed on this date
-              </div>
-            )
-              : null}
           </div>
           <Link to="/importance" className="mt-2 mb-1 btn btn-outline-light">Reevaluate Importance</Link>
         </div>
