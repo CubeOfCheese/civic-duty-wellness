@@ -294,9 +294,10 @@ public class Main {
         ResultSet rs = pstmt.executeQuery();
         if (rs.isBeforeFirst()) {
           rs.next();
-          survey = new Survey(new Long(rs.getInt("survey_id")), rs.getDate("survey_date"), rs.getInt("emotional_perf"),
-          rs.getInt("spiritual_perf"), rs.getInt("intellectual_perf"), rs.getInt("physical_perf"), rs.getInt("environmental_perf"),
-          rs.getInt("financial_perf"), rs.getInt("social_perf"), rs.getInt("occupational_perf"));
+          survey = new Survey(new Long(rs.getInt("survey_id")), rs.getDate("survey_date"), rs.getInt("physical_perf"),
+                  rs.getInt("emotional_perf"), rs.getInt("intellectual_perf"), rs.getInt("social_perf"),
+                  rs.getInt("spiritual_perf"), rs.getInt("environmental_perf"), rs.getInt("occupational_perf"),
+                  rs.getInt("financial_perf"));
           PreparedStatement activityPstmt = dbConnection.prepareStatement("SELECT * FROM survey_activity WHERE survey_id = ?");
           activityPstmt.setInt(1, survey.getSurveyID().intValue());
           ResultSet actrs = activityPstmt.executeQuery();
@@ -345,6 +346,7 @@ public class Main {
         pstmt.setInt(9, survey.getOccupationalPerf());
         pstmt.setInt(10, survey.getFinancialPerf());
         pstmt.executeUpdate();
+
         PreparedStatement survIdPstmt = dbConnection.prepareStatement("SELECT survey_id FROM survey WHERE user_id = ? AND survey_date = ?");
         survIdPstmt.setInt(1, survey.getUserID());
         survIdPstmt.setDate(2, survey.getSurveyDate());
