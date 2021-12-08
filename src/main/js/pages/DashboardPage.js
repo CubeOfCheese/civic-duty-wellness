@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Radar } from 'react-chartjs-2';
+import { Link } from 'react-router-dom';
 
 export default class Dashboard extends Component {
   constructor() {
@@ -213,7 +214,7 @@ export default class Dashboard extends Component {
             )
               : null}
           </div>
-          <a href="/importance" className="mt-2 mb-1 btn btn-outline-light">Reevaluate Importance</a>
+          <Link to="/importance" className="mt-2 mb-1 btn btn-outline-light">Reevaluate Importance</Link>
         </div>
         { activities && activities.length ? (
           <div className="bg-secondary text-light w-75 h3 text-center mt-5 mx-auto my-5 pb-3 pt-3">

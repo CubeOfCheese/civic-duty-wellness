@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { Form } from 'react-bootstrap';
 import $ from 'jquery';
+import { Redirect } from 'react-router';
 
 export default class UserWellnessSurvey extends Component {
   constructor() {
     super();
     this.state = {
+      complete: false,
       invalidDate: -1,
       surveyInfo: {
         userId: 1,
@@ -136,7 +138,7 @@ export default class UserWellnessSurvey extends Component {
     };
     fetch(url, request)
       .then(() => {
-        window.location.href = '/';
+        this.setState({ complete: true });
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
@@ -145,9 +147,13 @@ export default class UserWellnessSurvey extends Component {
   }
 
   render() {
-    const { invalidDate, currentActivityIsComplete, surveyInfo } = this.state;
+    const {
+      invalidDate, currentActivityIsComplete, surveyInfo, complete,
+    } = this.state;
     const { activities } = surveyInfo;
-
+    if (complete) {
+      return (<Redirect to="/" />);
+    }
     return (
       <div>
         <h2 className="bg-primary text-center text-light mb-5 p-3">Wellness Survey</h2>
