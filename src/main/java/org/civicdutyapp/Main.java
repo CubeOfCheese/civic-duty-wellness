@@ -23,16 +23,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -55,6 +55,15 @@ public class Main {
   @Autowired
   private DataSource dataSource;
 
+  @Autowired
+  private AuthenticationManager authenticationManager;
+
+  @Autowired
+  private CDUserDetailsService userDetailsService;
+
+  @Autowired
+  private JwtUtil jwtTokenUtil;
+
   public static void main(String[] args) throws Exception {
     SpringApplication.run(Main.class, args);
   }
@@ -64,10 +73,33 @@ public class Main {
     return "index";
   }
 
+  @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+  public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+    try {
+      authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword()));
+    } catch (BadCredentialsException e) {
+      throw new Exception("Incorrect email or password");
+    }
+    final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
+    final User user = new User();
+    try(Connection dbConnection = dataSource.getConnection()) {
+      PreparedStatement pstmt = dbConnection.prepareStatement("SELECT * FROM civic_duty_user WHERE email = ?");
+      pstmt.setString(1, authenticationRequest.getEmail());
+      ResultSet rs = pstmt.executeQuery();
+      rs.next();
+      user.setUserID(rs.getLong("user_id"));
+    }
+    final String jwt = jwtTokenUtil.generateToken(userDetails);
+
+    return ResponseEntity.ok(new AuthenticationResponse(user, jwt));
+  }
+
   @PostMapping(path = "/registration/attempt", consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> requestRegistration(@RequestBody String data) {
     ObjectMapper objectMapper = new ObjectMapper();
     objectMapper.setTimeZone(TimeZone.getDefault());
+    String jwt;
+    User user = new User();
     try {
       User registrationAttempt = objectMapper.readValue(data, User.class);
       try(Connection dbConnection = dataSource.getConnection()) {
@@ -102,40 +134,22 @@ public class Main {
         else {
           return new ResponseEntity<>("FAILURE", HttpStatus.BAD_REQUEST);
         }
-      } catch(Exception e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-      }
-    } catch(JsonProcessingException e) {
-      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-    return new ResponseEntity<>("", HttpStatus.OK);
-  }
 
-  @PostMapping(path = "/login/attempt", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<?> requestLogin(@RequestBody String data) {
-    ObjectMapper objectMapper = new ObjectMapper();
-    try {
-      User loginAttempt = objectMapper.readValue(data, User.class);
-      try(Connection dbConnection = dataSource.getConnection()) {
-        PreparedStatement pstmt = dbConnection.prepareStatement("SELECT password FROM civic_duty_user WHERE email = ?");
-        pstmt.setString(1, loginAttempt.getEmail());
-        ResultSet rs = pstmt.executeQuery();
-        if (rs.isBeforeFirst()) {
-          rs.next();
-          if (!rs.getString("password").equals(loginAttempt.getPassword())) {
-            return new ResponseEntity<>("FAILURE", HttpStatus.BAD_REQUEST);
-          }
-        }
-        else {
-          return new ResponseEntity<>("FAILURE", HttpStatus.BAD_REQUEST);
-        }
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(registrationAttempt.getEmail());
+        PreparedStatement jwtPstmt = dbConnection.prepareStatement("SELECT * FROM civic_duty_user WHERE email = ?");
+        jwtPstmt.setString(1, registrationAttempt.getEmail());
+        ResultSet jwtResponse = jwtPstmt.executeQuery();
+        jwtResponse.next();
+        user.setUserID(jwtResponse.getLong("user_id"));
+        jwt = jwtTokenUtil.generateToken(userDetails);
       } catch(Exception e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
       }
     } catch(JsonProcessingException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
-    return new ResponseEntity<>("", HttpStatus.OK);
+
+    return ResponseEntity.ok(new AuthenticationResponse(user, jwt));
   }
 
   @PostMapping(path = "/user/{id}/importance/update", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -377,17 +391,6 @@ public class Main {
     } catch (Exception e) {
       model.put("message", e.getMessage());
       return "error";
-    }
-  }
-
-  @Bean
-  public DataSource dataSource() throws SQLException {
-    if (dbUrl == null || dbUrl.isEmpty()) {
-      return new HikariDataSource();
-    } else {
-      HikariConfig config = new HikariConfig();
-      config.setJdbcUrl(dbUrl);
-      return new HikariDataSource(config);
     }
   }
 }

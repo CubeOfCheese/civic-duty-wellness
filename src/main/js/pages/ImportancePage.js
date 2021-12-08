@@ -23,8 +23,15 @@ export default class ImportancePage extends Component {
   }
 
   componentDidMount() {
-    // retrieve Impormance data from dummy backend route
-    fetch('/user/1')
+    const jwt = window.localStorage.getItem('jwt');
+    const userId = window.localStorage.getItem('userId');
+    const request = {
+      method: 'GET',
+      headers: ({
+        Authorization: `Bearer ${jwt}`,
+      }),
+    };
+    fetch(`/user/${userId}`, request)
       .then((response) => response.json())
       .then((user) => this.setState({
         importanceInfo: {
@@ -51,11 +58,16 @@ export default class ImportancePage extends Component {
   }
 
   handleSubmit() {
-    const url = '/user/1/importance/update';
+    const userId = window.localStorage.getItem('userId');
+    const url = `/user/${userId}/importance/update`;
     const { importanceInfo } = this.state;
+    const jwt = window.localStorage.getItem('jwt');
     const request = {
       method: 'POST',
-      headers: ({ 'Content-Type': 'application/json' }),
+      headers: ({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
+      }),
       body: JSON.stringify(importanceInfo),
     };
     fetch(url, request)

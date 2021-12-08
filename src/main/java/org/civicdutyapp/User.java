@@ -1,8 +1,12 @@
 package org.civicdutyapp;
 
-import java.sql.Date;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-public class User {
+import java.sql.Date;
+import java.util.Collection;
+
+public class User implements UserDetails {
     private Long userId;
     private String fname;
     private String lname;
@@ -23,6 +27,7 @@ public class User {
     private int environmentalImp;
     private int occupationalImp;
     private int financialImp;
+    private Collection<? extends GrantedAuthority> authorities;
 
     public User() {}
 
@@ -77,6 +82,10 @@ public class User {
         this.userType = userType;
     }
     public String getEmail() {
+        return email;
+    }
+    @Override
+    public String getUsername() {
         return email;
     }
     public void setEmail(String email) {
@@ -171,6 +180,27 @@ public class User {
     }
     public void setSalt(String salt) {
       this.salt = salt;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     @Override

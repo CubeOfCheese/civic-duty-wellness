@@ -32,7 +32,15 @@ export default class Dashboard extends Component {
   }
 
   componentDidMount() {
-    fetch('/user/1/survey/recent')
+    const jwt = window.localStorage.getItem('jwt');
+    const userId = window.localStorage.getItem('userId');
+    const request = {
+      method: 'GET',
+      headers: ({
+        Authorization: `Bearer ${jwt}`,
+      }),
+    };
+    fetch(`/user/${userId}/survey/recent`, request)
       .then((response) => response.json())
       .then((obj) => this.setState({
         surveyDate: obj.surveyDate,
@@ -47,7 +55,7 @@ export default class Dashboard extends Component {
         activities: obj.activities,
       }));
 
-    fetch('/user/1')
+    fetch(`/user/${userId}`, request)
       .then((response) => response.json())
       .then((user) => this.setState({
         physicalImp: user.physicalImp,
@@ -63,15 +71,20 @@ export default class Dashboard extends Component {
 
   handleDate(event) {
     const newSurveyDate = event.target.value;
+    const userId = window.localStorage.getItem('userId');
     this.setState({
       surveyDate: newSurveyDate,
     }, () => {
       // retrieve performance data from dummy backend route
       const { surveyDate } = this.state;
-      const url = '/user/1/survey';
+      const url = `/user/${userId}/survey`;
+      const jwt = window.localStorage.getItem('jwt');
       const request = {
         method: 'POST',
-        headers: ({ 'Content-Type': 'application/json' }),
+        headers: ({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${jwt}`,
+        }),
         body: JSON.stringify({ surveyDate }),
       };
       fetch(url, request)
