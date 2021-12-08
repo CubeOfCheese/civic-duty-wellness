@@ -57,7 +57,7 @@ The password is the one used when installing postgresql and connecting to the de
 ```sh
 $ git checkout master
 $ git pull
-$ npm run-script watch
+$ npm run build-deploy
 ```
 delete the line `src/main/resources/static` from .gitignore
 ```sh
