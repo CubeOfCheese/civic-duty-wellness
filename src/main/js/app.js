@@ -34,8 +34,8 @@ export class App extends Component {
             <div className="container-fluid">
               <div className="navbar-header">
                 <Link className="navbar-brand row" to="/">
-                  <img className="col" style={{ width: '100px' }} src="civicduty-edited.png" alt="civic duty logo" />
-                  <div className="col align-self-center">
+                  <img className="col" style={{ width: '100px' }} src="images/civicduty-edited.png" alt="civic duty logo" />
+                  <div className="col">
                     <p className="h3">Civic Duty</p>
                     <p>Wellness for the People</p>
                   </div>

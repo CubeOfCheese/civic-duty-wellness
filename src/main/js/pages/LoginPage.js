@@ -34,8 +34,7 @@ export default class LoginPage extends Component {
     const { changeAuth } = this.props;
     const { loginInfo } = this.state;
     const { password } = loginInfo;
-    const url = '/login/attempt';
-
+    const url = '/authenticate';
     this.getSalt()
       .then((salt) => {
         const hashedPassword = bcrypt.hashSync(password, salt);
@@ -51,13 +50,17 @@ export default class LoginPage extends Component {
         fetch(url, request)
           .then((response) => {
             if (response.ok) {
-              changeAuth();
-              return;
+              return response.json();
             }
             this.setState({
               invalid: true,
             });
           })
+          .then((obj) => {
+            window.localStorage.setItem('userId', obj.userId);
+            return window.localStorage.setItem('jwt', obj.jwt);
+          })
+          .then(() => changeAuth())
           .catch((error) => {
             // eslint-disable-next-line no-console
             console.error('Error:', error);
@@ -116,7 +119,7 @@ export default class LoginPage extends Component {
             </Form.Group>
             {invalid ? (
               <div className="alert alert-danger" role="alert">
-                Invalid Username and/or Password
+                Invalid Email and/or Password
               </div>
             )
               : null}

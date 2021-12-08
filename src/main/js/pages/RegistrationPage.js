@@ -109,7 +109,9 @@ export default class RegistrationPage extends Component {
       const url = '/registration/attempt';
       const request = {
         method: 'POST',
-        headers: ({ 'Content-Type': 'application/json' }),
+        headers: ({
+          'Content-Type': 'application/json',
+        }),
         body: JSON.stringify(registerInfo),
       };
       fetch(url, request)
@@ -119,13 +121,17 @@ export default class RegistrationPage extends Component {
               complete: true,
               invalid: false,
             });
-            changeAuth();
-            return;
+            return response.json();
           }
           this.setState({
             invalid: true,
           });
         })
+        .then((obj) => {
+          window.localStorage.setItem('userId', obj.userId);
+          return window.localStorage.setItem('jwt', obj.jwt);
+        })
+        .then(() => changeAuth())
         .catch((error) => {
           // eslint-disable-next-line no-console
           console.error('Error:', error);
