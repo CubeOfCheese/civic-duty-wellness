@@ -28,6 +28,8 @@ export default class Dashboard extends Component {
       financialImp: null,
 
       activities: [],
+
+      userFirstName: '',
     };
     this.handleDate = this.handleDate.bind(this);
   }
@@ -129,7 +131,7 @@ export default class Dashboard extends Component {
 
   render() {
     const {
-      surveyDate, invalidDate, activities,
+      userFirstName, surveyDate, invalidDate, activities,
       physicalPerf, emotionalPerf, intellectualPerf, socialPerf,
       spiritualPerf, environmentalPerf, occupationalPerf, financialPerf,
       physicalImp, emotionalImp, intellectualImp, socialImp,
@@ -194,10 +196,11 @@ export default class Dashboard extends Component {
         },
       },
     };
-
+    const profileHeading = `${userFirstName}'s Profile`;
     return (
       <div>
-        <h2 className="bg-primary text-center text-light mb-5 p-3">Profile</h2>
+        {userFirstName === '' ? (<h2 className="bg-primary text-center text-light mb-5 p-3">Profile</h2>)
+          : <h2 className="bg-primary text-center text-light mb-5 p-3">{profileHeading}</h2>}
         <div className="text-center w-75 pb-3 mx-auto my-5 bg-secondary text-white">
           <h4>Show Performance for</h4>
           <input type="date" name="chosen-date" value={surveyDate} onChange={(e) => this.handleDate(e)} />
@@ -217,10 +220,11 @@ export default class Dashboard extends Component {
           <Link to="/importance" className="mt-2 mb-1 btn btn-outline-light">Reevaluate Importance</Link>
         </div>
         { activities && activities.length ? (
-          <div className="bg-secondary text-light w-75 h3 text-center mt-5 mx-auto my-5 pb-3 pt-3">
+          <div className="bg-secondary text-light w-75 text-center mt-5 mx-auto my-5 pb-3 pt-3">
+            <h3>Activities</h3>
             <div className="w-75 text-center mx-auto my-3">
               {activities.length > 0 ? (
-                <div className="row">
+                <div className="row h4">
                   <p className="col">Activity</p>
                   <p className="col">Duration</p>
                   <p className="col">Intensity</p>
