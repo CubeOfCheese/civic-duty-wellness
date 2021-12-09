@@ -32,6 +32,7 @@ export default class UserWellnessSurvey extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleActivityChange = this.handleActivityChange.bind(this);
     this.handleAddActivity = this.handleAddActivity.bind(this);
+    this.dateToFormattedString = this.dateToFormattedString.bind(this);
   }
 
   handlePerformanceChange(event) {
@@ -153,14 +154,21 @@ export default class UserWellnessSurvey extends Component {
       });
   }
 
+  // function provided by http://curlybrackets.co/blog/javascript-date-format-yyyy-mm-dd/
+  dateToFormattedString(d) {
+    const yyyy = d.getFullYear().toString();
+    const mm = (d.getMonth() + 1).toString(); // getMonth() is zero-based
+    const dd = d.getDate().toString();
+    return `${yyyy}-${mm[1] ? mm : `0${mm[0]}`}-${dd[1] ? dd : `0${dd[0]}`}`;
+  }
+
   render() {
     const {
       invalidDate, currentActivityIsComplete, surveyInfo, complete,
     } = this.state;
     const { activities } = surveyInfo;
     const now = new Date();
-    // Substring to include only the date and not the time
-    const maxDate = now.toISOString().substring(0, 10);
+    const maxDate = this.dateToFormattedString(now);
     if (complete) {
       return (<Redirect to="/" />);
     }
