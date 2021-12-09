@@ -99,7 +99,6 @@ export default class ImportancePage extends Component {
         <h2 className="bg-primary text-center text-light mb-5 p-3">Importance</h2>
         <form className="text-center">
           <div className="my-5 w-75 px-5 mx-auto bg-secondary text-white text-right">
-            <h3 className="text-center">Importance</h3>
             <table className="table w-50 mx-auto text-white">
               <thead>
                 <tr>
