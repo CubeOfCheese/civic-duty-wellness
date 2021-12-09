@@ -45,6 +45,9 @@ export class App extends Component {
                 <li className="nav-item">
                   <Link className="nav-link" to="/survey">Wellness Survey</Link>
                 </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/">Dashboard</Link>
+                </li>
               </ul>
             </div>
           </nav>
