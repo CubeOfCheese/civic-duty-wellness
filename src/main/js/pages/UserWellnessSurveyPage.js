@@ -30,7 +30,7 @@ export default class UserWellnessSurvey extends Component {
     this.handlePerformanceChange = this.handlePerformanceChange.bind(this);
     this.handleDate = this.handleDate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleActivityChange.bind(this);
+    this.handleActivityChange = this.handleActivityChange.bind(this);
     this.handleAddActivity = this.handleAddActivity.bind(this);
   }
 
@@ -47,6 +47,10 @@ export default class UserWellnessSurvey extends Component {
   handleDate(event) {
     const { surveyInfo } = this.state;
     const newSurveyInfo = surveyInfo;
+    if (event.target.value === '') {
+      this.setState({ invalidDate: -1 });
+      return;
+    }
     newSurveyInfo.surveyDate = event.target.value;
     this.setState({
       surveyInfo: newSurveyInfo,
@@ -66,7 +70,6 @@ export default class UserWellnessSurvey extends Component {
       fetch(url, request)
         .then((response) => response.json())
         .then((obj) => {
-          // console.log(obj.surveyDate);
           if (obj.surveyID < 0) {
             this.setState({
               invalidDate: 0,
