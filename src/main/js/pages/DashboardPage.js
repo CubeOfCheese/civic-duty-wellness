@@ -196,11 +196,11 @@ export default class Dashboard extends Component {
         },
       },
     };
-    const profileHeading = `${userFirstName}'s Profile`;
+    const dashboardHeading = `${userFirstName}'s Dashboard`;
     return (
       <div>
-        {userFirstName === '' ? (<h2 className="bg-primary text-center text-light mb-5 p-3">Profile</h2>)
-          : <h2 className="bg-primary text-center text-light mb-5 p-3">{profileHeading}</h2>}
+        {userFirstName === '' ? (<h2 className="bg-primary text-center text-light mb-5 p-3">Dashboard</h2>)
+          : <h2 className="bg-primary text-center text-light mb-5 p-3">{dashboardHeading}</h2>}
         <div className="text-center w-75 pb-3 mx-auto my-5 bg-secondary text-white">
           <h4>Show Performance for</h4>
           <input type="date" name="chosen-date" value={surveyDate} onChange={(e) => this.handleDate(e)} />
