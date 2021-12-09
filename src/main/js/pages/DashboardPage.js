@@ -164,11 +164,6 @@ export default class Dashboard extends Component {
       scale: {
         min: 0,
         max: 10,
-        pointLabels: {
-          font: {
-            size: 16,
-          },
-        },
       },
       scales: {
         r: {
@@ -180,6 +175,9 @@ export default class Dashboard extends Component {
           },
           pointLabels: {
             color: 'white',
+            font: {
+              size: 14,
+            },
           },
           ticks: {
             color: 'white',
