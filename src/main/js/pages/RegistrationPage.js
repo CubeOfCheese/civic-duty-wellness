@@ -238,9 +238,15 @@ export default class RegistrationPage extends Component {
                 <Form.Group className="mb-3" controlId="formBasicZipCode">
                   <Form.Label>Zip Code (optional)</Form.Label>
                   <Form.Control
-                    type="zip code"
+                    type="text"
                     placeholder="Zip Code"
                     name="zip"
+                    id="zip"
+                    pattern="[0-9]{5}"
+                    maxlength="5"
+                    onKeyDown={(e) => (e.which !== 8 && e.which !== 0
+                      && (e.which < 48 || e.which > 57))
+                      && e.preventDefault()}
                     onChange={(e) => this.handleNumEntryChange(e)}
                   />
                 </Form.Group>
@@ -248,9 +254,14 @@ export default class RegistrationPage extends Component {
                 <Form.Group className="mb-3" controlId="formBasicPhoneNumber">
                   <Form.Label>Phone (optional)</Form.Label>
                   <Form.Control
-                    type="phone"
+                    type="tel"
+                    maxlength="12"
+                    id="phone"
                     placeholder="Phone"
                     name="phone"
+                    onKeyDown={(e) => (e.which !== 8 && e.which !== 0
+                      && (e.which < 48 || e.which > 57))
+                      && e.preventDefault()}
                     onChange={(e) => this.handleTextEntryChange(e)}
                   />
                 </Form.Group>
