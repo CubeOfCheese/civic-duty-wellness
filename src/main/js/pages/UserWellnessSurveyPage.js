@@ -115,6 +115,11 @@ export default class UserWellnessSurvey extends Component {
         window.$('#survey-activities-popup').modal();
         window.$('#survey-activities-popup').modal('hide');
         window.$('#activityForm').trigger('reset');
+        this.setState({
+          currentActivity: {
+            activityName: '', hours: null, minutes: null, intensity: null,
+          },
+        });
       });
     } else {
       this.setState({
@@ -358,21 +363,29 @@ export default class UserWellnessSurvey extends Component {
                     <div className="row mx-2">
                       <Form.Control
                         type="number"
-                        placeholder="00"
+                        placeholder="hh"
                         name="durationHours"
                         className="w-25"
+                        maxlength="2"
                         min="0"
                         max="24"
+                        onKeyDown={(e) => (e.which !== 8 && e.which !== 0
+                          && (e.which < 48 || e.which > 57))
+                          && e.preventDefault()}
                         onBlur={(e) => this.handleActivityChange(e, 'hours')}
                       />
                       :
                       <Form.Control
                         type="number"
-                        placeholder="00"
+                        placeholder="mm"
                         name="durationMinutes"
                         className="w-25"
+                        maxlength="2"
                         min="0"
                         max="59"
+                        onKeyDown={(e) => (e.which !== 8 && e.which !== 0
+                          && (e.which < 48 || e.which > 57))
+                          && e.preventDefault()}
                         onBlur={(e) => this.handleActivityChange(e, 'minutes')}
                       />
                     </div>
