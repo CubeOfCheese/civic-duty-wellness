@@ -99,6 +99,15 @@ export default class ImportancePage extends Component {
         <h2 className="bg-primary text-center text-light mb-5 p-3">Importance</h2>
         <form className="text-center">
           <div className="my-5 w-75 px-5 mx-auto bg-secondary text-white text-right">
+            <h3 className="text-center d-inline">Please rate your importance value for each dimension:</h3>
+            <button type="button" className="d-inline btn btn-secondary" data-toggle="collapse" data-target="#definition">
+              <i className="text-light far fa-question-circle" />
+            </button>
+            <div id="definition" className="collapse">
+              Importance values are a rating from 1 to 10
+              (1 = very unimportant to 10 = very important)
+              that expresses how central a dimension is to your life.
+            </div>
             <table className="table w-50 mx-auto text-white">
               <thead>
                 <tr>
