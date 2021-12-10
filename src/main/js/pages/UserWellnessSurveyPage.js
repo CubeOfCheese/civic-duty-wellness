@@ -416,7 +416,7 @@ export default class UserWellnessSurvey extends Component {
                       <Form.Label className="col text-center">Medium</Form.Label>
                       <Form.Label className="col text-center">High</Form.Label>
                     </div>
-                    <div className="row mx-2" onBlur={(e) => this.handleActivityChange(e, 'intensity')}>
+                    <div className="row mx-2" onChange={(e) => this.handleActivityChange(e, 'intensity')}>
                       <input type="radio" name="Intensity" className="col" value="1" />
                       <input type="radio" name="Intensity" className="col" value="2" />
                       <input type="radio" name="Intensity" className="col" value="3" />
