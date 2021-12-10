@@ -79,7 +79,6 @@ export default class Dashboard extends Component {
     this.setState({
       surveyDate: newSurveyDate,
     }, () => {
-      // retrieve performance data from dummy backend route
       const { surveyDate } = this.state;
       const url = `/user/${userId}/survey`;
       const jwt = window.localStorage.getItem('jwt');
@@ -104,7 +103,6 @@ export default class Dashboard extends Component {
             });
           }
           this.setState({
-            userFirstName: obj.getFname,
             physicalPerf: obj.physicalPerf,
             emotionalPerf: obj.emotionalPerf,
             intellectualPerf: obj.intellectualPerf,
