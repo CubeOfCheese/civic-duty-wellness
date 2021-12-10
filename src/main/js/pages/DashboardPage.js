@@ -61,6 +61,7 @@ export default class Dashboard extends Component {
     fetch(`/user/${userId}`, request)
       .then((response) => response.json())
       .then((user) => this.setState({
+        userFirstName: user.fname,
         physicalImp: user.physicalImp,
         emotionalImp: user.emotionalImp,
         intellectualImp: user.intellectualImp,
@@ -103,6 +104,7 @@ export default class Dashboard extends Component {
             });
           }
           this.setState({
+            userFirstName: obj.getFname,
             physicalPerf: obj.physicalPerf,
             emotionalPerf: obj.emotionalPerf,
             intellectualPerf: obj.intellectualPerf,
@@ -194,11 +196,10 @@ export default class Dashboard extends Component {
         },
       },
     };
-    const dashboardHeading = `${userFirstName}'s Dashboard`;
+    const dashboardHeading = (userFirstName === '') ? 'Dashboard' : `${userFirstName}'s Dashboard`;
     return (
       <div>
-        {userFirstName === '' ? (<h2 className="bg-primary text-center text-light mb-5 p-3">Dashboard</h2>)
-          : <h2 className="bg-primary text-center text-light mb-5 p-3">{dashboardHeading}</h2>}
+        <h2 className="bg-primary text-center text-light mb-5 p-3">{dashboardHeading}</h2>
         <div className="text-center w-75 pb-3 mx-auto my-5 bg-secondary text-white">
           <h4>Show Performance for</h4>
           <input type="date" name="chosen-date" value={surveyDate} onChange={(e) => this.handleDate(e)} />
