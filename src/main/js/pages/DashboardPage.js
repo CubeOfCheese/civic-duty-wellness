@@ -214,7 +214,7 @@ export default class Dashboard extends Component {
             : null}
         </div>
         <div className="bg-secondary p-5 mx-auto w-75 d-flex align-items-center flex-column">
-          <div style={{ height: '60vh', width: '60vh' }}>
+          <div className="w-100" style={{ maxHeight: '60vh', maxWidth: '60vh' }}>
             <Radar data={data} options={options} />
           </div>
           <Link to="/importance" className="mt-2 mb-1 btn btn-outline-light">Reevaluate Importance</Link>
@@ -224,7 +224,7 @@ export default class Dashboard extends Component {
             <h3>Activities</h3>
             <div className="w-75 text-center mx-auto my-3">
               {activities.length > 0 ? (
-                <div className="row h4">
+                <div className="w-100 row h6">
                   <p className="col">Activity</p>
                   <p className="col">Duration</p>
                   <p className="col">Intensity</p>
