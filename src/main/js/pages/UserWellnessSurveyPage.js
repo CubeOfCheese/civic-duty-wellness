@@ -189,7 +189,15 @@ export default class UserWellnessSurvey extends Component {
           {invalidDate === 0 ? (
             <div>
               <div className="my-5 w-75 px-5 mx-auto bg-secondary text-white text-right">
-                <h3 className="text-center">Performance</h3>
+                <h3 className="d-inline text-center">Performance</h3>
+                <button type="button" className="d-inline btn btn-secondary" data-toggle="collapse" data-target="#definition">
+                  <i className="text-light far fa-question-circle" />
+                </button>
+                <div id="definition" className="collapse">
+                  Performance values are a rating from 1 to 10
+                  (1 = very unsatisfied to 10 = very satisfied)
+                  that expresses how fulfilled a dimension feels to you right now.
+                </div>
                 <table className="table w-50 mx-auto text-white">
                   <thead>
                     <tr>
