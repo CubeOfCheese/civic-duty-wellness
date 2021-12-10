@@ -41,14 +41,16 @@ export class App extends Component {
                   </div>
                 </Link>
               </div>
-              <ul className="nav navbar-nav">
-                <li className="nav-item">
-                  <Link className="nav-link" to="/survey">Wellness Survey</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/">Dashboard</Link>
-                </li>
-              </ul>
+              {authenticated ? (
+                <ul className="nav navbar-nav">
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/survey">Wellness Survey</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/">Dashboard</Link>
+                  </li>
+                </ul>
+              ) : null}
             </div>
           </nav>
           <Switch>
